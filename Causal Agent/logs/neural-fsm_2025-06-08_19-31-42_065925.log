@@ -1,0 +1,2906 @@
+2025-06-08 19:31:44 | INFO     | conv_id: GENERAL      | llm_fsm.llm:__init__:80 | Initializing LiteLLMInterface with model: gpt-4o-mini
+2025-06-08 19:31:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:__init__:97 | No API key provided, assuming it's set in environment variables
+2025-06-08 19:31:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:__init__:102 | Enabled JSON schema validation in LiteLLM
+2025-06-08 19:31:44 | INFO     | conv_id: GENERAL      | llm_fsm.api:__init__:311 | LLM_FSM initialized with default LiteLLM interface, model=gpt-4o-mini
+2025-06-08 19:31:44 | INFO     | conv_id: GENERAL      | llm_fsm.utilities:load_fsm_from_file:106 | Loading FSM definition from file: fsm.json
+2025-06-08 19:31:44 | INFO     | conv_id: GENERAL      | llm_fsm.utilities:load_fsm_from_file:112 | Successfully loaded FSM definition: fsm_builder_bot
+2025-06-08 19:31:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: fsm_builder_bot
+2025-06-08 19:31:44 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: fsm_builder_bot
+2025-06-08 19:31:44 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: finalize
+2025-06-08 19:31:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:__post_init__:158 | PromptBuilder initialized with effective max_history_size=5
+2025-06-08 19:31:44 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:__init__:65 | FSM Manager initialized with max_history_size=5, max_message_length=1000
+2025-06-08 19:31:44 | INFO     | conv_id: GENERAL      | llm_fsm.api:__init__:354 | LLM_FSM fully initialized with max_history_size=5
+2025-06-08 19:31:44 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:get_fsm_definition:101 | Loading FSM definition: fsm_file_fsm.json
+2025-06-08 19:31:44 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:_create_instance:116 | Creating new FSM instance for fsm_file_fsm.json, starting at state: collect_fsm_metadata
+2025-06-08 19:31:44 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z"}
+2025-06-08 19:31:44 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:start_conversation:452 | Added initial context with keys: session_id, timestamp
+2025-06-08 19:31:44 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:start_conversation:462 | Started new conversation [7cb9d3df-0ed4-4939-91e2-91bfb237161e] with FSM [fsm_file_fsm.json]
+2025-06-08 19:31:44 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_fsm_metadata
+2025-06-08 19:31:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: 
+2025-06-08 19:31:44 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: collect_fsm_metadata
+2025-06-08 19:31:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_fsm_metadata
+2025-06-08 19:31:44 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a helpful FSM creation assistant. Your job is to guide users through building their own FSM by asking questions step-by-step.
+</persona>
+<current_state>
+<id>collect_fsm_metadata</id>
+<description>Ask the user to provide basic metadata for their FSM</description>
+<purpose>Get the FSM name, description, version, and persona</purpose>
+<state_instructions>
+Please tell me the name, description, version, and persona for your FSM.
+</state_instructions>
+<information_to_collect>
+fsm_name, fsm_description, fsm_version, fsm_persona
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:31:44.125417",
+ "_timestamp": 1749382304.1254175,
+ "_fsm_id": "fsm_file_fsm.json",
+ "_conversation_id": "7cb9d3df-0ed4-4939-91e2-91bfb237161e"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ }
+]
+]]></conversation_history>
+<valid_states>
+add_state, collect_fsm_metadata
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "add_state",
+  "desc": "Move to adding the first state once metadata is complete",
+  "priority": 10
+ },
+ {
+  "to": "collect_fsm_metadata",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:31:44 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:31:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: 
+2025-06-08 19:31:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:31:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:31:45 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 1.81s
+2025-06-08 19:31:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:31:45 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "collect_fsm_metadata",
+    "context_update": {}
+  },
+  "message": "Please tell me the name, description, version, and persona for your FSM.",
+  "reasoning": "User has not provided any input yet, so I'm prompting them for the necessary FSM metadata."
+})
+2025-06-08 19:31:45 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_fsm_metadata to collect_fsm_metadata
+2025-06-08 19:31:45 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: collect_fsm_metadata
+2025-06-08 19:31:45 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:validate_transition:188 | Staying in the same state - valid
+2025-06-08 19:31:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Please tell me the name, description, version, and...
+2025-06-08 19:31:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: fsm_builder_bot
+2025-06-08 19:31:45 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: fsm_builder_bot
+2025-06-08 19:31:45 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: finalize
+2025-06-08 19:31:45 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: collect_fsm_metadata
+2025-06-08 19:31:45 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: collect_fsm_metadata
+2025-06-08 19:31:45 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:process_message:512 | Processing message: I want to create a new FSM
+2025-06-08 19:31:45 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_fsm_metadata
+2025-06-08 19:31:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: I want to create a new FSM
+2025-06-08 19:31:45 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: collect_fsm_metadata
+2025-06-08 19:31:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_fsm_metadata
+2025-06-08 19:31:45 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a helpful FSM creation assistant. Your job is to guide users through building their own FSM by asking questions step-by-step.
+</persona>
+<current_state>
+<id>collect_fsm_metadata</id>
+<description>Ask the user to provide basic metadata for their FSM</description>
+<purpose>Get the FSM name, description, version, and persona</purpose>
+<state_instructions>
+Please tell me the name, description, version, and persona for your FSM.
+</state_instructions>
+<information_to_collect>
+fsm_name, fsm_description, fsm_version, fsm_persona
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:31:44.125417",
+ "_timestamp": 1749382304.1254175,
+ "_fsm_id": "fsm_file_fsm.json",
+ "_conversation_id": "7cb9d3df-0ed4-4939-91e2-91bfb237161e"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Please tell me the name, description, version, and persona for your FSM."
+ },
+ {
+  "user": "I want to create a new FSM"
+ }
+]
+]]></conversation_history>
+<valid_states>
+add_state, collect_fsm_metadata
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "add_state",
+  "desc": "Move to adding the first state once metadata is complete",
+  "priority": 10
+ },
+ {
+  "to": "collect_fsm_metadata",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:31:45 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:31:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: I want to create a new FSM
+2025-06-08 19:31:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:31:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:31:48 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 2.10s
+2025-06-08 19:31:48 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:31:48 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "collect_fsm_metadata",
+    "context_update": {}
+  },
+  "message": "Please tell me the name, description, version, and persona for your FSM.",
+  "reasoning": "User expressed a desire to create a new FSM, so I'm prompting for the necessary metadata."
+})
+2025-06-08 19:31:48 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_fsm_metadata to collect_fsm_metadata
+2025-06-08 19:31:48 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: collect_fsm_metadata
+2025-06-08 19:31:48 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:validate_transition:188 | Staying in the same state - valid
+2025-06-08 19:31:48 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:367 | State transition: collect_fsm_metadata -> collect_fsm_metadata
+2025-06-08 19:31:48 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Please tell me the name, description, version, and...
+2025-06-08 19:31:48 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: collect_fsm_metadata
+2025-06-08 19:31:48 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state
+2025-06-08 19:31:48 | INFO     | conv_id: GENERAL      | llm_fsm.utilities:load_fsm_from_file:106 | Loading FSM definition from file: metafsm.json
+2025-06-08 19:31:48 | INFO     | conv_id: GENERAL      | llm_fsm.utilities:load_fsm_from_file:112 | Successfully loaded FSM definition: fsm_metadata_collector
+2025-06-08 19:31:48 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: fsm_metadata_collector
+2025-06-08 19:31:48 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: fsm_metadata_collector
+2025-06-08 19:31:48 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: metadata_complete
+2025-06-08 19:31:48 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state
+2025-06-08 19:31:48 | WARNING  | conv_id: GENERAL      | llm_fsm.api:push_fsm:572 | Could not preserve history: 'FSMManager' object has no attribute 'get_conversation_history'
+2025-06-08 19:31:48 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:get_fsm_definition:101 | Loading FSM definition: fsm_file_metafsm.json
+2025-06-08 19:31:48 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:_create_instance:116 | Creating new FSM instance for fsm_file_metafsm.json, starting at state: collect_name
+2025-06-08 19:31:48 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:31:44.125417", "_timestamp": 1749382304.1254175, "_fsm_id": "fsm_file_fsm.json", "_conversation_id": "7cb9d3df-0ed4-4939-91e2-91bfb237161e", "_previous_state": "collect_fsm_metadata", "_current_state": "collect_fsm_metadata", "fsm_name": null, "fsm_version": null, "fsm_persona": null, "fsm_description": null}
+2025-06-08 19:31:48 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:start_conversation:452 | Added initial context with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, fsm_name, fsm_version, fsm_persona, fsm_description
+2025-06-08 19:31:48 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:start_conversation:462 | Started new conversation [330476be-30f7-4a69-a22e-ed7e61adcdad] with FSM [fsm_file_metafsm.json]
+2025-06-08 19:31:48 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_name
+2025-06-08 19:31:48 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: 
+2025-06-08 19:31:48 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_current_state:154 | Current state: collect_name
+2025-06-08 19:31:48 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_name
+2025-06-08 19:31:48 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a metadata assistant. Guide the user one step at a time to gather metadata for an FSM.
+</persona>
+<current_state>
+<id>collect_name</id>
+<description>Ask for FSM name</description>
+<purpose>Collect the name of the FSM</purpose>
+<state_instructions>
+What would you like to name your FSM?
+</state_instructions>
+<information_to_collect>
+fsm_name
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:31:48.061853",
+ "_timestamp": 1749382308.0618532,
+ "_fsm_id": "fsm_file_metafsm.json",
+ "_conversation_id": "330476be-30f7-4a69-a22e-ed7e61adcdad",
+ "_previous_state": "collect_fsm_metadata",
+ "_current_state": "collect_fsm_metadata",
+ "fsm_name": null,
+ "fsm_version": null,
+ "fsm_persona": null,
+ "fsm_description": null
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ }
+]
+]]></conversation_history>
+<valid_states>
+collect_description, collect_name
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "collect_description",
+  "desc": "Move to collect FSM description",
+  "priority": 10
+ },
+ {
+  "to": "collect_name",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:31:48 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:31:48 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: 
+2025-06-08 19:31:48 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:31:48 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:31:50 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 2.73s
+2025-06-08 19:31:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:31:50 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "collect_name",
+    "context_update": {}
+  },
+  "message": "What would you like to name your FSM?",
+  "reasoning": "The user hasn't provided any input yet, so I will repeat the prompt to collect the FSM name."
+})
+2025-06-08 19:31:50 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_name to collect_name
+2025-06-08 19:31:50 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_current_state:154 | Current state: collect_name
+2025-06-08 19:31:50 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:validate_transition:188 | Staying in the same state - valid
+2025-06-08 19:31:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: What would you like to name your FSM?
+2025-06-08 19:31:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: fsm_metadata_collector
+2025-06-08 19:31:50 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: fsm_metadata_collector
+2025-06-08 19:31:50 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: metadata_complete
+2025-06-08 19:31:50 | INFO     | conv_id: GENERAL      | llm_fsm.api:push_fsm:592 | Pushed new FSM onto conversation 7cb9d3df-0ed4-4939-91e2-91bfb237161e, stack depth: 2
+2025-06-08 19:31:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.api:push_fsm:594 | Context passed to new FSM: ['session_id', 'timestamp', '_conversation_start', '_timestamp', '_fsm_id', '_conversation_id', '_previous_state', '_current_state', 'fsm_name', 'fsm_version', 'fsm_persona', 'fsm_description']
+2025-06-08 19:31:50 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:process_message:512 | Processing message: Let's call it 'my_custom_fsm'
+2025-06-08 19:31:50 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_name
+2025-06-08 19:31:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: Let's call it 'my_custom_fsm'
+2025-06-08 19:31:50 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_current_state:154 | Current state: collect_name
+2025-06-08 19:31:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_name
+2025-06-08 19:31:50 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a metadata assistant. Guide the user one step at a time to gather metadata for an FSM.
+</persona>
+<current_state>
+<id>collect_name</id>
+<description>Ask for FSM name</description>
+<purpose>Collect the name of the FSM</purpose>
+<state_instructions>
+What would you like to name your FSM?
+</state_instructions>
+<information_to_collect>
+fsm_name
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:31:48.061853",
+ "_timestamp": 1749382308.0618532,
+ "_fsm_id": "fsm_file_metafsm.json",
+ "_conversation_id": "330476be-30f7-4a69-a22e-ed7e61adcdad",
+ "_previous_state": "collect_fsm_metadata",
+ "_current_state": "collect_fsm_metadata",
+ "fsm_name": null,
+ "fsm_version": null,
+ "fsm_persona": null,
+ "fsm_description": null
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "What would you like to name your FSM?"
+ },
+ {
+  "user": "Let's call it 'my_custom_fsm'"
+ }
+]
+]]></conversation_history>
+<valid_states>
+collect_description, collect_name
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "collect_description",
+  "desc": "Move to collect FSM description",
+  "priority": 10
+ },
+ {
+  "to": "collect_name",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:31:50 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:31:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: Let's call it 'my_custom_fsm'
+2025-06-08 19:31:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:31:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:31:52 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 1.67s
+2025-06-08 19:31:52 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:31:52 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"fsm_name": "my_custom_fsm"}
+2025-06-08 19:31:52 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "collect_description",
+    "context_update": {
+      "fsm_name": "my_custom_fsm"
+    }
+  },
+  "message": "Great choice! Now, could you please provide a description for your FSM?",
+  "reasoning": "User provided the FSM name, so I'm transitioning to collect the FSM description."
+})
+2025-06-08 19:31:52 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_name": "my_custom_fsm"}
+2025-06-08 19:31:52 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_name": "my_custom_fsm"}
+2025-06-08 19:31:52 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:31:48.061853", "_timestamp": 1749382308.0618532, "_fsm_id": "fsm_file_metafsm.json", "_conversation_id": "330476be-30f7-4a69-a22e-ed7e61adcdad", "_previous_state": "collect_fsm_metadata", "_current_state": "collect_fsm_metadata", "fsm_name": "my_custom_fsm", "fsm_version": null, "fsm_persona": null, "fsm_description": null}
+2025-06-08 19:31:52 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_name to collect_description
+2025-06-08 19:31:52 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_current_state:154 | Current state: collect_name
+2025-06-08 19:31:52 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:validate_transition:223 | Transition from collect_name to collect_description is valid
+2025-06-08 19:31:52 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:367 | State transition: collect_name -> collect_description
+2025-06-08 19:31:52 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Great choice! Now, could you please provide a desc...
+2025-06-08 19:31:52 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: collect_description
+2025-06-08 19:31:52 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:process_message:512 | Processing message: It's a general purpose FSM for handling user inter...
+2025-06-08 19:31:52 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_description
+2025-06-08 19:31:52 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: It's a general purpose FSM for handling user inter...
+2025-06-08 19:31:52 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_current_state:154 | Current state: collect_description
+2025-06-08 19:31:52 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_description
+2025-06-08 19:31:52 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a metadata assistant. Guide the user one step at a time to gather metadata for an FSM.
+</persona>
+<current_state>
+<id>collect_description</id>
+<description>Ask for FSM description</description>
+<purpose>Understand what the FSM is for</purpose>
+<state_instructions>
+Please describe what your FSM does.
+</state_instructions>
+<information_to_collect>
+fsm_description
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:31:48.061853",
+ "_timestamp": 1749382308.0618532,
+ "_fsm_id": "fsm_file_metafsm.json",
+ "_conversation_id": "330476be-30f7-4a69-a22e-ed7e61adcdad",
+ "_previous_state": "collect_name",
+ "_current_state": "collect_description",
+ "fsm_name": "my_custom_fsm",
+ "fsm_version": null,
+ "fsm_persona": null,
+ "fsm_description": null
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "What would you like to name your FSM?"
+ },
+ {
+  "user": "Let's call it 'my_custom_fsm'"
+ },
+ {
+  "system": "Great choice! Now, could you please provide a description for your FSM?"
+ },
+ {
+  "user": "It's a general purpose FSM for handling user interactions"
+ }
+]
+]]></conversation_history>
+<valid_states>
+collect_description, collect_version
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "collect_version",
+  "desc": "Move to collect version",
+  "priority": 10
+ },
+ {
+  "to": "collect_description",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:31:52 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:31:52 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: It's a general purpose FSM for handling user inter...
+2025-06-08 19:31:52 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:31:52 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:32:04 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 11.80s
+2025-06-08 19:32:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:32:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"fsm_description": "It's a general purpose FSM for handling user interactions"}
+2025-06-08 19:32:04 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "collect_version",
+    "context_update": {
+      "fsm_description": "It's a general purpose FSM for handling user interactions"
+    }
+  },
+  "message": "Thank you for the description! Now, could you please provide the version of your FSM?",
+  "reasoning": "User provided a description of the FSM, so I'm transitioning to collect the version."
+})
+2025-06-08 19:32:04 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_description": "It's a general purpose FSM for handling user interactions"}
+2025-06-08 19:32:04 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_description": "It's a general purpose FSM for handling user interactions"}
+2025-06-08 19:32:04 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:31:48.061853", "_timestamp": 1749382308.0618532, "_fsm_id": "fsm_file_metafsm.json", "_conversation_id": "330476be-30f7-4a69-a22e-ed7e61adcdad", "_previous_state": "collect_name", "_current_state": "collect_description", "fsm_name": "my_custom_fsm", "fsm_version": null, "fsm_persona": null, "fsm_description": "It's a general purpose FSM for handling user interactions"}
+2025-06-08 19:32:04 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_description to collect_version
+2025-06-08 19:32:04 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_current_state:154 | Current state: collect_description
+2025-06-08 19:32:04 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:validate_transition:223 | Transition from collect_description to collect_version is valid
+2025-06-08 19:32:04 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:367 | State transition: collect_description -> collect_version
+2025-06-08 19:32:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Thank you for the description! Now, could you plea...
+2025-06-08 19:32:04 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: collect_version
+2025-06-08 19:32:04 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:process_message:512 | Processing message: Version 1.0
+2025-06-08 19:32:04 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_version
+2025-06-08 19:32:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: Version 1.0
+2025-06-08 19:32:04 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_current_state:154 | Current state: collect_version
+2025-06-08 19:32:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_version
+2025-06-08 19:32:04 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a metadata assistant. Guide the user one step at a time to gather metadata for an FSM.
+</persona>
+<current_state>
+<id>collect_version</id>
+<description>Ask for FSM version</description>
+<purpose>Capture version number for FSM</purpose>
+<state_instructions>
+What version number would you like to assign to this FSM?
+</state_instructions>
+<information_to_collect>
+fsm_version
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:31:48.061853",
+ "_timestamp": 1749382308.0618532,
+ "_fsm_id": "fsm_file_metafsm.json",
+ "_conversation_id": "330476be-30f7-4a69-a22e-ed7e61adcdad",
+ "_previous_state": "collect_description",
+ "_current_state": "collect_version",
+ "fsm_name": "my_custom_fsm",
+ "fsm_version": null,
+ "fsm_persona": null,
+ "fsm_description": "It's a general purpose FSM for handling user interactions"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "What would you like to name your FSM?"
+ },
+ {
+  "user": "Let's call it 'my_custom_fsm'"
+ },
+ {
+  "system": "Great choice! Now, could you please provide a description for your FSM?"
+ },
+ {
+  "user": "It's a general purpose FSM for handling user interactions"
+ },
+ {
+  "system": "Thank you for the description! Now, could you please provide the version of your FSM?"
+ },
+ {
+  "user": "Version 1.0"
+ }
+]
+]]></conversation_history>
+<valid_states>
+collect_persona, collect_version
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "collect_persona",
+  "desc": "Move to collect persona",
+  "priority": 10
+ },
+ {
+  "to": "collect_version",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:32:04 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:32:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: Version 1.0
+2025-06-08 19:32:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:32:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:32:06 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 2.36s
+2025-06-08 19:32:06 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:32:06 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"fsm_version": "1.0"}
+2025-06-08 19:32:06 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "collect_persona",
+    "context_update": {
+      "fsm_version": "1.0"
+    }
+  },
+  "message": "Thank you for providing the version! Now, could you please share the persona for your FSM?",
+  "reasoning": "User provided the FSM version, so I'm transitioning to collect the persona."
+})
+2025-06-08 19:32:06 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_version": "1.0"}
+2025-06-08 19:32:06 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_version": "1.0"}
+2025-06-08 19:32:06 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:31:48.061853", "_timestamp": 1749382308.0618532, "_fsm_id": "fsm_file_metafsm.json", "_conversation_id": "330476be-30f7-4a69-a22e-ed7e61adcdad", "_previous_state": "collect_description", "_current_state": "collect_version", "fsm_name": "my_custom_fsm", "fsm_version": "1.0", "fsm_persona": null, "fsm_description": "It's a general purpose FSM for handling user interactions"}
+2025-06-08 19:32:06 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_version to collect_persona
+2025-06-08 19:32:06 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_current_state:154 | Current state: collect_version
+2025-06-08 19:32:06 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:validate_transition:223 | Transition from collect_version to collect_persona is valid
+2025-06-08 19:32:06 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:367 | State transition: collect_version -> collect_persona
+2025-06-08 19:32:06 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Thank you for providing the version! Now, could yo...
+2025-06-08 19:32:06 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: collect_persona
+2025-06-08 19:32:06 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:process_message:512 | Processing message: It should be helpful and informative
+2025-06-08 19:32:06 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_persona
+2025-06-08 19:32:06 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: It should be helpful and informative
+2025-06-08 19:32:06 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_current_state:154 | Current state: collect_persona
+2025-06-08 19:32:06 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_persona
+2025-06-08 19:32:06 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a metadata assistant. Guide the user one step at a time to gather metadata for an FSM.
+</persona>
+<current_state>
+<id>collect_persona</id>
+<description>Ask for FSM persona</description>
+<purpose>Define the role the FSM should play when conversing</purpose>
+<state_instructions>
+What kind of persona should the FSM adopt? (e.g., friendly teacher, professional support agent, etc.)
+</state_instructions>
+<information_to_collect>
+fsm_persona
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:31:48.061853",
+ "_timestamp": 1749382308.0618532,
+ "_fsm_id": "fsm_file_metafsm.json",
+ "_conversation_id": "330476be-30f7-4a69-a22e-ed7e61adcdad",
+ "_previous_state": "collect_version",
+ "_current_state": "collect_persona",
+ "fsm_name": "my_custom_fsm",
+ "fsm_version": "1.0",
+ "fsm_persona": null,
+ "fsm_description": "It's a general purpose FSM for handling user interactions"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "What would you like to name your FSM?"
+ },
+ {
+  "user": "Let's call it 'my_custom_fsm'"
+ },
+ {
+  "system": "Great choice! Now, could you please provide a description for your FSM?"
+ },
+ {
+  "user": "It's a general purpose FSM for handling user interactions"
+ },
+ {
+  "system": "Thank you for the description! Now, could you please provide the version of your FSM?"
+ },
+ {
+  "user": "Version 1.0"
+ },
+ {
+  "system": "Thank you for providing the version! Now, could you please share the persona for your FSM?"
+ },
+ {
+  "user": "It should be helpful and informative"
+ }
+]
+]]></conversation_history>
+<valid_states>
+collect_persona, metadata_complete
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "metadata_complete",
+  "desc": "All metadata fields collected",
+  "priority": 10
+ },
+ {
+  "to": "collect_persona",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:32:06 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:32:06 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: It should be helpful and informative
+2025-06-08 19:32:06 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:32:06 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:32:08 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 1.99s
+2025-06-08 19:32:08 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:32:08 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"fsm_persona": "helpful and informative"}
+2025-06-08 19:32:08 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "metadata_complete",
+    "context_update": {
+      "fsm_persona": "helpful and informative"
+    }
+  },
+  "message": "Thank you for providing the persona! All the necessary metadata has been collected. If you need any further assistance, feel free to ask.",
+  "reasoning": "User provided the persona, completing the metadata collection process."
+})
+2025-06-08 19:32:08 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_persona": "helpful and informative"}
+2025-06-08 19:32:08 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_persona": "helpful and informative"}
+2025-06-08 19:32:08 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:31:48.061853", "_timestamp": 1749382308.0618532, "_fsm_id": "fsm_file_metafsm.json", "_conversation_id": "330476be-30f7-4a69-a22e-ed7e61adcdad", "_previous_state": "collect_version", "_current_state": "collect_persona", "fsm_name": "my_custom_fsm", "fsm_version": "1.0", "fsm_persona": "helpful and informative", "fsm_description": "It's a general purpose FSM for handling user interactions"}
+2025-06-08 19:32:08 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_persona to metadata_complete
+2025-06-08 19:32:08 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_current_state:154 | Current state: collect_persona
+2025-06-08 19:32:08 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:validate_transition:223 | Transition from collect_persona to metadata_complete is valid
+2025-06-08 19:32:08 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:_process_user_input:367 | State transition: collect_persona -> metadata_complete
+2025-06-08 19:32:08 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Thank you for providing the persona! All the neces...
+2025-06-08 19:32:08 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: metadata_complete
+2025-06-08 19:32:08 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, fsm_name, fsm_version, fsm_persona, fsm_description
+2025-06-08 19:32:08 | DEBUG    | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, fsm_name, fsm_version, fsm_persona, fsm_description
+2025-06-08 19:32:08 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state
+2025-06-08 19:32:08 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:update_conversation_context:730 | Updating context with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, metadata_collection_completed, referral_source, fsm_name, fsm_description, fsm_version, fsm_persona
+2025-06-08 19:32:08 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:update_conversation_context:731 | Context update data: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:31:44.125417", "_timestamp": 1749382304.1254175, "_fsm_id": "fsm_file_fsm.json", "_conversation_id": "7cb9d3df-0ed4-4939-91e2-91bfb237161e", "_previous_state": "collect_fsm_metadata", "_current_state": "collect_fsm_metadata", "metadata_collection_completed": true, "referral_source": "fsm_builder", "fsm_name": "my_custom_fsm", "fsm_description": "It's a general purpose FSM for handling user interactions", "fsm_version": "1.0", "fsm_persona": "helpful and informative"}
+2025-06-08 19:32:08 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:31:44.125417", "_timestamp": 1749382304.1254175, "_fsm_id": "fsm_file_fsm.json", "_conversation_id": "7cb9d3df-0ed4-4939-91e2-91bfb237161e", "_previous_state": "collect_fsm_metadata", "_current_state": "collect_fsm_metadata", "metadata_collection_completed": true, "referral_source": "fsm_builder", "fsm_name": "my_custom_fsm", "fsm_description": "It's a general purpose FSM for handling user interactions", "fsm_version": "1.0", "fsm_persona": "helpful and informative"}
+2025-06-08 19:32:08 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:update_conversation_context:742 | Context successfully updated for conversation [7cb9d3df-0ed4-4939-91e2-91bfb237161e]
+2025-06-08 19:32:08 | WARNING  | conv_id: GENERAL      | llm_fsm.api:pop_fsm:687 | Could not preserve sub-conversation summary: 'FSMManager' object has no attribute 'get_conversation_history'
+2025-06-08 19:32:08 | INFO     | conv_id: 330476be-30f7-4a69-a22e-ed7e61adcdad | llm_fsm.fsm:end_conversation:634 | Ending conversation 330476be-30f7-4a69-a22e-ed7e61adcdad
+2025-06-08 19:32:08 | INFO     | conv_id: GENERAL      | llm_fsm.api:pop_fsm:698 | Popped FSM from conversation 7cb9d3df-0ed4-4939-91e2-91bfb237161e, stack depth: 1
+2025-06-08 19:32:08 | DEBUG    | conv_id: GENERAL      | llm_fsm.api:pop_fsm:699 | Context merged back: ['metadata_collection_completed', 'referral_source', 'fsm_name', 'fsm_description', 'fsm_version', 'fsm_persona']
+2025-06-08 19:32:08 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: collect_fsm_metadata
+2025-06-08 19:32:08 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: collect_fsm_metadata
+2025-06-08 19:32:08 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:process_message:512 | Processing message: Yes, let's start with the metadata
+2025-06-08 19:32:08 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_fsm_metadata
+2025-06-08 19:32:08 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: Yes, let's start with the metadata
+2025-06-08 19:32:08 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: collect_fsm_metadata
+2025-06-08 19:32:08 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_fsm_metadata
+2025-06-08 19:32:08 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a helpful FSM creation assistant. Your job is to guide users through building their own FSM by asking questions step-by-step.
+</persona>
+<current_state>
+<id>collect_fsm_metadata</id>
+<description>Ask the user to provide basic metadata for their FSM</description>
+<purpose>Get the FSM name, description, version, and persona</purpose>
+<state_instructions>
+Please tell me the name, description, version, and persona for your FSM.
+</state_instructions>
+<information_to_collect>
+fsm_name, fsm_description, fsm_version, fsm_persona
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:31:44.125417",
+ "_timestamp": 1749382304.1254175,
+ "_fsm_id": "fsm_file_fsm.json",
+ "_conversation_id": "7cb9d3df-0ed4-4939-91e2-91bfb237161e",
+ "_previous_state": "collect_fsm_metadata",
+ "_current_state": "collect_fsm_metadata",
+ "metadata_collection_completed": true,
+ "referral_source": "fsm_builder",
+ "fsm_name": "my_custom_fsm",
+ "fsm_description": "It's a general purpose FSM for handling user interactions",
+ "fsm_version": "1.0",
+ "fsm_persona": "helpful and informative",
+ "_last_context_update": 1749382328.631929
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Please tell me the name, description, version, and persona for your FSM."
+ },
+ {
+  "user": "I want to create a new FSM"
+ },
+ {
+  "system": "Please tell me the name, description, version, and persona for your FSM."
+ },
+ {
+  "user": "Yes, let's start with the metadata"
+ }
+]
+]]></conversation_history>
+<valid_states>
+add_state, collect_fsm_metadata
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "add_state",
+  "desc": "Move to adding the first state once metadata is complete",
+  "priority": 10
+ },
+ {
+  "to": "collect_fsm_metadata",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:32:08 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:32:08 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: Yes, let's start with the metadata
+2025-06-08 19:32:08 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:32:08 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:32:09 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 1.30s
+2025-06-08 19:32:09 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:32:09 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "collect_fsm_metadata",
+    "context_update": {}
+  },
+  "message": "Please tell me the name, description, version, and persona for your FSM.",
+  "reasoning": "User wants to start with the metadata, so I will prompt them for the required information."
+})
+2025-06-08 19:32:09 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_fsm_metadata to collect_fsm_metadata
+2025-06-08 19:32:09 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: collect_fsm_metadata
+2025-06-08 19:32:09 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:validate_transition:188 | Staying in the same state - valid
+2025-06-08 19:32:09 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:367 | State transition: collect_fsm_metadata -> collect_fsm_metadata
+2025-06-08 19:32:09 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Please tell me the name, description, version, and...
+2025-06-08 19:32:09 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: collect_fsm_metadata
+2025-06-08 19:32:09 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, metadata_collection_completed, referral_source, fsm_name, fsm_description, fsm_version, fsm_persona, _last_context_update
+2025-06-08 19:32:09 | INFO     | conv_id: GENERAL      | llm_fsm.utilities:load_fsm_from_file:106 | Loading FSM definition from file: metafsm.json
+2025-06-08 19:32:09 | INFO     | conv_id: GENERAL      | llm_fsm.utilities:load_fsm_from_file:112 | Successfully loaded FSM definition: fsm_metadata_collector
+2025-06-08 19:32:09 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: fsm_metadata_collector
+2025-06-08 19:32:09 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: fsm_metadata_collector
+2025-06-08 19:32:09 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: metadata_complete
+2025-06-08 19:32:09 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, metadata_collection_completed, referral_source, fsm_name, fsm_description, fsm_version, fsm_persona, _last_context_update
+2025-06-08 19:32:09 | WARNING  | conv_id: GENERAL      | llm_fsm.api:push_fsm:572 | Could not preserve history: 'FSMManager' object has no attribute 'get_conversation_history'
+2025-06-08 19:32:09 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:_create_instance:116 | Creating new FSM instance for fsm_file_metafsm.json, starting at state: collect_name
+2025-06-08 19:32:09 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:31:44.125417", "_timestamp": 1749382304.1254175, "_fsm_id": "fsm_file_fsm.json", "_conversation_id": "7cb9d3df-0ed4-4939-91e2-91bfb237161e", "_previous_state": "collect_fsm_metadata", "_current_state": "collect_fsm_metadata", "metadata_collection_completed": true, "referral_source": "fsm_builder", "fsm_name": "my_custom_fsm", "fsm_description": "It's a general purpose FSM for handling user interactions", "fsm_version": "1.0", "fsm_persona": "helpful and informative", "_last_context_update": 1749382328.631929}
+2025-06-08 19:32:09 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:start_conversation:452 | Added initial context with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, metadata_collection_completed, referral_source, fsm_name, fsm_description, fsm_version, fsm_persona, _last_context_update
+2025-06-08 19:32:09 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:start_conversation:462 | Started new conversation [07a95fa8-fc8e-452b-af1f-edde472d41b7] with FSM [fsm_file_metafsm.json]
+2025-06-08 19:32:09 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_name
+2025-06-08 19:32:09 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: 
+2025-06-08 19:32:09 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_current_state:154 | Current state: collect_name
+2025-06-08 19:32:09 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_name
+2025-06-08 19:32:09 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a metadata assistant. Guide the user one step at a time to gather metadata for an FSM.
+</persona>
+<current_state>
+<id>collect_name</id>
+<description>Ask for FSM name</description>
+<purpose>Collect the name of the FSM</purpose>
+<state_instructions>
+What would you like to name your FSM?
+</state_instructions>
+<information_to_collect>
+fsm_name
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:32:09.956743",
+ "_timestamp": 1749382329.9567432,
+ "_fsm_id": "fsm_file_metafsm.json",
+ "_conversation_id": "07a95fa8-fc8e-452b-af1f-edde472d41b7",
+ "_previous_state": "collect_fsm_metadata",
+ "_current_state": "collect_fsm_metadata",
+ "metadata_collection_completed": true,
+ "referral_source": "fsm_builder",
+ "fsm_name": "my_custom_fsm",
+ "fsm_description": "It's a general purpose FSM for handling user interactions",
+ "fsm_version": "1.0",
+ "fsm_persona": "helpful and informative",
+ "_last_context_update": 1749382328.631929
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ }
+]
+]]></conversation_history>
+<valid_states>
+collect_description, collect_name
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "collect_description",
+  "desc": "Move to collect FSM description",
+  "priority": 10
+ },
+ {
+  "to": "collect_name",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:32:09 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:32:09 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: 
+2025-06-08 19:32:09 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:32:09 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:32:11 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 1.62s
+2025-06-08 19:32:11 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:32:11 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "collect_name",
+    "context_update": {}
+  },
+  "message": "What would you like to name your FSM?",
+  "reasoning": "The user did not provide any input, so I will prompt them for the FSM name again."
+})
+2025-06-08 19:32:11 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_name to collect_name
+2025-06-08 19:32:11 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_current_state:154 | Current state: collect_name
+2025-06-08 19:32:11 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:validate_transition:188 | Staying in the same state - valid
+2025-06-08 19:32:11 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: What would you like to name your FSM?
+2025-06-08 19:32:11 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: fsm_metadata_collector
+2025-06-08 19:32:11 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: fsm_metadata_collector
+2025-06-08 19:32:11 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: metadata_complete
+2025-06-08 19:32:11 | INFO     | conv_id: GENERAL      | llm_fsm.api:push_fsm:592 | Pushed new FSM onto conversation 7cb9d3df-0ed4-4939-91e2-91bfb237161e, stack depth: 2
+2025-06-08 19:32:11 | DEBUG    | conv_id: GENERAL      | llm_fsm.api:push_fsm:594 | Context passed to new FSM: ['session_id', 'timestamp', '_conversation_start', '_timestamp', '_fsm_id', '_conversation_id', '_previous_state', '_current_state', 'metadata_collection_completed', 'referral_source', 'fsm_name', 'fsm_description', 'fsm_version', 'fsm_persona', '_last_context_update']
+2025-06-08 19:32:11 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:process_message:512 | Processing message: Let's call it 'my_custom_fsm'
+2025-06-08 19:32:11 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_name
+2025-06-08 19:32:11 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: Let's call it 'my_custom_fsm'
+2025-06-08 19:32:11 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_current_state:154 | Current state: collect_name
+2025-06-08 19:32:11 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_name
+2025-06-08 19:32:11 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a metadata assistant. Guide the user one step at a time to gather metadata for an FSM.
+</persona>
+<current_state>
+<id>collect_name</id>
+<description>Ask for FSM name</description>
+<purpose>Collect the name of the FSM</purpose>
+<state_instructions>
+What would you like to name your FSM?
+</state_instructions>
+<information_to_collect>
+fsm_name
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:32:09.956743",
+ "_timestamp": 1749382329.9567432,
+ "_fsm_id": "fsm_file_metafsm.json",
+ "_conversation_id": "07a95fa8-fc8e-452b-af1f-edde472d41b7",
+ "_previous_state": "collect_fsm_metadata",
+ "_current_state": "collect_fsm_metadata",
+ "metadata_collection_completed": true,
+ "referral_source": "fsm_builder",
+ "fsm_name": "my_custom_fsm",
+ "fsm_description": "It's a general purpose FSM for handling user interactions",
+ "fsm_version": "1.0",
+ "fsm_persona": "helpful and informative",
+ "_last_context_update": 1749382328.631929
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "What would you like to name your FSM?"
+ },
+ {
+  "user": "Let's call it 'my_custom_fsm'"
+ }
+]
+]]></conversation_history>
+<valid_states>
+collect_description, collect_name
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "collect_description",
+  "desc": "Move to collect FSM description",
+  "priority": 10
+ },
+ {
+  "to": "collect_name",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:32:11 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:32:11 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: Let's call it 'my_custom_fsm'
+2025-06-08 19:32:11 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:32:11 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:32:13 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 1.83s
+2025-06-08 19:32:13 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:32:13 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"fsm_name": "my_custom_fsm"}
+2025-06-08 19:32:13 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "collect_description",
+    "context_update": {
+      "fsm_name": "my_custom_fsm"
+    }
+  },
+  "message": "Great! Now, could you please provide a description for your FSM?",
+  "reasoning": "User provided the FSM name, so I'm transitioning to collect the FSM description."
+})
+2025-06-08 19:32:13 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_name": "my_custom_fsm"}
+2025-06-08 19:32:13 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_name": "my_custom_fsm"}
+2025-06-08 19:32:13 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:32:09.956743", "_timestamp": 1749382329.9567432, "_fsm_id": "fsm_file_metafsm.json", "_conversation_id": "07a95fa8-fc8e-452b-af1f-edde472d41b7", "_previous_state": "collect_fsm_metadata", "_current_state": "collect_fsm_metadata", "metadata_collection_completed": true, "referral_source": "fsm_builder", "fsm_name": "my_custom_fsm", "fsm_description": "It's a general purpose FSM for handling user interactions", "fsm_version": "1.0", "fsm_persona": "helpful and informative", "_last_context_update": 1749382328.631929}
+2025-06-08 19:32:13 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_name to collect_description
+2025-06-08 19:32:13 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_current_state:154 | Current state: collect_name
+2025-06-08 19:32:13 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:validate_transition:223 | Transition from collect_name to collect_description is valid
+2025-06-08 19:32:13 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:367 | State transition: collect_name -> collect_description
+2025-06-08 19:32:13 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Great! Now, could you please provide a description...
+2025-06-08 19:32:13 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: collect_description
+2025-06-08 19:32:13 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:process_message:512 | Processing message: It's a general purpose FSM for handling user inter...
+2025-06-08 19:32:13 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_description
+2025-06-08 19:32:13 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: It's a general purpose FSM for handling user inter...
+2025-06-08 19:32:13 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_current_state:154 | Current state: collect_description
+2025-06-08 19:32:13 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_description
+2025-06-08 19:32:13 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a metadata assistant. Guide the user one step at a time to gather metadata for an FSM.
+</persona>
+<current_state>
+<id>collect_description</id>
+<description>Ask for FSM description</description>
+<purpose>Understand what the FSM is for</purpose>
+<state_instructions>
+Please describe what your FSM does.
+</state_instructions>
+<information_to_collect>
+fsm_description
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:32:09.956743",
+ "_timestamp": 1749382329.9567432,
+ "_fsm_id": "fsm_file_metafsm.json",
+ "_conversation_id": "07a95fa8-fc8e-452b-af1f-edde472d41b7",
+ "_previous_state": "collect_name",
+ "_current_state": "collect_description",
+ "metadata_collection_completed": true,
+ "referral_source": "fsm_builder",
+ "fsm_name": "my_custom_fsm",
+ "fsm_description": "It's a general purpose FSM for handling user interactions",
+ "fsm_version": "1.0",
+ "fsm_persona": "helpful and informative",
+ "_last_context_update": 1749382328.631929
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "What would you like to name your FSM?"
+ },
+ {
+  "user": "Let's call it 'my_custom_fsm'"
+ },
+ {
+  "system": "Great! Now, could you please provide a description for your FSM?"
+ },
+ {
+  "user": "It's a general purpose FSM for handling user interactions"
+ }
+]
+]]></conversation_history>
+<valid_states>
+collect_description, collect_version
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "collect_version",
+  "desc": "Move to collect version",
+  "priority": 10
+ },
+ {
+  "to": "collect_description",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:32:13 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:32:13 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: It's a general purpose FSM for handling user inter...
+2025-06-08 19:32:13 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:32:13 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:32:16 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 2.79s
+2025-06-08 19:32:16 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:32:16 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"fsm_description": "It's a general purpose FSM for handling user interactions"}
+2025-06-08 19:32:16 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "collect_version",
+    "context_update": {
+      "fsm_description": "It's a general purpose FSM for handling user interactions"
+    }
+  },
+  "message": "Thank you for the description! Now, could you please provide the version of your FSM?",
+  "reasoning": "User provided the FSM description, so I'm transitioning to collect the version."
+})
+2025-06-08 19:32:16 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_description": "It's a general purpose FSM for handling user interactions"}
+2025-06-08 19:32:16 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_description": "It's a general purpose FSM for handling user interactions"}
+2025-06-08 19:32:16 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:32:09.956743", "_timestamp": 1749382329.9567432, "_fsm_id": "fsm_file_metafsm.json", "_conversation_id": "07a95fa8-fc8e-452b-af1f-edde472d41b7", "_previous_state": "collect_name", "_current_state": "collect_description", "metadata_collection_completed": true, "referral_source": "fsm_builder", "fsm_name": "my_custom_fsm", "fsm_description": "It's a general purpose FSM for handling user interactions", "fsm_version": "1.0", "fsm_persona": "helpful and informative", "_last_context_update": 1749382328.631929}
+2025-06-08 19:32:16 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_description to collect_version
+2025-06-08 19:32:16 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_current_state:154 | Current state: collect_description
+2025-06-08 19:32:16 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:validate_transition:223 | Transition from collect_description to collect_version is valid
+2025-06-08 19:32:16 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:367 | State transition: collect_description -> collect_version
+2025-06-08 19:32:16 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Thank you for the description! Now, could you plea...
+2025-06-08 19:32:16 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: collect_version
+2025-06-08 19:32:16 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:process_message:512 | Processing message: Version 1.0
+2025-06-08 19:32:16 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_version
+2025-06-08 19:32:16 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: Version 1.0
+2025-06-08 19:32:16 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_current_state:154 | Current state: collect_version
+2025-06-08 19:32:16 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_version
+2025-06-08 19:32:16 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a metadata assistant. Guide the user one step at a time to gather metadata for an FSM.
+</persona>
+<current_state>
+<id>collect_version</id>
+<description>Ask for FSM version</description>
+<purpose>Capture version number for FSM</purpose>
+<state_instructions>
+What version number would you like to assign to this FSM?
+</state_instructions>
+<information_to_collect>
+fsm_version
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:32:09.956743",
+ "_timestamp": 1749382329.9567432,
+ "_fsm_id": "fsm_file_metafsm.json",
+ "_conversation_id": "07a95fa8-fc8e-452b-af1f-edde472d41b7",
+ "_previous_state": "collect_description",
+ "_current_state": "collect_version",
+ "metadata_collection_completed": true,
+ "referral_source": "fsm_builder",
+ "fsm_name": "my_custom_fsm",
+ "fsm_description": "It's a general purpose FSM for handling user interactions",
+ "fsm_version": "1.0",
+ "fsm_persona": "helpful and informative",
+ "_last_context_update": 1749382328.631929
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "What would you like to name your FSM?"
+ },
+ {
+  "user": "Let's call it 'my_custom_fsm'"
+ },
+ {
+  "system": "Great! Now, could you please provide a description for your FSM?"
+ },
+ {
+  "user": "It's a general purpose FSM for handling user interactions"
+ },
+ {
+  "system": "Thank you for the description! Now, could you please provide the version of your FSM?"
+ },
+ {
+  "user": "Version 1.0"
+ }
+]
+]]></conversation_history>
+<valid_states>
+collect_persona, collect_version
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "collect_persona",
+  "desc": "Move to collect persona",
+  "priority": 10
+ },
+ {
+  "to": "collect_version",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:32:16 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:32:16 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: Version 1.0
+2025-06-08 19:32:16 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:32:16 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:32:18 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 1.83s
+2025-06-08 19:32:18 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:32:18 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"fsm_version": "1.0"}
+2025-06-08 19:32:18 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "collect_persona",
+    "context_update": {
+      "fsm_version": "1.0"
+    }
+  },
+  "message": "Thank you for providing the version number! Now, could you please share the persona for your FSM?",
+  "reasoning": "User provided the FSM version, so I'm transitioning to collect persona."
+})
+2025-06-08 19:32:18 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_version": "1.0"}
+2025-06-08 19:32:18 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_version": "1.0"}
+2025-06-08 19:32:18 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:32:09.956743", "_timestamp": 1749382329.9567432, "_fsm_id": "fsm_file_metafsm.json", "_conversation_id": "07a95fa8-fc8e-452b-af1f-edde472d41b7", "_previous_state": "collect_description", "_current_state": "collect_version", "metadata_collection_completed": true, "referral_source": "fsm_builder", "fsm_name": "my_custom_fsm", "fsm_description": "It's a general purpose FSM for handling user interactions", "fsm_version": "1.0", "fsm_persona": "helpful and informative", "_last_context_update": 1749382328.631929}
+2025-06-08 19:32:18 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_version to collect_persona
+2025-06-08 19:32:18 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_current_state:154 | Current state: collect_version
+2025-06-08 19:32:18 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:validate_transition:223 | Transition from collect_version to collect_persona is valid
+2025-06-08 19:32:18 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:367 | State transition: collect_version -> collect_persona
+2025-06-08 19:32:18 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Thank you for providing the version number! Now, c...
+2025-06-08 19:32:18 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: collect_persona
+2025-06-08 19:32:18 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:process_message:512 | Processing message: It should be helpful and informative
+2025-06-08 19:32:18 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_persona
+2025-06-08 19:32:18 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: It should be helpful and informative
+2025-06-08 19:32:18 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_current_state:154 | Current state: collect_persona
+2025-06-08 19:32:18 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_persona
+2025-06-08 19:32:18 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a metadata assistant. Guide the user one step at a time to gather metadata for an FSM.
+</persona>
+<current_state>
+<id>collect_persona</id>
+<description>Ask for FSM persona</description>
+<purpose>Define the role the FSM should play when conversing</purpose>
+<state_instructions>
+What kind of persona should the FSM adopt? (e.g., friendly teacher, professional support agent, etc.)
+</state_instructions>
+<information_to_collect>
+fsm_persona
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:32:09.956743",
+ "_timestamp": 1749382329.9567432,
+ "_fsm_id": "fsm_file_metafsm.json",
+ "_conversation_id": "07a95fa8-fc8e-452b-af1f-edde472d41b7",
+ "_previous_state": "collect_version",
+ "_current_state": "collect_persona",
+ "metadata_collection_completed": true,
+ "referral_source": "fsm_builder",
+ "fsm_name": "my_custom_fsm",
+ "fsm_description": "It's a general purpose FSM for handling user interactions",
+ "fsm_version": "1.0",
+ "fsm_persona": "helpful and informative",
+ "_last_context_update": 1749382328.631929
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "What would you like to name your FSM?"
+ },
+ {
+  "user": "Let's call it 'my_custom_fsm'"
+ },
+ {
+  "system": "Great! Now, could you please provide a description for your FSM?"
+ },
+ {
+  "user": "It's a general purpose FSM for handling user interactions"
+ },
+ {
+  "system": "Thank you for the description! Now, could you please provide the version of your FSM?"
+ },
+ {
+  "user": "Version 1.0"
+ },
+ {
+  "system": "Thank you for providing the version number! Now, could you please share the persona for your FSM?"
+ },
+ {
+  "user": "It should be helpful and informative"
+ }
+]
+]]></conversation_history>
+<valid_states>
+collect_persona, metadata_complete
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "metadata_complete",
+  "desc": "All metadata fields collected",
+  "priority": 10
+ },
+ {
+  "to": "collect_persona",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:32:18 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:32:18 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: It should be helpful and informative
+2025-06-08 19:32:18 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:32:18 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:32:20 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 1.98s
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"fsm_persona": "helpful and informative"}
+2025-06-08 19:32:20 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "metadata_complete",
+    "context_update": {
+      "fsm_persona": "helpful and informative"
+    }
+  },
+  "message": "Thank you for providing the persona for your FSM! You've completed the metadata collection process.",
+  "reasoning": "User provided the required persona information, allowing the transition to the completion state."
+})
+2025-06-08 19:32:20 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_persona": "helpful and informative"}
+2025-06-08 19:32:20 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"fsm_persona": "helpful and informative"}
+2025-06-08 19:32:20 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:32:09.956743", "_timestamp": 1749382329.9567432, "_fsm_id": "fsm_file_metafsm.json", "_conversation_id": "07a95fa8-fc8e-452b-af1f-edde472d41b7", "_previous_state": "collect_version", "_current_state": "collect_persona", "metadata_collection_completed": true, "referral_source": "fsm_builder", "fsm_name": "my_custom_fsm", "fsm_description": "It's a general purpose FSM for handling user interactions", "fsm_version": "1.0", "fsm_persona": "helpful and informative", "_last_context_update": 1749382328.631929}
+2025-06-08 19:32:20 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_persona to metadata_complete
+2025-06-08 19:32:20 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_current_state:154 | Current state: collect_persona
+2025-06-08 19:32:20 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:validate_transition:223 | Transition from collect_persona to metadata_complete is valid
+2025-06-08 19:32:20 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:_process_user_input:367 | State transition: collect_persona -> metadata_complete
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Thank you for providing the persona for your FSM! ...
+2025-06-08 19:32:20 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: metadata_complete
+2025-06-08 19:32:20 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, metadata_collection_completed, referral_source, fsm_name, fsm_description, fsm_version, fsm_persona, _last_context_update
+2025-06-08 19:32:20 | DEBUG    | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, metadata_collection_completed, referral_source, fsm_name, fsm_description, fsm_version, fsm_persona, _last_context_update
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, metadata_collection_completed, referral_source, fsm_name, fsm_description, fsm_version, fsm_persona, _last_context_update
+2025-06-08 19:32:20 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:update_conversation_context:730 | Updating context with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, metadata_collection_completed, referral_source, fsm_name, fsm_description, fsm_version, fsm_persona, _last_context_update
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:update_conversation_context:731 | Context update data: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:31:44.125417", "_timestamp": 1749382304.1254175, "_fsm_id": "fsm_file_fsm.json", "_conversation_id": "7cb9d3df-0ed4-4939-91e2-91bfb237161e", "_previous_state": "collect_fsm_metadata", "_current_state": "collect_fsm_metadata", "metadata_collection_completed": true, "referral_source": "fsm_builder", "fsm_name": "my_custom_fsm", "fsm_description": "It's a general purpose FSM for handling user interactions", "fsm_version": "1.0", "fsm_persona": "helpful and informative", "_last_context_update": 1749382328.631929}
+2025-06-08 19:32:20 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:31:44.125417", "_timestamp": 1749382304.1254175, "_fsm_id": "fsm_file_fsm.json", "_conversation_id": "7cb9d3df-0ed4-4939-91e2-91bfb237161e", "_previous_state": "collect_fsm_metadata", "_current_state": "collect_fsm_metadata", "metadata_collection_completed": true, "referral_source": "fsm_builder", "fsm_name": "my_custom_fsm", "fsm_description": "It's a general purpose FSM for handling user interactions", "fsm_version": "1.0", "fsm_persona": "helpful and informative", "_last_context_update": 1749382328.631929}
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:update_conversation_context:742 | Context successfully updated for conversation [7cb9d3df-0ed4-4939-91e2-91bfb237161e]
+2025-06-08 19:32:20 | WARNING  | conv_id: GENERAL      | llm_fsm.api:pop_fsm:687 | Could not preserve sub-conversation summary: 'FSMManager' object has no attribute 'get_conversation_history'
+2025-06-08 19:32:20 | INFO     | conv_id: 07a95fa8-fc8e-452b-af1f-edde472d41b7 | llm_fsm.fsm:end_conversation:634 | Ending conversation 07a95fa8-fc8e-452b-af1f-edde472d41b7
+2025-06-08 19:32:20 | INFO     | conv_id: GENERAL      | llm_fsm.api:pop_fsm:698 | Popped FSM from conversation 7cb9d3df-0ed4-4939-91e2-91bfb237161e, stack depth: 1
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.api:pop_fsm:699 | Context merged back: ['metadata_collection_completed', 'referral_source', 'fsm_name', 'fsm_description', 'fsm_version', 'fsm_persona']
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: collect_fsm_metadata
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: collect_fsm_metadata
+2025-06-08 19:32:20 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:process_message:512 | Processing message: Now let's add some states to the FSM
+2025-06-08 19:32:20 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: collect_fsm_metadata
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: Now let's add some states to the FSM
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: collect_fsm_metadata
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: collect_fsm_metadata
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a helpful FSM creation assistant. Your job is to guide users through building their own FSM by asking questions step-by-step.
+</persona>
+<current_state>
+<id>collect_fsm_metadata</id>
+<description>Ask the user to provide basic metadata for their FSM</description>
+<purpose>Get the FSM name, description, version, and persona</purpose>
+<state_instructions>
+Please tell me the name, description, version, and persona for your FSM.
+</state_instructions>
+<information_to_collect>
+fsm_name, fsm_description, fsm_version, fsm_persona
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:31:44.125417",
+ "_timestamp": 1749382304.1254175,
+ "_fsm_id": "fsm_file_fsm.json",
+ "_conversation_id": "7cb9d3df-0ed4-4939-91e2-91bfb237161e",
+ "_previous_state": "collect_fsm_metadata",
+ "_current_state": "collect_fsm_metadata",
+ "metadata_collection_completed": true,
+ "referral_source": "fsm_builder",
+ "fsm_name": "my_custom_fsm",
+ "fsm_description": "It's a general purpose FSM for handling user interactions",
+ "fsm_version": "1.0",
+ "fsm_persona": "helpful and informative",
+ "_last_context_update": 1749382340.0206337
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Please tell me the name, description, version, and persona for your FSM."
+ },
+ {
+  "user": "I want to create a new FSM"
+ },
+ {
+  "system": "Please tell me the name, description, version, and persona for your FSM."
+ },
+ {
+  "user": "Yes, let's start with the metadata"
+ },
+ {
+  "system": "Please tell me the name, description, version, and persona for your FSM."
+ },
+ {
+  "user": "Now let's add some states to the FSM"
+ }
+]
+]]></conversation_history>
+<valid_states>
+add_state, collect_fsm_metadata
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "add_state",
+  "desc": "Move to adding the first state once metadata is complete",
+  "priority": 10
+ },
+ {
+  "to": "collect_fsm_metadata",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:32:20 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: Now let's add some states to the FSM
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:32:20 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 0.95s
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "add_state",
+    "context_update": {}
+  },
+  "message": "Great! Let's start adding states to your FSM. What would you like to name the first state?",
+  "reasoning": "User indicated they want to add states, so I am transitioning to the add_state state."
+})
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:validate_transition:175 | Validating transition from collect_fsm_metadata to add_state
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: collect_fsm_metadata
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:validate_transition:223 | Transition from collect_fsm_metadata to add_state is valid
+2025-06-08 19:32:20 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:367 | State transition: collect_fsm_metadata -> add_state
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Great! Let's start adding states to your FSM. What...
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: add_state
+2025-06-08 19:32:20 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:process_message:512 | Processing message: I want to add an initial state first
+2025-06-08 19:32:20 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: add_state
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: I want to add an initial state first
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: add_state
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: add_state
+2025-06-08 19:32:20 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a helpful FSM creation assistant. Your job is to guide users through building their own FSM by asking questions step-by-step.
+</persona>
+<current_state>
+<id>add_state</id>
+<description>Collect details for a new state</description>
+<purpose>Add a state to the FSM being built</purpose>
+<state_instructions>
+Please provide the state ID, description, purpose, and any instructions you want the bot to follow in this state.
+</state_instructions>
+<information_to_collect>
+state_id, state_description, state_purpose, state_instructions
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "fsm_builder_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-06-08T19:31:44.125417",
+ "_timestamp": 1749382304.1254175,
+ "_fsm_id": "fsm_file_fsm.json",
+ "_conversation_id": "7cb9d3df-0ed4-4939-91e2-91bfb237161e",
+ "_previous_state": "collect_fsm_metadata",
+ "_current_state": "add_state",
+ "metadata_collection_completed": true,
+ "referral_source": "fsm_builder",
+ "fsm_name": "my_custom_fsm",
+ "fsm_description": "It's a general purpose FSM for handling user interactions",
+ "fsm_version": "1.0",
+ "fsm_persona": "helpful and informative",
+ "_last_context_update": 1749382340.0206337
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Please tell me the name, description, version, and persona for your FSM."
+ },
+ {
+  "user": "I want to create a new FSM"
+ },
+ {
+  "system": "Please tell me the name, description, version, and persona for your FSM."
+ },
+ {
+  "user": "Yes, let's start with the metadata"
+ },
+ {
+  "system": "Please tell me the name, description, version, and persona for your FSM."
+ },
+ {
+  "user": "Now let's add some states to the FSM"
+ },
+ {
+  "system": "Great! Let's start adding states to your FSM. What would you like to name the first state?"
+ },
+ {
+  "user": "I want to add an initial state first"
+ }
+]
+]]></conversation_history>
+<valid_states>
+add_state, add_transitions
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "add_transitions",
+  "desc": "Go to transition definition for this state",
+  "priority": 10
+ },
+ {
+  "to": "add_state",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-08 19:32:20 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: I want to add an initial state first
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-06-08 19:32:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-06-08 19:32:24 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 3.23s
+2025-06-08 19:32:24 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-08 19:32:24 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"state_id": "initial_state", "state_description": "This is the starting point of the FSM.", "state_purpose": "To initialize the FSM and handle initial user interactions.", "state_instructions": "Greet the user and ask for their input."}
+2025-06-08 19:32:24 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "add_state",
+    "context_update": {
+      "state_id": "initial_state",
+      "state_description": "This is the starting point of the FSM.",
+      "state_purpose": "To initialize the FSM and handle initial user interactions.",
+      "state_instructions": "Greet the user and ask for their input."
+    }
+  },
+  "message": "Please provide the state ID, description, purpose, and any instructions for the initial state you'd like to add.",
+  "reasoning": "User wants to add an initial state, so I'm prompting for the required details to create that state."
+})
+2025-06-08 19:32:24 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"state_id": "initial_state", "state_description": "This is the starting point of the FSM.", "state_purpose": "To initialize the FSM and handle initial user interactions.", "state_instructions": "Greet the user and ask for their input."}
+2025-06-08 19:32:24 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"state_id": "initial_state", "state_description": "This is the starting point of the FSM.", "state_purpose": "To initialize the FSM and handle initial user interactions.", "state_instructions": "Greet the user and ask for their input."}
+2025-06-08 19:32:24 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "fsm_builder_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-06-08T19:31:44.125417", "_timestamp": 1749382304.1254175, "_fsm_id": "fsm_file_fsm.json", "_conversation_id": "7cb9d3df-0ed4-4939-91e2-91bfb237161e", "_previous_state": "collect_fsm_metadata", "_current_state": "add_state", "metadata_collection_completed": true, "referral_source": "fsm_builder", "fsm_name": "my_custom_fsm", "fsm_description": "It's a general purpose FSM for handling user interactions", "fsm_version": "1.0", "fsm_persona": "helpful and informative", "_last_context_update": 1749382340.0206337, "state_id": "initial_state", "state_description": "This is the starting point of the FSM.", "state_purpose": "To initialize the FSM and handle initial user interactions.", "state_instructions": "Greet the user and ask for their input."}
+2025-06-08 19:32:24 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:validate_transition:175 | Validating transition from add_state to add_state
+2025-06-08 19:32:24 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_current_state:154 | Current state: add_state
+2025-06-08 19:32:24 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:validate_transition:188 | Staying in the same state - valid
+2025-06-08 19:32:24 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:_process_user_input:367 | State transition: add_state -> add_state
+2025-06-08 19:32:24 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Please provide the state ID, description, purpose,...
+2025-06-08 19:32:24 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, metadata_collection_completed, referral_source, fsm_name, fsm_description, fsm_version, fsm_persona, _last_context_update, state_id, state_description, state_purpose, state_instructions
+2025-06-08 19:32:24 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, metadata_collection_completed, referral_source, fsm_name, fsm_description, fsm_version, fsm_persona, _last_context_update, state_id, state_description, state_purpose, state_instructions
+2025-06-08 19:32:24 | DEBUG    | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, metadata_collection_completed, referral_source, fsm_name, fsm_description, fsm_version, fsm_persona, _last_context_update, state_id, state_description, state_purpose, state_instructions
+2025-06-08 19:32:24 | INFO     | conv_id: 7cb9d3df-0ed4-4939-91e2-91bfb237161e | llm_fsm.fsm:end_conversation:634 | Ending conversation 7cb9d3df-0ed4-4939-91e2-91bfb237161e

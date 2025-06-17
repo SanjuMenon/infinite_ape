@@ -1,0 +1,1613 @@
+2025-05-30 22:26:17 | INFO     | conv_id: GENERAL      | llm_fsm.llm:__init__:80 | Initializing LiteLLMInterface with model: gpt-4o-mini
+2025-05-30 22:26:17 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:__init__:97 | No API key provided, assuming it's set in environment variables
+2025-05-30 22:26:17 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:__init__:102 | Enabled JSON schema validation in LiteLLM
+2025-05-30 22:26:17 | INFO     | conv_id: GENERAL      | llm_fsm.api:__init__:311 | LLM_FSM initialized with default LiteLLM interface, model=gpt-4o-mini
+2025-05-30 22:26:17 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: customer_service_main
+2025-05-30 22:26:17 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: customer_service_main
+2025-05-30 22:26:17 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: farewell
+2025-05-30 22:26:17 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:__post_init__:158 | PromptBuilder initialized with effective max_history_size=5
+2025-05-30 22:26:17 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:__init__:65 | FSM Manager initialized with max_history_size=5, max_message_length=1000
+2025-05-30 22:26:17 | INFO     | conv_id: GENERAL      | llm_fsm.api:__init__:354 | LLM_FSM fully initialized with max_history_size=5
+2025-05-30 22:26:17 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:get_fsm_definition:101 | Loading FSM definition: fsm_dict_customer_service_main_be60975a
+2025-05-30 22:26:17 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:_create_instance:116 | Creating new FSM instance for fsm_dict_customer_service_main_be60975a, starting at state: greeting
+2025-05-30 22:26:17 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"session_id": "demo_session_001", "timestamp": "2024-01-15T10:30:00Z"}
+2025-05-30 22:26:17 | INFO     | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:start_conversation:452 | Added initial context with keys: session_id, timestamp
+2025-05-30 22:26:17 | INFO     | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:start_conversation:462 | Started new conversation [98381486-d98d-44d5-878e-49d84011a0ed] with FSM [fsm_dict_customer_service_main_be60975a]
+2025-05-30 22:26:17 | INFO     | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: greeting
+2025-05-30 22:26:17 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: 
+2025-05-30 22:26:17 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_current_state:154 | Current state: greeting
+2025-05-30 22:26:17 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: greeting
+2025-05-30 22:26:17 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a helpful customer service representative. You're friendly, professional, and always try to assist customers with their needs.
+</persona>
+<current_state>
+<id>greeting</id>
+<description>Initial greeting and customer identification</description>
+<purpose>Welcome the customer and identify how to help them</purpose>
+<state_instructions>
+Greet the customer warmly and ask how you can help them today. Try to understand their needs.
+</state_instructions>
+<information_to_collect>
+customer_name, inquiry_type
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "demo_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-05-30T22:26:17.968653",
+ "_timestamp": 1748615177.968653,
+ "_fsm_id": "fsm_dict_customer_service_main_be60975a",
+ "_conversation_id": "98381486-d98d-44d5-878e-49d84011a0ed"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ }
+]
+]]></conversation_history>
+<valid_states>
+farewell, general_help, greeting, product_inquiry
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "product_inquiry",
+  "desc": "Customer is asking about products or wants recommendations",
+  "priority": 5
+ },
+ {
+  "to": "general_help",
+  "desc": "Customer has a general question or issue",
+  "priority": 10
+ },
+ {
+  "to": "farewell",
+  "desc": "Customer wants to end the conversation",
+  "priority": 20
+ },
+ {
+  "to": "greeting",
+  "desc": "Remain in current state if needed",
+  "priority": 120
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-05-30 22:26:17 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-05-30 22:26:17 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: 
+2025-05-30 22:26:17 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-05-30 22:26:17 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-05-30 22:26:20 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 2.47s
+2025-05-30 22:26:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-05-30 22:26:20 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "greeting",
+    "context_update": {}
+  },
+  "message": "Hello! Welcome! How can I assist you today?",
+  "reasoning": "I am in the greeting state and need to welcome the user and ask how I can help."
+})
+2025-05-30 22:26:20 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:validate_transition:175 | Validating transition from greeting to greeting
+2025-05-30 22:26:20 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_current_state:154 | Current state: greeting
+2025-05-30 22:26:20 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:validate_transition:188 | Staying in the same state - valid
+2025-05-30 22:26:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Hello! Welcome! How can I assist you today?
+2025-05-30 22:26:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: customer_service_main
+2025-05-30 22:26:20 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: customer_service_main
+2025-05-30 22:26:20 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: farewell
+2025-05-30 22:26:20 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_current_state:154 | Current state: greeting
+2025-05-30 22:26:20 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: greeting
+2025-05-30 22:26:20 | INFO     | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:process_message:512 | Processing message: Hi! I'm looking for a laptop for my college studie...
+2025-05-30 22:26:20 | INFO     | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: greeting
+2025-05-30 22:26:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: Hi! I'm looking for a laptop for my college studie...
+2025-05-30 22:26:20 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_current_state:154 | Current state: greeting
+2025-05-30 22:26:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: greeting
+2025-05-30 22:26:20 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a helpful customer service representative. You're friendly, professional, and always try to assist customers with their needs.
+</persona>
+<current_state>
+<id>greeting</id>
+<description>Initial greeting and customer identification</description>
+<purpose>Welcome the customer and identify how to help them</purpose>
+<state_instructions>
+Greet the customer warmly and ask how you can help them today. Try to understand their needs.
+</state_instructions>
+<information_to_collect>
+customer_name, inquiry_type
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "demo_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-05-30T22:26:17.968653",
+ "_timestamp": 1748615177.968653,
+ "_fsm_id": "fsm_dict_customer_service_main_be60975a",
+ "_conversation_id": "98381486-d98d-44d5-878e-49d84011a0ed"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! Welcome! How can I assist you today?"
+ },
+ {
+  "user": "Hi! I'm looking for a laptop for my college studies."
+ }
+]
+]]></conversation_history>
+<valid_states>
+farewell, general_help, greeting, product_inquiry
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "product_inquiry",
+  "desc": "Customer is asking about products or wants recommendations",
+  "priority": 5
+ },
+ {
+  "to": "general_help",
+  "desc": "Customer has a general question or issue",
+  "priority": 10
+ },
+ {
+  "to": "farewell",
+  "desc": "Customer wants to end the conversation",
+  "priority": 20
+ },
+ {
+  "to": "greeting",
+  "desc": "Remain in current state if needed",
+  "priority": 120
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-05-30 22:26:20 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-05-30 22:26:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: Hi! I'm looking for a laptop for my college studie...
+2025-05-30 22:26:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-05-30 22:26:20 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-05-30 22:26:23 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 3.00s
+2025-05-30 22:26:23 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-05-30 22:26:23 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"inquiry_type": "laptop for college studies", "_extra": {}}
+2025-05-30 22:26:23 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "product_inquiry",
+    "context_update": {
+      "inquiry_type": "laptop for college studies",
+      "_extra": {}
+    }
+  },
+  "message": "Great! I can help you find a laptop suitable for your college studies. Could you please share your name so I can assist you better?",
+  "reasoning": "User is inquiring about a product, transitioning to the product inquiry state while collecting their name."
+})
+2025-05-30 22:26:23 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"inquiry_type": "laptop for college studies", "_extra": {}}
+2025-05-30 22:26:23 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"inquiry_type": "laptop for college studies", "_extra": {}}
+2025-05-30 22:26:23 | INFO     | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "demo_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-05-30T22:26:17.968653", "_timestamp": 1748615177.968653, "_fsm_id": "fsm_dict_customer_service_main_be60975a", "_conversation_id": "98381486-d98d-44d5-878e-49d84011a0ed", "inquiry_type": "laptop for college studies", "_extra": {}}
+2025-05-30 22:26:23 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:validate_transition:175 | Validating transition from greeting to product_inquiry
+2025-05-30 22:26:23 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_current_state:154 | Current state: greeting
+2025-05-30 22:26:23 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:validate_transition:223 | Transition from greeting to product_inquiry is valid
+2025-05-30 22:26:23 | INFO     | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:_process_user_input:367 | State transition: greeting -> product_inquiry
+2025-05-30 22:26:23 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Great! I can help you find a laptop suitable for y...
+2025-05-30 22:26:23 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: product_inquiry
+2025-05-30 22:26:23 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_current_state:154 | Current state: product_inquiry
+2025-05-30 22:26:23 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: product_inquiry
+2025-05-30 22:26:23 | INFO     | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:process_message:512 | Processing message: I need something that's good for programming and n...
+2025-05-30 22:26:23 | INFO     | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: product_inquiry
+2025-05-30 22:26:23 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: I need something that's good for programming and n...
+2025-05-30 22:26:23 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_current_state:154 | Current state: product_inquiry
+2025-05-30 22:26:23 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: product_inquiry
+2025-05-30 22:26:23 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a helpful customer service representative. You're friendly, professional, and always try to assist customers with their needs.
+</persona>
+<current_state>
+<id>product_inquiry</id>
+<description>Customer is interested in product recommendations</description>
+<purpose>Identify that customer needs product recommendations and prepare to delegate</purpose>
+<state_instructions>
+Acknowledge the customer's interest in products. Explain that you'll connect them with our product recommendation specialist.
+</state_instructions>
+<information_to_collect>
+product_category, budget_range
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "demo_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-05-30T22:26:17.968653",
+ "_timestamp": 1748615177.968653,
+ "_fsm_id": "fsm_dict_customer_service_main_be60975a",
+ "_conversation_id": "98381486-d98d-44d5-878e-49d84011a0ed",
+ "inquiry_type": "laptop for college studies",
+ "_extra": {},
+ "_previous_state": "greeting",
+ "_current_state": "product_inquiry"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! Welcome! How can I assist you today?"
+ },
+ {
+  "user": "Hi! I'm looking for a laptop for my college studies."
+ },
+ {
+  "system": "Great! I can help you find a laptop suitable for your college studies. Could you please share your name so I can assist you better?"
+ },
+ {
+  "user": "I need something that's good for programming and not too expensive. My budget is around $800-1200."
+ }
+]
+]]></conversation_history>
+<valid_states>
+delegate_to_product_specialist, general_help, product_inquiry
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "delegate_to_product_specialist",
+  "desc": "Ready to delegate to product recommendation system",
+  "priority": 5
+ },
+ {
+  "to": "general_help",
+  "desc": "Customer has other questions first",
+  "priority": 10
+ },
+ {
+  "to": "product_inquiry",
+  "desc": "Remain in current state if needed",
+  "priority": 110
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-05-30 22:26:23 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-05-30 22:26:23 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: I need something that's good for programming and n...
+2025-05-30 22:26:23 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-05-30 22:26:23 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-05-30 22:26:26 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 2.59s
+2025-05-30 22:26:26 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-05-30 22:26:26 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"product_category": "laptop", "budget_range": "800-1200", "_extra": {"inquiry_type": "laptop for college studies"}}
+2025-05-30 22:26:26 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "delegate_to_product_specialist",
+    "context_update": {
+      "product_category": "laptop",
+      "budget_range": "800-1200",
+      "_extra": {
+        "inquiry_type": "laptop for college studies"
+      }
+    }
+  },
+  "message": "Thank you for the details! I will connect you with our product recommendation specialist who can help you find a laptop suitable for programming within your budget. Please hold on for a moment.",
+  "reasoning": "User provided the necessary information about the product category and budget, so transitioning to delegate to the product specialist."
+})
+2025-05-30 22:26:26 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"product_category": "laptop", "budget_range": "800-1200", "_extra": {"inquiry_type": "laptop for college studies"}}
+2025-05-30 22:26:26 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"product_category": "laptop", "budget_range": "800-1200", "_extra": {"inquiry_type": "laptop for college studies"}}
+2025-05-30 22:26:26 | INFO     | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "demo_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-05-30T22:26:17.968653", "_timestamp": 1748615177.968653, "_fsm_id": "fsm_dict_customer_service_main_be60975a", "_conversation_id": "98381486-d98d-44d5-878e-49d84011a0ed", "inquiry_type": "laptop for college studies", "_extra": {"inquiry_type": "laptop for college studies"}, "_previous_state": "greeting", "_current_state": "product_inquiry", "product_category": "laptop", "budget_range": "800-1200"}
+2025-05-30 22:26:26 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:validate_transition:175 | Validating transition from product_inquiry to delegate_to_product_specialist
+2025-05-30 22:26:26 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_current_state:154 | Current state: product_inquiry
+2025-05-30 22:26:26 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:validate_transition:223 | Transition from product_inquiry to delegate_to_product_specialist is valid
+2025-05-30 22:26:26 | INFO     | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:_process_user_input:367 | State transition: product_inquiry -> delegate_to_product_specialist
+2025-05-30 22:26:26 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Thank you for the details! I will connect you with...
+2025-05-30 22:26:26 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: delegate_to_product_specialist
+2025-05-30 22:26:26 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, inquiry_type, _extra, _previous_state, _current_state, product_category, budget_range
+2025-05-30 22:26:26 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: product_recommendation_specialist
+2025-05-30 22:26:26 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: product_recommendation_specialist
+2025-05-30 22:26:26 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: specialist_handoff
+2025-05-30 22:26:26 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, inquiry_type, _extra, _previous_state, _current_state, product_category, budget_range
+2025-05-30 22:26:26 | WARNING  | conv_id: GENERAL      | llm_fsm.api:push_fsm:572 | Could not preserve history: 'FSMManager' object has no attribute 'get_conversation_history'
+2025-05-30 22:26:26 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:get_fsm_definition:101 | Loading FSM definition: fsm_dict_product_recommendation_specialist_3fdfdca3
+2025-05-30 22:26:26 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:_create_instance:116 | Creating new FSM instance for fsm_dict_product_recommendation_specialist_3fdfdca3, starting at state: specialist_introduction
+2025-05-30 22:26:26 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"session_id": "demo_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-05-30T22:26:17.968653", "_timestamp": 1748615177.968653, "_fsm_id": "fsm_dict_customer_service_main_be60975a", "_conversation_id": "98381486-d98d-44d5-878e-49d84011a0ed", "inquiry_type": "laptop for college studies", "_extra": {"inquiry_type": "laptop for college studies"}, "_previous_state": "product_inquiry", "_current_state": "delegate_to_product_specialist", "product_category": "laptop", "budget_range": "800-1200", "customer_name": "Customer", "initial_budget": "800-1200"}
+2025-05-30 22:26:26 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:start_conversation:452 | Added initial context with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, inquiry_type, _extra, _previous_state, _current_state, product_category, budget_range, customer_name, initial_budget
+2025-05-30 22:26:26 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:start_conversation:462 | Started new conversation [2c046ce2-2fdb-48f1-b37f-2542f124230b] with FSM [fsm_dict_product_recommendation_specialist_3fdfdca3]
+2025-05-30 22:26:26 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: specialist_introduction
+2025-05-30 22:26:26 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: 
+2025-05-30 22:26:26 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_current_state:154 | Current state: specialist_introduction
+2025-05-30 22:26:26 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: specialist_introduction
+2025-05-30 22:26:26 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are an expert product recommendation specialist. You're knowledgeable about various products, understand customer needs deeply, and provide personalized recommendations based on budget, preferences, and use cases.
+</persona>
+<current_state>
+<id>specialist_introduction</id>
+<description>Product specialist introduces themselves</description>
+<purpose>Welcome customer and establish expertise</purpose>
+<state_instructions>
+Introduce yourself as a product specialist. Acknowledge any context from the previous conversation and ask about specific needs.
+</state_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "demo_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-05-30T22:26:26.049553",
+ "_timestamp": 1748615186.0495534,
+ "_fsm_id": "fsm_dict_product_recommendation_specialist_3fdfdca3",
+ "_conversation_id": "2c046ce2-2fdb-48f1-b37f-2542f124230b",
+ "inquiry_type": "laptop for college studies",
+ "_extra": {
+  "inquiry_type": "laptop for college studies"
+ },
+ "_previous_state": "product_inquiry",
+ "_current_state": "delegate_to_product_specialist",
+ "product_category": "laptop",
+ "budget_range": "800-1200",
+ "customer_name": "Customer",
+ "initial_budget": "800-1200"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ }
+]
+]]></conversation_history>
+<valid_states>
+needs_assessment, specialist_introduction
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "needs_assessment",
+  "desc": "Begin detailed needs assessment",
+  "priority": 5
+ },
+ {
+  "to": "specialist_introduction",
+  "desc": "Remain in current state if needed",
+  "priority": 105
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-05-30 22:26:26 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-05-30 22:26:26 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: 
+2025-05-30 22:26:26 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-05-30 22:26:26 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-05-30 22:26:32 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 6.74s
+2025-05-30 22:26:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-05-30 22:26:32 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "needs_assessment",
+    "context_update": {}
+  },
+  "message": "Hello! I'm your product specialist here to help you find the perfect laptop for your college studies. Could you tell me more about your specific needs? Are there any particular features or specifications you are looking for?",
+  "reasoning": "I introduced myself as a product specialist and prompted the user to provide more details about their laptop needs."
+})
+2025-05-30 22:26:32 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:validate_transition:175 | Validating transition from specialist_introduction to needs_assessment
+2025-05-30 22:26:32 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_current_state:154 | Current state: specialist_introduction
+2025-05-30 22:26:32 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:validate_transition:223 | Transition from specialist_introduction to needs_assessment is valid
+2025-05-30 22:26:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Hello! I'm your product specialist here to help yo...
+2025-05-30 22:26:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: product_recommendation_specialist
+2025-05-30 22:26:32 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: product_recommendation_specialist
+2025-05-30 22:26:32 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: specialist_handoff
+2025-05-30 22:26:32 | INFO     | conv_id: GENERAL      | llm_fsm.api:push_fsm:592 | Pushed new FSM onto conversation 98381486-d98d-44d5-878e-49d84011a0ed, stack depth: 2
+2025-05-30 22:26:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.api:push_fsm:594 | Context passed to new FSM: ['session_id', 'timestamp', '_conversation_start', '_timestamp', '_fsm_id', '_conversation_id', 'inquiry_type', '_extra', '_previous_state', '_current_state', 'product_category', 'budget_range', 'customer_name', 'initial_budget']
+2025-05-30 22:26:32 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:process_message:512 | Processing message: I mainly need it for programming in Python and Jav...
+2025-05-30 22:26:32 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: specialist_introduction
+2025-05-30 22:26:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: I mainly need it for programming in Python and Jav...
+2025-05-30 22:26:32 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_current_state:154 | Current state: specialist_introduction
+2025-05-30 22:26:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: specialist_introduction
+2025-05-30 22:26:32 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are an expert product recommendation specialist. You're knowledgeable about various products, understand customer needs deeply, and provide personalized recommendations based on budget, preferences, and use cases.
+</persona>
+<current_state>
+<id>specialist_introduction</id>
+<description>Product specialist introduces themselves</description>
+<purpose>Welcome customer and establish expertise</purpose>
+<state_instructions>
+Introduce yourself as a product specialist. Acknowledge any context from the previous conversation and ask about specific needs.
+</state_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "demo_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-05-30T22:26:26.049553",
+ "_timestamp": 1748615186.0495534,
+ "_fsm_id": "fsm_dict_product_recommendation_specialist_3fdfdca3",
+ "_conversation_id": "2c046ce2-2fdb-48f1-b37f-2542f124230b",
+ "inquiry_type": "laptop for college studies",
+ "_extra": {
+  "inquiry_type": "laptop for college studies"
+ },
+ "_previous_state": "product_inquiry",
+ "_current_state": "delegate_to_product_specialist",
+ "product_category": "laptop",
+ "budget_range": "800-1200",
+ "customer_name": "Customer",
+ "initial_budget": "800-1200"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! I'm your product specialist here to help you find the perfect laptop for your college studies. Could you tell me more about your specific needs? Are there any particular features or specifications you are looking for?"
+ },
+ {
+  "user": "I mainly need it for programming in Python and Java, some web development, and general college work like writing papers."
+ }
+]
+]]></conversation_history>
+<valid_states>
+needs_assessment, specialist_introduction
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "needs_assessment",
+  "desc": "Begin detailed needs assessment",
+  "priority": 5
+ },
+ {
+  "to": "specialist_introduction",
+  "desc": "Remain in current state if needed",
+  "priority": 105
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-05-30 22:26:32 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-05-30 22:26:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: I mainly need it for programming in Python and Jav...
+2025-05-30 22:26:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-05-30 22:26:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-05-30 22:26:36 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 3.27s
+2025-05-30 22:26:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-05-30 22:26:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"programming_languages": ["Python", "Java"], "use_cases": ["web development", "writing papers"], "_extra": {}}
+2025-05-30 22:26:36 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "needs_assessment",
+    "context_update": {
+      "programming_languages": [
+        "Python",
+        "Java"
+      ],
+      "use_cases": [
+        "web development",
+        "writing papers"
+      ],
+      "_extra": {}
+    }
+  },
+  "message": "Great! It sounds like you'll need a laptop that can handle programming and general college tasks smoothly. Let's dive deeper into what you're looking for. Do you have any preferences regarding weight, battery life, or brand?",
+  "reasoning": "User provided specific use cases for the laptop, which allows me to transition to a detailed needs assessment."
+})
+2025-05-30 22:26:36 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"programming_languages": ["Python", "Java"], "use_cases": ["web development", "writing papers"], "_extra": {}}
+2025-05-30 22:26:36 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"programming_languages": ["Python", "Java"], "use_cases": ["web development", "writing papers"], "_extra": {}}
+2025-05-30 22:26:36 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "demo_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-05-30T22:26:26.049553", "_timestamp": 1748615186.0495534, "_fsm_id": "fsm_dict_product_recommendation_specialist_3fdfdca3", "_conversation_id": "2c046ce2-2fdb-48f1-b37f-2542f124230b", "inquiry_type": "laptop for college studies", "_extra": {}, "_previous_state": "product_inquiry", "_current_state": "delegate_to_product_specialist", "product_category": "laptop", "budget_range": "800-1200", "customer_name": "Customer", "initial_budget": "800-1200", "programming_languages": ["Python", "Java"], "use_cases": ["web development", "writing papers"]}
+2025-05-30 22:26:36 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:validate_transition:175 | Validating transition from specialist_introduction to needs_assessment
+2025-05-30 22:26:36 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_current_state:154 | Current state: specialist_introduction
+2025-05-30 22:26:36 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:validate_transition:223 | Transition from specialist_introduction to needs_assessment is valid
+2025-05-30 22:26:36 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:367 | State transition: specialist_introduction -> needs_assessment
+2025-05-30 22:26:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Great! It sounds like you'll need a laptop that ca...
+2025-05-30 22:26:36 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: needs_assessment
+2025-05-30 22:26:36 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:process_message:512 | Processing message: I'd prefer something portable since I'll be carryi...
+2025-05-30 22:26:36 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: needs_assessment
+2025-05-30 22:26:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: I'd prefer something portable since I'll be carryi...
+2025-05-30 22:26:36 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_current_state:154 | Current state: needs_assessment
+2025-05-30 22:26:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: needs_assessment
+2025-05-30 22:26:36 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are an expert product recommendation specialist. You're knowledgeable about various products, understand customer needs deeply, and provide personalized recommendations based on budget, preferences, and use cases.
+</persona>
+<current_state>
+<id>needs_assessment</id>
+<description>Detailed assessment of customer needs and preferences</description>
+<purpose>Gather comprehensive information about customer requirements</purpose>
+<state_instructions>
+Ask detailed questions about the customer's needs, use cases, preferences, and constraints. Be thorough but not overwhelming.
+</state_instructions>
+<information_to_collect>
+primary_use_case, budget_range, important_features, deal_breakers
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "demo_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-05-30T22:26:26.049553",
+ "_timestamp": 1748615186.0495534,
+ "_fsm_id": "fsm_dict_product_recommendation_specialist_3fdfdca3",
+ "_conversation_id": "2c046ce2-2fdb-48f1-b37f-2542f124230b",
+ "inquiry_type": "laptop for college studies",
+ "_extra": {},
+ "_previous_state": "specialist_introduction",
+ "_current_state": "needs_assessment",
+ "product_category": "laptop",
+ "budget_range": "800-1200",
+ "customer_name": "Customer",
+ "initial_budget": "800-1200",
+ "programming_languages": [
+  "Python",
+  "Java"
+ ],
+ "use_cases": [
+  "web development",
+  "writing papers"
+ ]
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! I'm your product specialist here to help you find the perfect laptop for your college studies. Could you tell me more about your specific needs? Are there any particular features or specifications you are looking for?"
+ },
+ {
+  "user": "I mainly need it for programming in Python and Java, some web development, and general college work like writing papers."
+ },
+ {
+  "system": "Great! It sounds like you'll need a laptop that can handle programming and general college tasks smoothly. Let's dive deeper into what you're looking for. Do you have any preferences regarding weight, battery life, or brand?"
+ },
+ {
+  "user": "I'd prefer something portable since I'll be carrying it around campus. Battery life is important too."
+ }
+]
+]]></conversation_history>
+<valid_states>
+needs_assessment, recommendation_generation
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "recommendation_generation",
+  "desc": "Enough information gathered to make recommendations",
+  "priority": 5
+ },
+ {
+  "to": "needs_assessment",
+  "desc": "Need more information",
+  "priority": 10
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-05-30 22:26:36 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-05-30 22:26:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: I'd prefer something portable since I'll be carryi...
+2025-05-30 22:26:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-05-30 22:26:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-05-30 22:26:38 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 2.59s
+2025-05-30 22:26:38 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-05-30 22:26:38 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"primary_use_case": "programming in Python and Java, web development, writing papers", "important_features": ["portability", "good battery life"], "_extra": {}}
+2025-05-30 22:26:38 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "recommendation_generation",
+    "context_update": {
+      "primary_use_case": "programming in Python and Java, web development, writing papers",
+      "important_features": [
+        "portability",
+        "good battery life"
+      ],
+      "_extra": {}
+    }
+  },
+  "message": "Thanks for sharing that! I understand you need a portable laptop with long battery life for your programming and college work. Let me find some recommendations that fit your needs and budget.",
+  "reasoning": "User provided crucial details about portability and battery life, allowing me to transition to the recommendation generation state."
+})
+2025-05-30 22:26:38 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"primary_use_case": "programming in Python and Java, web development, writing papers", "important_features": ["portability", "good battery life"], "_extra": {}}
+2025-05-30 22:26:38 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"primary_use_case": "programming in Python and Java, web development, writing papers", "important_features": ["portability", "good battery life"], "_extra": {}}
+2025-05-30 22:26:38 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "demo_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-05-30T22:26:26.049553", "_timestamp": 1748615186.0495534, "_fsm_id": "fsm_dict_product_recommendation_specialist_3fdfdca3", "_conversation_id": "2c046ce2-2fdb-48f1-b37f-2542f124230b", "inquiry_type": "laptop for college studies", "_extra": {}, "_previous_state": "specialist_introduction", "_current_state": "needs_assessment", "product_category": "laptop", "budget_range": "800-1200", "customer_name": "Customer", "initial_budget": "800-1200", "programming_languages": ["Python", "Java"], "use_cases": ["web development", "writing papers"], "primary_use_case": "programming in Python and Java, web development, writing papers", "important_features": ["portability", "good battery life"]}
+2025-05-30 22:26:38 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:validate_transition:175 | Validating transition from needs_assessment to recommendation_generation
+2025-05-30 22:26:38 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_current_state:154 | Current state: needs_assessment
+2025-05-30 22:26:38 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:validate_transition:223 | Transition from needs_assessment to recommendation_generation is valid
+2025-05-30 22:26:38 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:367 | State transition: needs_assessment -> recommendation_generation
+2025-05-30 22:26:38 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Thanks for sharing that! I understand you need a p...
+2025-05-30 22:26:38 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: recommendation_generation
+2025-05-30 22:26:38 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:process_message:512 | Processing message: Those sound great! I think the ThinkPad would be p...
+2025-05-30 22:26:38 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: recommendation_generation
+2025-05-30 22:26:38 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: Those sound great! I think the ThinkPad would be p...
+2025-05-30 22:26:38 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_current_state:154 | Current state: recommendation_generation
+2025-05-30 22:26:38 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: recommendation_generation
+2025-05-30 22:26:38 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are an expert product recommendation specialist. You're knowledgeable about various products, understand customer needs deeply, and provide personalized recommendations based on budget, preferences, and use cases.
+</persona>
+<current_state>
+<id>recommendation_generation</id>
+<description>Generate and present product recommendations</description>
+<purpose>Provide tailored product recommendations based on assessed needs</purpose>
+<state_instructions>
+Based on the gathered information, provide 2-3 specific product recommendations. Explain why each product fits their needs and highlight key features.
+</state_instructions>
+<information_to_collect>
+recommended_products, recommendation_reasoning
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "demo_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-05-30T22:26:26.049553",
+ "_timestamp": 1748615186.0495534,
+ "_fsm_id": "fsm_dict_product_recommendation_specialist_3fdfdca3",
+ "_conversation_id": "2c046ce2-2fdb-48f1-b37f-2542f124230b",
+ "inquiry_type": "laptop for college studies",
+ "_extra": {},
+ "_previous_state": "needs_assessment",
+ "_current_state": "recommendation_generation",
+ "product_category": "laptop",
+ "budget_range": "800-1200",
+ "customer_name": "Customer",
+ "initial_budget": "800-1200",
+ "programming_languages": [
+  "Python",
+  "Java"
+ ],
+ "use_cases": [
+  "web development",
+  "writing papers"
+ ],
+ "primary_use_case": "programming in Python and Java, web development, writing papers",
+ "important_features": [
+  "portability",
+  "good battery life"
+ ]
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! I'm your product specialist here to help you find the perfect laptop for your college studies. Could you tell me more about your specific needs? Are there any particular features or specifications you are looking for?"
+ },
+ {
+  "user": "I mainly need it for programming in Python and Java, some web development, and general college work like writing papers."
+ },
+ {
+  "system": "Great! It sounds like you'll need a laptop that can handle programming and general college tasks smoothly. Let's dive deeper into what you're looking for. Do you have any preferences regarding weight, battery life, or brand?"
+ },
+ {
+  "user": "I'd prefer something portable since I'll be carrying it around campus. Battery life is important too."
+ },
+ {
+  "system": "Thanks for sharing that! I understand you need a portable laptop with long battery life for your programming and college work. Let me find some recommendations that fit your needs and budget."
+ },
+ {
+  "user": "Those sound great! I think the ThinkPad would be perfect for my needs."
+ }
+]
+]]></conversation_history>
+<valid_states>
+needs_assessment, recommendation_finalization, recommendation_generation, recommendation_refinement
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "recommendation_refinement",
+  "desc": "Customer wants to refine or modify recommendations",
+  "priority": 5
+ },
+ {
+  "to": "recommendation_finalization",
+  "desc": "Customer is satisfied with recommendations",
+  "priority": 8
+ },
+ {
+  "to": "needs_assessment",
+  "desc": "Need to reassess needs based on feedback",
+  "priority": 15
+ },
+ {
+  "to": "recommendation_generation",
+  "desc": "Remain in current state if needed",
+  "priority": 115
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-05-30 22:26:38 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-05-30 22:26:38 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: Those sound great! I think the ThinkPad would be p...
+2025-05-30 22:26:38 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-05-30 22:26:38 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-05-30 22:26:45 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 6.61s
+2025-05-30 22:26:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-05-30 22:26:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"recommended_products": ["Lenovo ThinkPad X1 Carbon 9th Gen", "Dell XPS 13", "Apple MacBook Air M1"], "recommendation_reasoning": "The Lenovo ThinkPad X1 Carbon is highly regarded for its portability and excellent battery life, making it ideal for college students who need to carry their laptop around campus. The Dell XPS 13 is also lightweight and has a long-lasting battery, suitable for programming and general college work. The Apple MacBook Air M1 offers impressive performance and battery life, plus a user-friendly interface for programming tasks."}
+2025-05-30 22:26:45 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "recommendation_finalization",
+    "context_update": {
+      "recommended_products": [
+        "Lenovo ThinkPad X1 Carbon 9th Gen",
+        "Dell XPS 13",
+        "Apple MacBook Air M1"
+      ],
+      "recommendation_reasoning": "The Lenovo ThinkPad X1 Carbon is highly regarded for its portability and excellent battery life, making it ideal for college students who need to carry their laptop around campus. The Dell XPS 13 is also lightweight and has a long-lasting battery, suitable for programming and general college work. The Apple MacBook Air M1 offers impressive performance and battery life, plus a user-friendly interface for programming tasks."
+    }
+  },
+  "message": "I have some great recommendations for you! Based on your needs, I suggest the following laptops:\n\n1. **Lenovo ThinkPad X1 Carbon (9th Gen)**: Known for its portability and excellent battery life, it's perfect for carrying around campus and handling programming tasks smoothly.\n\n2. **Dell XPS 13**: This laptop is lightweight with a long-lasting battery, making it ideal for web development and writing papers.\n\n3. **Apple MacBook Air M1**: Offers impressive performance and battery life, suitable for programming in Python and Java.\n\nLet me know if you would like more information on any of these options or if you want to refine your search!",
+  "reasoning": "The user expressed satisfaction with the ThinkPad and I provided additional recommendations that fit their specified needs and budget."
+})
+2025-05-30 22:26:45 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"recommended_products": ["Lenovo ThinkPad X1 Carbon 9th Gen", "Dell XPS 13", "Apple MacBook Air M1"], "recommendation_reasoning": "The Lenovo ThinkPad X1 Carbon is highly regarded for its portability and excellent battery life, making it ideal for college students who need to carry their laptop around campus. The Dell XPS 13 is also lightweight and has a long-lasting battery, suitable for programming and general college work. The Apple MacBook Air M1 offers impressive performance and battery life, plus a user-friendly interface for programming tasks."}
+2025-05-30 22:26:45 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"recommended_products": ["Lenovo ThinkPad X1 Carbon 9th Gen", "Dell XPS 13", "Apple MacBook Air M1"], "recommendation_reasoning": "The Lenovo ThinkPad X1 Carbon is highly regarded for its portability and excellent battery life, making it ideal for college students who need to carry their laptop around campus. The Dell XPS 13 is also lightweight and has a long-lasting battery, suitable for programming and general college work. The Apple MacBook Air M1 offers impressive performance and battery life, plus a user-friendly interface for programming tasks."}
+2025-05-30 22:26:45 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "demo_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-05-30T22:26:26.049553", "_timestamp": 1748615186.0495534, "_fsm_id": "fsm_dict_product_recommendation_specialist_3fdfdca3", "_conversation_id": "2c046ce2-2fdb-48f1-b37f-2542f124230b", "inquiry_type": "laptop for college studies", "_extra": {}, "_previous_state": "needs_assessment", "_current_state": "recommendation_generation", "product_category": "laptop", "budget_range": "800-1200", "customer_name": "Customer", "initial_budget": "800-1200", "programming_languages": ["Python", "Java"], "use_cases": ["web development", "writing papers"], "primary_use_case": "programming in Python and Java, web development, writing papers", "important_features": ["portability", "good battery life"], "recommended_products": ["Lenovo ThinkPad X1 Carbon 9th Gen", "Dell XPS 13", "Apple MacBook Air M1"], "recommendation_reasoning": "The Lenovo ThinkPad X1 Carbon is highly regarded for its portability and excellent battery life, making it ideal for college students who need to carry their laptop around campus. The Dell XPS 13 is also lightweight and has a long-lasting battery, suitable for programming and general college work. The Apple MacBook Air M1 offers impressive performance and battery life, plus a user-friendly interface for programming tasks."}
+2025-05-30 22:26:45 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:validate_transition:175 | Validating transition from recommendation_generation to recommendation_finalization
+2025-05-30 22:26:45 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_current_state:154 | Current state: recommendation_generation
+2025-05-30 22:26:45 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:validate_transition:223 | Transition from recommendation_generation to recommendation_finalization is valid
+2025-05-30 22:26:45 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:367 | State transition: recommendation_generation -> recommendation_finalization
+2025-05-30 22:26:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: I have some great recommendations for you! Based o...
+2025-05-30 22:26:45 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: recommendation_finalization
+2025-05-30 22:26:45 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_current_state:154 | Current state: recommendation_finalization
+2025-05-30 22:26:45 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_current_state:154 | Current state: recommendation_finalization
+2025-05-30 22:26:45 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:process_message:512 | Processing message: That was really helpful! Do you have information a...
+2025-05-30 22:26:45 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: recommendation_finalization
+2025-05-30 22:26:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: That was really helpful! Do you have information a...
+2025-05-30 22:26:45 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_current_state:154 | Current state: recommendation_finalization
+2025-05-30 22:26:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: recommendation_finalization
+2025-05-30 22:26:45 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are an expert product recommendation specialist. You're knowledgeable about various products, understand customer needs deeply, and provide personalized recommendations based on budget, preferences, and use cases.
+</persona>
+<current_state>
+<id>recommendation_finalization</id>
+<description>Finalize the recommendation process</description>
+<purpose>Summarize recommendations and next steps</purpose>
+<state_instructions>
+Summarize the final recommendations, provide next steps for purchase or further research, and prepare to hand back to main customer service.
+</state_instructions>
+<information_to_collect>
+final_recommendations, next_steps
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "demo_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-05-30T22:26:26.049553",
+ "_timestamp": 1748615186.0495534,
+ "_fsm_id": "fsm_dict_product_recommendation_specialist_3fdfdca3",
+ "_conversation_id": "2c046ce2-2fdb-48f1-b37f-2542f124230b",
+ "inquiry_type": "laptop for college studies",
+ "_extra": {},
+ "_previous_state": "recommendation_generation",
+ "_current_state": "recommendation_finalization",
+ "product_category": "laptop",
+ "budget_range": "800-1200",
+ "customer_name": "Customer",
+ "initial_budget": "800-1200",
+ "programming_languages": [
+  "Python",
+  "Java"
+ ],
+ "use_cases": [
+  "web development",
+  "writing papers"
+ ],
+ "primary_use_case": "programming in Python and Java, web development, writing papers",
+ "important_features": [
+  "portability",
+  "good battery life"
+ ],
+ "recommended_products": [
+  "Lenovo ThinkPad X1 Carbon 9th Gen",
+  "Dell XPS 13",
+  "Apple MacBook Air M1"
+ ],
+ "recommendation_reasoning": "The Lenovo ThinkPad X1 Carbon is highly regarded for its portability and excellent battery life, making it ideal for college students who need to carry their laptop around campus. The Dell XPS 13 is also lightweight and has a long-lasting battery, suitable for programming and general college work. The Apple MacBook Air M1 offers impressive performance and battery life, plus a user-friendly interface for programming tasks."
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! I'm your product specialist here to help you find the perfect laptop for your college studies. Could you tell me more about your specific needs? Are there any particular features or specifications you are looking for?"
+ },
+ {
+  "user": "I mainly need it for programming in Python and Java, some web development, and general college work like writing papers."
+ },
+ {
+  "system": "Great! It sounds like you'll need a laptop that can handle programming and general college tasks smoothly. Let's dive deeper into what you're looking for. Do you have any preferences regarding weight, battery life, or brand?"
+ },
+ {
+  "user": "I'd prefer something portable since I'll be carrying it around campus. Battery life is important too."
+ },
+ {
+  "system": "Thanks for sharing that! I understand you need a portable laptop with long battery life for your programming and college work. Let me find some recommendations that fit your needs and budget."
+ },
+ {
+  "user": "Those sound great! I think the ThinkPad would be perfect for my needs."
+ },
+ {
+  "system": "I have some great recommendations for you! Based on your needs, I suggest the following laptops:\n\n1. **Lenovo ThinkPad X1 Carbon (9th Gen)**: Known for its portability and excellent battery life, it's perfect for carrying around campus and handling programming tasks smoothly.\n\n2. **Dell XPS 13**: This laptop is lightweight with a long-lasting battery, making it ideal for web development and writing papers.\n\n3. **Apple MacBook Air M1**: Offers impressive performance and battery life, suitable for programming in Python and Java.\n\nLet me know if you would like more information on any of these options or if you want to refine your search!"
+ },
+ {
+  "user": "That was really helpful! Do you have information about warranty options?"
+ }
+]
+]]></conversation_history>
+<valid_states>
+recommendation_finalization, specialist_handoff
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "specialist_handoff",
+  "desc": "Ready to hand back to main customer service",
+  "priority": 5
+ },
+ {
+  "to": "recommendation_finalization",
+  "desc": "Remain in current state if needed",
+  "priority": 105
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-05-30 22:26:45 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-05-30 22:26:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: That was really helpful! Do you have information a...
+2025-05-30 22:26:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-05-30 22:26:45 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-05-30 22:26:49 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 3.95s
+2025-05-30 22:26:49 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-05-30 22:26:49 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"final_recommendations": ["Lenovo ThinkPad X1 Carbon 9th Gen", "Dell XPS 13", "Apple MacBook Air M1"], "next_steps": "Please contact customer service for detailed warranty options."}
+2025-05-30 22:26:49 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "specialist_handoff",
+    "context_update": {
+      "final_recommendations": [
+        "Lenovo ThinkPad X1 Carbon 9th Gen",
+        "Dell XPS 13",
+        "Apple MacBook Air M1"
+      ],
+      "next_steps": "Please contact customer service for detailed warranty options."
+    }
+  },
+  "message": "I'm glad you found the recommendations helpful! For detailed information about warranty options, I will hand you over to our customer service team. They will assist you with that.",
+  "reasoning": "User requested warranty information, which is best handled by customer service, so I'm transitioning to the handoff state."
+})
+2025-05-30 22:26:49 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"final_recommendations": ["Lenovo ThinkPad X1 Carbon 9th Gen", "Dell XPS 13", "Apple MacBook Air M1"], "next_steps": "Please contact customer service for detailed warranty options."}
+2025-05-30 22:26:49 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"final_recommendations": ["Lenovo ThinkPad X1 Carbon 9th Gen", "Dell XPS 13", "Apple MacBook Air M1"], "next_steps": "Please contact customer service for detailed warranty options."}
+2025-05-30 22:26:49 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:308 | After context: {"session_id": "demo_session_001", "timestamp": "2024-01-15T10:30:00Z", "_conversation_start": "2025-05-30T22:26:26.049553", "_timestamp": 1748615186.0495534, "_fsm_id": "fsm_dict_product_recommendation_specialist_3fdfdca3", "_conversation_id": "2c046ce2-2fdb-48f1-b37f-2542f124230b", "inquiry_type": "laptop for college studies", "_extra": {}, "_previous_state": "recommendation_generation", "_current_state": "recommendation_finalization", "product_category": "laptop", "budget_range": "800-1200", "customer_name": "Customer", "initial_budget": "800-1200", "programming_languages": ["Python", "Java"], "use_cases": ["web development", "writing papers"], "primary_use_case": "programming in Python and Java, web development, writing papers", "important_features": ["portability", "good battery life"], "recommended_products": ["Lenovo ThinkPad X1 Carbon 9th Gen", "Dell XPS 13", "Apple MacBook Air M1"], "recommendation_reasoning": "The Lenovo ThinkPad X1 Carbon is highly regarded for its portability and excellent battery life, making it ideal for college students who need to carry their laptop around campus. The Dell XPS 13 is also lightweight and has a long-lasting battery, suitable for programming and general college work. The Apple MacBook Air M1 offers impressive performance and battery life, plus a user-friendly interface for programming tasks.", "final_recommendations": ["Lenovo ThinkPad X1 Carbon 9th Gen", "Dell XPS 13", "Apple MacBook Air M1"], "next_steps": "Please contact customer service for detailed warranty options."}
+2025-05-30 22:26:49 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:validate_transition:175 | Validating transition from recommendation_finalization to specialist_handoff
+2025-05-30 22:26:49 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_current_state:154 | Current state: recommendation_finalization
+2025-05-30 22:26:49 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:validate_transition:223 | Transition from recommendation_finalization to specialist_handoff is valid
+2025-05-30 22:26:49 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:_process_user_input:367 | State transition: recommendation_finalization -> specialist_handoff
+2025-05-30 22:26:49 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: I'm glad you found the recommendations helpful! Fo...
+2025-05-30 22:26:49 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_current_state:154 | Current state: specialist_handoff
+2025-05-30 22:26:49 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:has_conversation_ended:557 | Conversation has reached terminal state: specialist_handoff
+2025-05-30 22:26:49 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, inquiry_type, _extra, _previous_state, _current_state, product_category, budget_range, customer_name, initial_budget, programming_languages, use_cases, primary_use_case, important_features, recommended_products, recommendation_reasoning, final_recommendations, next_steps
+2025-05-30 22:26:49 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, inquiry_type, _extra, _previous_state, _current_state, product_category, budget_range
+2025-05-30 22:26:49 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, inquiry_type, _extra, _previous_state, _current_state, product_category, budget_range, customer_name, initial_budget, programming_languages, use_cases, primary_use_case, important_features, recommended_products, recommendation_reasoning, final_recommendations, next_steps
+2025-05-30 22:26:49 | DEBUG    | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, inquiry_type, _extra, _previous_state, _current_state, product_category, budget_range
+2025-05-30 22:26:49 | DEBUG    | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: session_id, timestamp, _conversation_start, _timestamp, _fsm_id, _conversation_id, inquiry_type, _extra, _previous_state, _current_state, product_category, budget_range, customer_name, initial_budget, programming_languages, use_cases, primary_use_case, important_features, recommended_products, recommendation_reasoning, final_recommendations, next_steps
+2025-05-30 22:26:49 | INFO     | conv_id: 98381486-d98d-44d5-878e-49d84011a0ed | llm_fsm.fsm:end_conversation:634 | Ending conversation 98381486-d98d-44d5-878e-49d84011a0ed
+2025-05-30 22:26:49 | INFO     | conv_id: 2c046ce2-2fdb-48f1-b37f-2542f124230b | llm_fsm.fsm:end_conversation:634 | Ending conversation 2c046ce2-2fdb-48f1-b37f-2542f124230b

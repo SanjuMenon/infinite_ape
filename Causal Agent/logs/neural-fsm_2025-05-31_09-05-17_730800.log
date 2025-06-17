@@ -1,0 +1,378 @@
+2025-05-31 09:05:19 | INFO     | conv_id: GENERAL      | llm_fsm.llm:__init__:80 | Initializing LiteLLMInterface with model: gpt-4o-mini
+2025-05-31 09:05:19 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:__init__:97 | No API key provided, assuming it's set in environment variables
+2025-05-31 09:05:19 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:__init__:102 | Enabled JSON schema validation in LiteLLM
+2025-05-31 09:05:19 | INFO     | conv_id: GENERAL      | llm_fsm.api:__init__:311 | LLM_FSM initialized with default LiteLLM interface, model=gpt-4o-mini
+2025-05-31 09:05:19 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: customer_service_main
+2025-05-31 09:05:19 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: customer_service_main
+2025-05-31 09:05:19 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: farewell
+2025-05-31 09:05:19 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:__post_init__:158 | PromptBuilder initialized with effective max_history_size=5
+2025-05-31 09:05:19 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:__init__:65 | FSM Manager initialized with max_history_size=5, max_message_length=1000
+2025-05-31 09:05:19 | INFO     | conv_id: GENERAL      | llm_fsm.api:__init__:354 | LLM_FSM fully initialized with max_history_size=5
+2025-05-31 09:05:19 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:get_fsm_definition:101 | Loading FSM definition: fsm_dict_customer_service_main_be60975a
+2025-05-31 09:05:19 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:_create_instance:116 | Creating new FSM instance for fsm_dict_customer_service_main_be60975a, starting at state: greeting
+2025-05-31 09:05:19 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"session_id": "demo_session_001", "timestamp": "2024-01-15T10:30:00Z"}
+2025-05-31 09:05:19 | INFO     | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:start_conversation:452 | Added initial context with keys: session_id, timestamp
+2025-05-31 09:05:19 | INFO     | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:start_conversation:462 | Started new conversation [7af7758b-52de-4cc3-9996-a6ba2427689b] with FSM [fsm_dict_customer_service_main_be60975a]
+2025-05-31 09:05:19 | INFO     | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: greeting
+2025-05-31 09:05:19 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: 
+2025-05-31 09:05:19 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:get_current_state:154 | Current state: greeting
+2025-05-31 09:05:19 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: greeting
+2025-05-31 09:05:19 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a helpful customer service representative. You're friendly, professional, and always try to assist customers with their needs.
+</persona>
+<current_state>
+<id>greeting</id>
+<description>Initial greeting and customer identification</description>
+<purpose>Welcome the customer and identify how to help them</purpose>
+<state_instructions>
+Greet the customer warmly and ask how you can help them today. Try to understand their needs.
+</state_instructions>
+<information_to_collect>
+customer_name, inquiry_type
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "demo_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-05-31T09:05:19.786927",
+ "_timestamp": 1748653519.7869277,
+ "_fsm_id": "fsm_dict_customer_service_main_be60975a",
+ "_conversation_id": "7af7758b-52de-4cc3-9996-a6ba2427689b"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ }
+]
+]]></conversation_history>
+<valid_states>
+farewell, general_help, greeting, product_inquiry
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "product_inquiry",
+  "desc": "Customer is asking about products or wants recommendations",
+  "priority": 5
+ },
+ {
+  "to": "general_help",
+  "desc": "Customer has a general question or issue",
+  "priority": 10
+ },
+ {
+  "to": "farewell",
+  "desc": "Customer wants to end the conversation",
+  "priority": 20
+ },
+ {
+  "to": "greeting",
+  "desc": "Remain in current state if needed",
+  "priority": 120
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-05-31 09:05:19 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-05-31 09:05:19 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: 
+2025-05-31 09:05:19 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-05-31 09:05:19 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-05-31 09:05:22 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 2.30s
+2025-05-31 09:05:22 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-05-31 09:05:22 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "greeting",
+    "context_update": {}
+  },
+  "message": "Hello! How can I assist you today?",
+  "reasoning": "Starting the conversation by greeting the customer and inviting them to share how I can help."
+})
+2025-05-31 09:05:22 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:validate_transition:175 | Validating transition from greeting to greeting
+2025-05-31 09:05:22 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:get_current_state:154 | Current state: greeting
+2025-05-31 09:05:22 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:validate_transition:188 | Staying in the same state - valid
+2025-05-31 09:05:22 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Hello! How can I assist you today?
+2025-05-31 09:05:22 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: customer_service_main
+2025-05-31 09:05:22 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: customer_service_main
+2025-05-31 09:05:22 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: farewell
+2025-05-31 09:05:22 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:get_current_state:154 | Current state: greeting
+2025-05-31 09:05:22 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: greeting
+2025-05-31 09:05:44 | INFO     | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:process_message:512 | Processing message: Doing good
+2025-05-31 09:05:44 | INFO     | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: greeting
+2025-05-31 09:05:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: Doing good
+2025-05-31 09:05:44 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:get_current_state:154 | Current state: greeting
+2025-05-31 09:05:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: greeting
+2025-05-31 09:05:44 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+You are a helpful customer service representative. You're friendly, professional, and always try to assist customers with their needs.
+</persona>
+<current_state>
+<id>greeting</id>
+<description>Initial greeting and customer identification</description>
+<purpose>Welcome the customer and identify how to help them</purpose>
+<state_instructions>
+Greet the customer warmly and ask how you can help them today. Try to understand their needs.
+</state_instructions>
+<information_to_collect>
+customer_name, inquiry_type
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "session_id": "demo_session_001",
+ "timestamp": "2024-01-15T10:30:00Z",
+ "_conversation_start": "2025-05-31T09:05:19.786927",
+ "_timestamp": 1748653519.7869277,
+ "_fsm_id": "fsm_dict_customer_service_main_be60975a",
+ "_conversation_id": "7af7758b-52de-4cc3-9996-a6ba2427689b"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! How can I assist you today?"
+ },
+ {
+  "user": "Doing good"
+ }
+]
+]]></conversation_history>
+<valid_states>
+farewell, general_help, greeting, product_inquiry
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "product_inquiry",
+  "desc": "Customer is asking about products or wants recommendations",
+  "priority": 5
+ },
+ {
+  "to": "general_help",
+  "desc": "Customer has a general question or issue",
+  "priority": 10
+ },
+ {
+  "to": "farewell",
+  "desc": "Customer wants to end the conversation",
+  "priority": 20
+ },
+ {
+  "to": "greeting",
+  "desc": "Remain in current state if needed",
+  "priority": 120
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-05-31 09:05:44 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4o-mini
+2025-05-31 09:05:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: Doing good
+2025-05-31 09:05:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4o-mini: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, response_format, user
+2025-05-31 09:05:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:140 | Using response_format for gpt-4o-mini
+2025-05-31 09:05:46 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4o-mini in 1.58s
+2025-05-31 09:05:46 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-05-31 09:05:46 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "greeting",
+    "context_update": {}
+  },
+  "message": "I'm glad to hear that! How can I assist you today?",
+  "reasoning": "The user didn't provide any specific information or request, so I'm remaining in the greeting state to further understand their needs."
+})
+2025-05-31 09:05:46 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:validate_transition:175 | Validating transition from greeting to greeting
+2025-05-31 09:05:46 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:get_current_state:154 | Current state: greeting
+2025-05-31 09:05:46 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:validate_transition:188 | Staying in the same state - valid
+2025-05-31 09:05:46 | INFO     | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:_process_user_input:367 | State transition: greeting -> greeting
+2025-05-31 09:05:46 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: I'm glad to hear that! How can I assist you today?
+2025-05-31 09:05:46 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: greeting
+2025-05-31 09:05:46 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:get_current_state:154 | Current state: greeting
+2025-05-31 09:05:46 | DEBUG    | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: greeting
+2025-05-31 09:10:27 | INFO     | conv_id: 7af7758b-52de-4cc3-9996-a6ba2427689b | llm_fsm.fsm:end_conversation:634 | Ending conversation 7af7758b-52de-4cc3-9996-a6ba2427689b

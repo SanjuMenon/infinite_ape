@@ -1,0 +1,2247 @@
+2025-06-17 18:00:44 | INFO     | conv_id: GENERAL      | llm_fsm.llm:__init__:80 | Initializing LiteLLMInterface with model: gpt-4
+2025-06-17 18:00:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:__init__:87 | Setting OPENAI_API_KEY environment variable
+2025-06-17 18:00:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:__init__:102 | Enabled JSON schema validation in LiteLLM
+2025-06-17 18:00:44 | INFO     | conv_id: GENERAL      | llm_fsm.api:__init__:311 | LLM_FSM initialized with default LiteLLM interface, model=gpt-4
+2025-06-17 18:00:44 | INFO     | conv_id: GENERAL      | llm_fsm.utilities:load_fsm_from_file:106 | Loading FSM definition from file: C:\Users\Sanju Menon\Documents\GitHub\OrchestrableAI\stigmergicai\openai-agents\form_filling.json
+2025-06-17 18:00:44 | INFO     | conv_id: GENERAL      | llm_fsm.utilities:load_fsm_from_file:112 | Successfully loaded FSM definition: Counterfactual Question Classification FSM
+2025-06-17 18:00:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: Counterfactual Question Classification FSM
+2025-06-17 18:00:44 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: Counterfactual Question Classification FSM
+2025-06-17 18:00:44 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: end_conversation
+2025-06-17 18:00:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:__post_init__:158 | PromptBuilder initialized with effective max_history_size=5
+2025-06-17 18:00:44 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:__init__:65 | FSM Manager initialized with max_history_size=5, max_message_length=1000
+2025-06-17 18:00:44 | INFO     | conv_id: GENERAL      | llm_fsm.api:__init__:354 | LLM_FSM fully initialized with max_history_size=5
+2025-06-17 18:00:44 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:get_fsm_definition:101 | Loading FSM definition: fsm_file_C:\Users\Sanju Menon\Documents\GitHub\OrchestrableAI\stigmergicai\openai-agents\form_filling.json
+2025-06-17 18:00:44 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:_create_instance:116 | Creating new FSM instance for fsm_file_C:\Users\Sanju Menon\Documents\GitHub\OrchestrableAI\stigmergicai\openai-agents\form_filling.json, starting at state: welcome
+2025-06-17 18:00:44 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:start_conversation:462 | Started new conversation [fa1f89be-4f11-4069-9da0-83d0c305e5b5] with FSM [fsm_file_C:\Users\Sanju Menon\Documents\GitHub\OrchestrableAI\stigmergicai\openai-agents\form_filling.json]
+2025-06-17 18:00:44 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: welcome
+2025-06-17 18:00:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: 
+2025-06-17 18:00:44 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-17 18:00:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: welcome
+2025-06-17 18:00:44 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis.
+</persona>
+<current_state>
+<id>welcome</id>
+<description>Welcome state</description>
+<purpose>Introduce the system and understand the user's topic of interest</purpose>
+<state_instructions>
+Welcome the user and explain that you'll help them understand their questions. Ask them if are ready to start.
+</state_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "_conversation_start": "2025-06-17T18:00:44.650119",
+ "_timestamp": 1750154444.6501195,
+ "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json",
+ "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ }
+]
+]]></conversation_history>
+<valid_states>
+end_conversation, gather_question, welcome
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "end_conversation",
+  "desc": "End the conversation",
+  "priority": 0
+ },
+ {
+  "to": "gather_question",
+  "desc": "After greeting, move to gathering the question",
+  "priority": 0
+ },
+ {
+  "to": "welcome",
+  "desc": "Remain in current state if needed",
+  "priority": 100
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-17 18:00:44 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4
+2025-06-17 18:00:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: 
+2025-06-17 18:00:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, user
+2025-06-17 18:00:44 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:166 | Using enhanced prompt with JSON instructions for gpt-4
+2025-06-17 18:00:49 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4 in 4.86s
+2025-06-17 18:00:49 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-17 18:00:49 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "gather_question",
+    "context_update": {}
+  },
+  "message": "Hello! I'm here to help you understand and classify your counterfactual questions. Are you ready to start?",
+  "reasoning": "As per the state instructions, I welcomed the user and asked if they are ready to start. Transitioning to 'gather_question' state."
+})
+2025-06-17 18:00:49 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:175 | Validating transition from welcome to gather_question
+2025-06-17 18:00:49 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-17 18:00:49 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:223 | Transition from welcome to gather_question is valid
+2025-06-17 18:00:49 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Hello! I'm here to help you understand and classif...
+2025-06-17 18:00:49 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: Counterfactual Question Classification FSM
+2025-06-17 18:00:49 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: Counterfactual Question Classification FSM
+2025-06-17 18:00:49 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: end_conversation
+2025-06-17 18:00:49 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-17 18:00:49 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: _conversation_start, _timestamp, _fsm_id, _conversation_id
+2025-06-17 18:00:49 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:process_message:512 | Processing message: 
+2025-06-17 18:00:49 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: welcome
+2025-06-17 18:00:49 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: 
+2025-06-17 18:00:49 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-17 18:00:49 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: welcome
+2025-06-17 18:00:49 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis.
+</persona>
+<current_state>
+<id>welcome</id>
+<description>Welcome state</description>
+<purpose>Introduce the system and understand the user's topic of interest</purpose>
+<state_instructions>
+Welcome the user and explain that you'll help them understand their questions. Ask them if are ready to start.
+</state_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "_conversation_start": "2025-06-17T18:00:44.650119",
+ "_timestamp": 1750154444.6501195,
+ "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json",
+ "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! I'm here to help you understand and classify your counterfactual questions. Are you ready to start?"
+ },
+ {
+  "user": ""
+ }
+]
+]]></conversation_history>
+<valid_states>
+end_conversation, gather_question, welcome
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "end_conversation",
+  "desc": "End the conversation",
+  "priority": 0
+ },
+ {
+  "to": "gather_question",
+  "desc": "After greeting, move to gathering the question",
+  "priority": 0
+ },
+ {
+  "to": "welcome",
+  "desc": "Remain in current state if needed",
+  "priority": 100
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-17 18:00:49 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4
+2025-06-17 18:00:49 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: 
+2025-06-17 18:00:49 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, user
+2025-06-17 18:00:49 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:166 | Using enhanced prompt with JSON instructions for gpt-4
+2025-06-17 18:00:54 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4 in 5.28s
+2025-06-17 18:00:54 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-17 18:00:54 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "gather_question",
+    "context_update": {}
+  },
+  "message": "Hello! I'm here to help you understand and classify your counterfactual questions. Are you ready to start?",
+  "reasoning": "This is the initial state, so I'm greeting the user and asking if they're ready to start."
+})
+2025-06-17 18:00:54 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:175 | Validating transition from welcome to gather_question
+2025-06-17 18:00:54 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-17 18:00:54 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:223 | Transition from welcome to gather_question is valid
+2025-06-17 18:00:54 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:367 | State transition: welcome -> gather_question
+2025-06-17 18:00:54 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Hello! I'm here to help you understand and classif...
+2025-06-17 18:00:54 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: gather_question
+2025-06-17 18:00:54 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_question
+2025-06-17 18:00:54 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_question
+2025-06-17 18:01:13 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state
+2025-06-17 18:01:13 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:process_message:512 | Processing message: yes
+2025-06-17 18:01:13 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: gather_question
+2025-06-17 18:01:13 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: yes
+2025-06-17 18:01:13 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_question
+2025-06-17 18:01:13 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: gather_question
+2025-06-17 18:01:13 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis.
+</persona>
+<current_state>
+<id>gather_question</id>
+<description>Collect the user's question of interest</description>
+<purpose>Understand what the user wants to explore or understand</purpose>
+<state_instructions>
+Ask the user to describe the question they want to understand better. Store their response in the 'user_question' context variable.
+</state_instructions>
+<information_to_collect>
+user_question
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "_conversation_start": "2025-06-17T18:00:44.650119",
+ "_timestamp": 1750154444.6501195,
+ "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json",
+ "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5",
+ "_previous_state": "welcome",
+ "_current_state": "gather_question"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! I'm here to help you understand and classify your counterfactual questions. Are you ready to start?"
+ },
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! I'm here to help you understand and classify your counterfactual questions. Are you ready to start?"
+ },
+ {
+  "user": "yes"
+ }
+]
+]]></conversation_history>
+<valid_states>
+clarify_nature, gather_question
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "clarify_nature",
+  "desc": "Once question is obtained, clarify if it's noticed or trying",
+  "priority": 0,
+  "conditions": [
+   {
+    "desc": "Question has been provided",
+    "keys": [
+     "user_question"
+    ]
+   }
+  ]
+ },
+ {
+  "to": "gather_question",
+  "desc": "Remain in current state if needed",
+  "priority": 100
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-17 18:01:13 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4
+2025-06-17 18:01:13 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: yes
+2025-06-17 18:01:13 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, user
+2025-06-17 18:01:13 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:166 | Using enhanced prompt with JSON instructions for gpt-4
+2025-06-17 18:01:17 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4 in 4.10s
+2025-06-17 18:01:17 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-17 18:01:17 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "gather_question",
+    "context_update": {}
+  },
+  "message": "Great! Could you please describe the question you want to understand better?",
+  "reasoning": "The user has agreed to start, so I'm asking for their question of interest."
+})
+2025-06-17 18:01:17 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:175 | Validating transition from gather_question to gather_question
+2025-06-17 18:01:17 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_question
+2025-06-17 18:01:17 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:188 | Staying in the same state - valid
+2025-06-17 18:01:17 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:367 | State transition: gather_question -> gather_question
+2025-06-17 18:01:17 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Great! Could you please describe the question you ...
+2025-06-17 18:01:17 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: gather_question
+2025-06-17 18:01:17 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_question
+2025-06-17 18:01:17 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_question
+2025-06-17 18:02:22 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state
+2025-06-17 18:02:22 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:process_message:512 | Processing message: Does exam pressure lead to reduction in curiosity
+2025-06-17 18:02:22 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: gather_question
+2025-06-17 18:02:22 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: Does exam pressure lead to reduction in curiosity
+2025-06-17 18:02:22 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_question
+2025-06-17 18:02:22 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: gather_question
+2025-06-17 18:02:22 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis.
+</persona>
+<current_state>
+<id>gather_question</id>
+<description>Collect the user's question of interest</description>
+<purpose>Understand what the user wants to explore or understand</purpose>
+<state_instructions>
+Ask the user to describe the question they want to understand better. Store their response in the 'user_question' context variable.
+</state_instructions>
+<information_to_collect>
+user_question
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "_conversation_start": "2025-06-17T18:00:44.650119",
+ "_timestamp": 1750154444.6501195,
+ "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json",
+ "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5",
+ "_previous_state": "gather_question",
+ "_current_state": "gather_question"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! I'm here to help you understand and classify your counterfactual questions. Are you ready to start?"
+ },
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! I'm here to help you understand and classify your counterfactual questions. Are you ready to start?"
+ },
+ {
+  "user": "yes"
+ },
+ {
+  "system": "Great! Could you please describe the question you want to understand better?"
+ },
+ {
+  "user": "Does exam pressure lead to reduction in curiosity"
+ }
+]
+]]></conversation_history>
+<valid_states>
+clarify_nature, gather_question
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "clarify_nature",
+  "desc": "Once question is obtained, clarify if it's noticed or trying",
+  "priority": 0,
+  "conditions": [
+   {
+    "desc": "Question has been provided",
+    "keys": [
+     "user_question"
+    ]
+   }
+  ]
+ },
+ {
+  "to": "gather_question",
+  "desc": "Remain in current state if needed",
+  "priority": 100
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-17 18:02:22 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4
+2025-06-17 18:02:22 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: Does exam pressure lead to reduction in curiosity
+2025-06-17 18:02:22 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, user
+2025-06-17 18:02:22 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:166 | Using enhanced prompt with JSON instructions for gpt-4
+2025-06-17 18:02:29 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4 in 6.71s
+2025-06-17 18:02:29 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-17 18:02:29 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"user_question": "Does exam pressure lead to reduction in curiosity"}
+2025-06-17 18:02:29 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "clarify_nature",
+    "context_update": {
+      "user_question": "Does exam pressure lead to reduction in curiosity"
+    }
+  },
+  "message": "Thank you for your question. Now, let's clarify the nature of your question. Are you asking this because you've noticed this pattern, or are you trying to understand if this could happen?",
+  "reasoning": "The user has provided their question, so I'm transitioning to the 'clarify_nature' state to understand the context of their question better."
+})
+2025-06-17 18:02:29 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"user_question": "Does exam pressure lead to reduction in curiosity"}
+2025-06-17 18:02:29 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"user_question": "Does exam pressure lead to reduction in curiosity"}
+2025-06-17 18:02:29 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:308 | After context: {"_conversation_start": "2025-06-17T18:00:44.650119", "_timestamp": 1750154444.6501195, "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json", "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5", "_previous_state": "gather_question", "_current_state": "gather_question", "user_question": "Does exam pressure lead to reduction in curiosity"}
+2025-06-17 18:02:29 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:175 | Validating transition from gather_question to clarify_nature
+2025-06-17 18:02:29 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_question
+2025-06-17 18:02:29 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:has_keys:357 | Checking context for keys: ['user_question'] - Result: True
+2025-06-17 18:02:29 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:223 | Transition from gather_question to clarify_nature is valid
+2025-06-17 18:02:29 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:367 | State transition: gather_question -> clarify_nature
+2025-06-17 18:02:29 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Thank you for your question. Now, let's clarify th...
+2025-06-17 18:02:29 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: clarify_nature
+2025-06-17 18:02:29 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: clarify_nature
+2025-06-17 18:02:29 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: clarify_nature
+2025-06-17 18:02:36 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, user_question
+2025-06-17 18:02:36 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:process_message:512 | Processing message: I have noticed this
+2025-06-17 18:02:36 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: clarify_nature
+2025-06-17 18:02:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: I have noticed this
+2025-06-17 18:02:36 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: clarify_nature
+2025-06-17 18:02:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: clarify_nature
+2025-06-17 18:02:36 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis.
+</persona>
+<current_state>
+<id>clarify_nature</id>
+<description>Clarify if the topic is something noticed or something to try</description>
+<purpose>Classify the nature of the user's interest (noticed/trying)</purpose>
+<state_instructions>
+Ask the user: 'Is this something you noticed or something you're thinking of trying?' Do not use the words 'query' or 'intervention'. Store the response as 'noticed' or 'trying' in the 'question_nature' context variable.
+</state_instructions>
+<information_to_collect>
+question_nature
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "_conversation_start": "2025-06-17T18:00:44.650119",
+ "_timestamp": 1750154444.6501195,
+ "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json",
+ "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5",
+ "_previous_state": "gather_question",
+ "_current_state": "clarify_nature",
+ "user_question": "Does exam pressure lead to reduction in curiosity"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! I'm here to help you understand and classify your counterfactual questions. Are you ready to start?"
+ },
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! I'm here to help you understand and classify your counterfactual questions. Are you ready to start?"
+ },
+ {
+  "user": "yes"
+ },
+ {
+  "system": "Great! Could you please describe the question you want to understand better?"
+ },
+ {
+  "user": "Does exam pressure lead to reduction in curiosity"
+ },
+ {
+  "system": "Thank you for your question. Now, let's clarify the nature of your question. Are you asking this because you've noticed this pattern, or are you trying to understand if this could happen?"
+ },
+ {
+  "user": "I have noticed this"
+ }
+]
+]]></conversation_history>
+<valid_states>
+clarify_nature, gather_factors
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "gather_factors",
+  "desc": "Once nature is clarified, gather factors",
+  "priority": 0,
+  "conditions": [
+   {
+    "desc": "Nature has been clarified",
+    "keys": [
+     "question_nature"
+    ]
+   }
+  ]
+ },
+ {
+  "to": "clarify_nature",
+  "desc": "Remain in current state if needed",
+  "priority": 100
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-17 18:02:36 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4
+2025-06-17 18:02:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: I have noticed this
+2025-06-17 18:02:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, user
+2025-06-17 18:02:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:166 | Using enhanced prompt with JSON instructions for gpt-4
+2025-06-17 18:02:42 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4 in 5.85s
+2025-06-17 18:02:42 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-17 18:02:42 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"question_nature": "noticed"}
+2025-06-17 18:02:42 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "gather_factors",
+    "context_update": {
+      "question_nature": "noticed"
+    }
+  },
+  "message": "I see, you've noticed this pattern. Now, let's try to identify the factors that might influence this situation. Could you please list any factors that you think might be relevant?",
+  "reasoning": "The user has clarified the nature of their question as something they've noticed. Therefore, I'm transitioning to the 'gather_factors' state to continue the conversation."
+})
+2025-06-17 18:02:42 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"question_nature": "noticed"}
+2025-06-17 18:02:42 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"question_nature": "noticed"}
+2025-06-17 18:02:42 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:308 | After context: {"_conversation_start": "2025-06-17T18:00:44.650119", "_timestamp": 1750154444.6501195, "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json", "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5", "_previous_state": "gather_question", "_current_state": "clarify_nature", "user_question": "Does exam pressure lead to reduction in curiosity", "question_nature": "noticed"}
+2025-06-17 18:02:42 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:175 | Validating transition from clarify_nature to gather_factors
+2025-06-17 18:02:42 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: clarify_nature
+2025-06-17 18:02:42 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:has_keys:357 | Checking context for keys: ['question_nature'] - Result: True
+2025-06-17 18:02:42 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:223 | Transition from clarify_nature to gather_factors is valid
+2025-06-17 18:02:42 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:367 | State transition: clarify_nature -> gather_factors
+2025-06-17 18:02:42 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: I see, you've noticed this pattern. Now, let's try...
+2025-06-17 18:02:42 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: gather_factors
+2025-06-17 18:02:42 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_factors
+2025-06-17 18:02:42 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_factors
+2025-06-17 18:04:55 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, user_question, question_nature
+2025-06-17 18:04:55 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:process_message:512 | Processing message: I've noticed this
+2025-06-17 18:04:55 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: gather_factors
+2025-06-17 18:04:55 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: I've noticed this
+2025-06-17 18:04:55 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:271 | Trimmed 1 old messages from conversation history
+2025-06-17 18:04:55 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_factors
+2025-06-17 18:04:55 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: gather_factors
+2025-06-17 18:04:55 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis.
+</persona>
+<current_state>
+<id>gather_factors</id>
+<description>Collect information about variables involved</description>
+<purpose>Understand the variables and relationships in the topic</purpose>
+<state_instructions>
+Ask what the user thinks the topic affects (target variable) and what might affect it (input variables). Store these in 'target_variable' and 'input_variables' context variables.
+</state_instructions>
+<information_to_collect>
+target_variable, input_variables
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "_conversation_start": "2025-06-17T18:00:44.650119",
+ "_timestamp": 1750154444.6501195,
+ "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json",
+ "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5",
+ "_previous_state": "clarify_nature",
+ "_current_state": "gather_factors",
+ "user_question": "Does exam pressure lead to reduction in curiosity",
+ "question_nature": "noticed"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "system": "Hello! I'm here to help you understand and classify your counterfactual questions. Are you ready to start?"
+ },
+ {
+  "user": ""
+ },
+ {
+  "system": "Hello! I'm here to help you understand and classify your counterfactual questions. Are you ready to start?"
+ },
+ {
+  "user": "yes"
+ },
+ {
+  "system": "Great! Could you please describe the question you want to understand better?"
+ },
+ {
+  "user": "Does exam pressure lead to reduction in curiosity"
+ },
+ {
+  "system": "Thank you for your question. Now, let's clarify the nature of your question. Are you asking this because you've noticed this pattern, or are you trying to understand if this could happen?"
+ },
+ {
+  "user": "I have noticed this"
+ },
+ {
+  "system": "I see, you've noticed this pattern. Now, let's try to identify the factors that might influence this situation. Could you please list any factors that you think might be relevant?"
+ },
+ {
+  "user": "I've noticed this"
+ }
+]
+]]></conversation_history>
+<valid_states>
+confirm_classification, gather_factors
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "confirm_classification",
+  "desc": "Once variables are collected, move to confirmation",
+  "priority": 0,
+  "conditions": [
+   {
+    "desc": "Variables have been provided",
+    "keys": [
+     "target_variable",
+     "input_variables"
+    ]
+   }
+  ]
+ },
+ {
+  "to": "gather_factors",
+  "desc": "Remain in current state if needed",
+  "priority": 100
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-17 18:04:55 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4
+2025-06-17 18:04:55 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: I've noticed this
+2025-06-17 18:04:55 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, user
+2025-06-17 18:04:55 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:166 | Using enhanced prompt with JSON instructions for gpt-4
+2025-06-17 18:05:02 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4 in 6.83s
+2025-06-17 18:05:02 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-17 18:05:02 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "gather_factors",
+    "context_update": {}
+  },
+  "message": "I understand that you've noticed this pattern. Now, could you please tell me what you believe is the target variable (the outcome you're interested in) and the input variables (factors that might influence the outcome) in this situation?",
+  "reasoning": "The user didn't provide any information about the target or input variables. Therefore, I'm asking for this information again and staying in the current state."
+})
+2025-06-17 18:05:02 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:175 | Validating transition from gather_factors to gather_factors
+2025-06-17 18:05:02 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_factors
+2025-06-17 18:05:02 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:188 | Staying in the same state - valid
+2025-06-17 18:05:02 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:367 | State transition: gather_factors -> gather_factors
+2025-06-17 18:05:02 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: I understand that you've noticed this pattern. Now...
+2025-06-17 18:05:02 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: gather_factors
+2025-06-17 18:05:02 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_factors
+2025-06-17 18:05:02 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_factors
+2025-06-17 18:05:33 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, user_question, question_nature
+2025-06-17 18:05:33 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:process_message:512 | Processing message: lack of sleep and focus on memorisation over under...
+2025-06-17 18:05:33 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: gather_factors
+2025-06-17 18:05:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: lack of sleep and focus on memorisation over under...
+2025-06-17 18:05:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:271 | Trimmed 2 old messages from conversation history
+2025-06-17 18:05:33 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_factors
+2025-06-17 18:05:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: gather_factors
+2025-06-17 18:05:33 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis.
+</persona>
+<current_state>
+<id>gather_factors</id>
+<description>Collect information about variables involved</description>
+<purpose>Understand the variables and relationships in the topic</purpose>
+<state_instructions>
+Ask what the user thinks the topic affects (target variable) and what might affect it (input variables). Store these in 'target_variable' and 'input_variables' context variables.
+</state_instructions>
+<information_to_collect>
+target_variable, input_variables
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "_conversation_start": "2025-06-17T18:00:44.650119",
+ "_timestamp": 1750154444.6501195,
+ "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json",
+ "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5",
+ "_previous_state": "gather_factors",
+ "_current_state": "gather_factors",
+ "user_question": "Does exam pressure lead to reduction in curiosity",
+ "question_nature": "noticed"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "system": "Hello! I'm here to help you understand and classify your counterfactual questions. Are you ready to start?"
+ },
+ {
+  "user": "yes"
+ },
+ {
+  "system": "Great! Could you please describe the question you want to understand better?"
+ },
+ {
+  "user": "Does exam pressure lead to reduction in curiosity"
+ },
+ {
+  "system": "Thank you for your question. Now, let's clarify the nature of your question. Are you asking this because you've noticed this pattern, or are you trying to understand if this could happen?"
+ },
+ {
+  "user": "I have noticed this"
+ },
+ {
+  "system": "I see, you've noticed this pattern. Now, let's try to identify the factors that might influence this situation. Could you please list any factors that you think might be relevant?"
+ },
+ {
+  "user": "I've noticed this"
+ },
+ {
+  "system": "I understand that you've noticed this pattern. Now, could you please tell me what you believe is the target variable (the outcome you're interested in) and the input variables (factors that might influence the outcome) in this situation?"
+ },
+ {
+  "user": "lack of sleep and focus on memorisation over understanding"
+ }
+]
+]]></conversation_history>
+<valid_states>
+confirm_classification, gather_factors
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "confirm_classification",
+  "desc": "Once variables are collected, move to confirmation",
+  "priority": 0,
+  "conditions": [
+   {
+    "desc": "Variables have been provided",
+    "keys": [
+     "target_variable",
+     "input_variables"
+    ]
+   }
+  ]
+ },
+ {
+  "to": "gather_factors",
+  "desc": "Remain in current state if needed",
+  "priority": 100
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-17 18:05:33 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4
+2025-06-17 18:05:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: lack of sleep and focus on memorisation over under...
+2025-06-17 18:05:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, user
+2025-06-17 18:05:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:166 | Using enhanced prompt with JSON instructions for gpt-4
+2025-06-17 18:05:40 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4 in 7.69s
+2025-06-17 18:05:40 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-17 18:05:40 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"target_variable": "reduction in curiosity", "input_variables": ["exam pressure", "lack of sleep", "focus on memorisation over understanding"]}
+2025-06-17 18:05:40 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "confirm_classification",
+    "context_update": {
+      "target_variable": "reduction in curiosity",
+      "input_variables": [
+        "exam pressure",
+        "lack of sleep",
+        "focus on memorisation over understanding"
+      ]
+    }
+  },
+  "message": "Thank you for providing the factors. So, you're interested in the outcome 'reduction in curiosity', and you believe it might be influenced by 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding'. Is that correct?",
+  "reasoning": "The user has provided the input variables. The target variable was provided in the initial question. All required information has been collected, so we can transition to the next state."
+})
+2025-06-17 18:05:40 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"target_variable": "reduction in curiosity", "input_variables": ["exam pressure", "lack of sleep", "focus on memorisation over understanding"]}
+2025-06-17 18:05:40 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"target_variable": "reduction in curiosity", "input_variables": ["exam pressure", "lack of sleep", "focus on memorisation over understanding"]}
+2025-06-17 18:05:40 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:308 | After context: {"_conversation_start": "2025-06-17T18:00:44.650119", "_timestamp": 1750154444.6501195, "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json", "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5", "_previous_state": "gather_factors", "_current_state": "gather_factors", "user_question": "Does exam pressure lead to reduction in curiosity", "question_nature": "noticed", "target_variable": "reduction in curiosity", "input_variables": ["exam pressure", "lack of sleep", "focus on memorisation over understanding"]}
+2025-06-17 18:05:40 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:175 | Validating transition from gather_factors to confirm_classification
+2025-06-17 18:05:40 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: gather_factors
+2025-06-17 18:05:40 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:has_keys:357 | Checking context for keys: ['target_variable', 'input_variables'] - Result: True
+2025-06-17 18:05:40 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:223 | Transition from gather_factors to confirm_classification is valid
+2025-06-17 18:05:40 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:367 | State transition: gather_factors -> confirm_classification
+2025-06-17 18:05:40 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Thank you for providing the factors. So, you're in...
+2025-06-17 18:05:40 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: confirm_classification
+2025-06-17 18:05:40 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: confirm_classification
+2025-06-17 18:05:40 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: confirm_classification
+2025-06-17 18:05:54 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, user_question, question_nature, target_variable, input_variables
+2025-06-17 18:05:54 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:process_message:512 | Processing message: yus
+2025-06-17 18:05:54 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: confirm_classification
+2025-06-17 18:05:54 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: yus
+2025-06-17 18:05:54 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:271 | Trimmed 2 old messages from conversation history
+2025-06-17 18:05:54 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: confirm_classification
+2025-06-17 18:05:54 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: confirm_classification
+2025-06-17 18:05:54 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis.
+</persona>
+<current_state>
+<id>confirm_classification</id>
+<description>Confirm the classification and details.</description>
+<purpose>Verify understanding and provide guidance</purpose>
+<state_instructions>
+Summarize the topic, the nature (noticed/trying), and the variables. Ask if this understanding is correct. If yes, proceed to guidance. If no, allow them to clarify their topic.
+</state_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "_conversation_start": "2025-06-17T18:00:44.650119",
+ "_timestamp": 1750154444.6501195,
+ "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json",
+ "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5",
+ "_previous_state": "gather_factors",
+ "_current_state": "confirm_classification",
+ "user_question": "Does exam pressure lead to reduction in curiosity",
+ "question_nature": "noticed",
+ "target_variable": "reduction in curiosity",
+ "input_variables": [
+  "exam pressure",
+  "lack of sleep",
+  "focus on memorisation over understanding"
+ ]
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "system": "Great! Could you please describe the question you want to understand better?"
+ },
+ {
+  "user": "Does exam pressure lead to reduction in curiosity"
+ },
+ {
+  "system": "Thank you for your question. Now, let's clarify the nature of your question. Are you asking this because you've noticed this pattern, or are you trying to understand if this could happen?"
+ },
+ {
+  "user": "I have noticed this"
+ },
+ {
+  "system": "I see, you've noticed this pattern. Now, let's try to identify the factors that might influence this situation. Could you please list any factors that you think might be relevant?"
+ },
+ {
+  "user": "I've noticed this"
+ },
+ {
+  "system": "I understand that you've noticed this pattern. Now, could you please tell me what you believe is the target variable (the outcome you're interested in) and the input variables (factors that might influence the outcome) in this situation?"
+ },
+ {
+  "user": "lack of sleep and focus on memorisation over understanding"
+ },
+ {
+  "system": "Thank you for providing the factors. So, you're interested in the outcome 'reduction in curiosity', and you believe it might be influenced by 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding'. Is that correct?"
+ },
+ {
+  "user": "yus"
+ }
+]
+]]></conversation_history>
+<valid_states>
+confirm_classification, gather_question, provide_summary
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "provide_summary",
+  "desc": "User confirms the summary",
+  "priority": 0,
+  "conditions": [
+   {
+    "desc": "User confirms understanding",
+    "keys": []
+   }
+  ]
+ },
+ {
+  "to": "gather_question",
+  "desc": "User wants to clarify their question",
+  "priority": 1,
+  "conditions": [
+   {
+    "desc": "User wants to modify their question",
+    "keys": []
+   }
+  ]
+ },
+ {
+  "to": "confirm_classification",
+  "desc": "Remain in current state if needed",
+  "priority": 101
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-17 18:05:54 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4
+2025-06-17 18:05:54 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: yus
+2025-06-17 18:05:54 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, user
+2025-06-17 18:05:54 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:166 | Using enhanced prompt with JSON instructions for gpt-4
+2025-06-17 18:05:58 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4 in 3.72s
+2025-06-17 18:05:58 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-17 18:05:58 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "provide_summary",
+    "context_update": {}
+  },
+  "message": "Great! Let's move on to providing some guidance on how to approach your analysis.",
+  "reasoning": "The user has confirmed the understanding of the question and its variables. Therefore, we can proceed to the next state to provide guidance."
+})
+2025-06-17 18:05:58 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:175 | Validating transition from confirm_classification to provide_summary
+2025-06-17 18:05:58 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: confirm_classification
+2025-06-17 18:05:58 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:223 | Transition from confirm_classification to provide_summary is valid
+2025-06-17 18:05:58 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:367 | State transition: confirm_classification -> provide_summary
+2025-06-17 18:05:58 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Great! Let's move on to providing some guidance on...
+2025-06-17 18:05:58 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: provide_summary
+2025-06-17 18:05:58 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: provide_summary
+2025-06-17 18:05:58 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: provide_summary
+2025-06-17 18:06:04 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, user_question, question_nature, target_variable, input_variables
+2025-06-17 18:06:04 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:process_message:512 | Processing message: ok
+2025-06-17 18:06:04 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: provide_summary
+2025-06-17 18:06:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: ok
+2025-06-17 18:06:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:271 | Trimmed 2 old messages from conversation history
+2025-06-17 18:06:04 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: provide_summary
+2025-06-17 18:06:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: provide_summary
+2025-06-17 18:06:04 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis.
+</persona>
+<current_state>
+<id>provide_summary</id>
+<description>Provide a final summary of the user's input</description>
+<purpose>Summarize the user's topic, nature, and variables as a conclusion</purpose>
+<state_instructions>
+Summarize the topic, the nature (noticed/trying), and the variables. Ask if this understanding is correct. Store it in the 'summary' context variable.
+</state_instructions>
+<information_to_collect>
+summary, scenarios
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "_conversation_start": "2025-06-17T18:00:44.650119",
+ "_timestamp": 1750154444.6501195,
+ "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json",
+ "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5",
+ "_previous_state": "confirm_classification",
+ "_current_state": "provide_summary",
+ "user_question": "Does exam pressure lead to reduction in curiosity",
+ "question_nature": "noticed",
+ "target_variable": "reduction in curiosity",
+ "input_variables": [
+  "exam pressure",
+  "lack of sleep",
+  "focus on memorisation over understanding"
+ ]
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "system": "Thank you for your question. Now, let's clarify the nature of your question. Are you asking this because you've noticed this pattern, or are you trying to understand if this could happen?"
+ },
+ {
+  "user": "I have noticed this"
+ },
+ {
+  "system": "I see, you've noticed this pattern. Now, let's try to identify the factors that might influence this situation. Could you please list any factors that you think might be relevant?"
+ },
+ {
+  "user": "I've noticed this"
+ },
+ {
+  "system": "I understand that you've noticed this pattern. Now, could you please tell me what you believe is the target variable (the outcome you're interested in) and the input variables (factors that might influence the outcome) in this situation?"
+ },
+ {
+  "user": "lack of sleep and focus on memorisation over understanding"
+ },
+ {
+  "system": "Thank you for providing the factors. So, you're interested in the outcome 'reduction in curiosity', and you believe it might be influenced by 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding'. Is that correct?"
+ },
+ {
+  "user": "yus"
+ },
+ {
+  "system": "Great! Let's move on to providing some guidance on how to approach your analysis."
+ },
+ {
+  "user": "ok"
+ }
+]
+]]></conversation_history>
+<valid_states>
+present_scenarios, provide_summary
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "present_scenarios",
+  "desc": "User wants to see the generated scenarios",
+  "priority": 1,
+  "conditions": [
+   {
+    "desc": "User wants to see the generated scenarios",
+    "keys": []
+   }
+  ]
+ },
+ {
+  "to": "provide_summary",
+  "desc": "Remain in current state if needed",
+  "priority": 101
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-17 18:06:04 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4
+2025-06-17 18:06:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: ok
+2025-06-17 18:06:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, user
+2025-06-17 18:06:04 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:166 | Using enhanced prompt with JSON instructions for gpt-4
+2025-06-17 18:06:11 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4 in 7.42s
+2025-06-17 18:06:11 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-17 18:06:11 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:237 | Context updates: {"summary": "You've noticed a pattern where 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding' lead to a 'reduction in curiosity'."}
+2025-06-17 18:06:11 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "present_scenarios",
+    "context_update": {
+      "summary": "You've noticed a pattern where 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding' lead to a 'reduction in curiosity'."
+    }
+  },
+  "message": "To summarize, you've noticed a pattern where 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding' lead to a 'reduction in curiosity'. Is my understanding correct?",
+  "reasoning": "The user has confirmed the details of their question. I've summarized this information and am now asking for confirmation before moving on to presenting scenarios."
+})
+2025-06-17 18:06:11 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"summary": "You've noticed a pattern where 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding' lead to a 'reduction in curiosity'."}
+2025-06-17 18:06:11 | DEBUG    | conv_id: GENERAL      | llm_fsm.handlers:execute_handlers:332 | Executing handler CausalResponseGenerator at CONTEXT_UPDATE
+2025-06-17 18:07:24 | DEBUG    | conv_id: GENERAL      | llm_fsm.handlers:execute_handlers:354 | Handler CausalResponseGenerator completed successfully
+2025-06-17 18:07:24 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:update:341 | Updating context with new data: {"summary": "You've noticed a pattern where 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding' lead to a 'reduction in curiosity'.", "scenarios": ["1. The intervention that was performed involved changing the amount of study time. The model was manipulated to represent two scenarios: one where a longer study time (\"long-studytime\") is allocated with a probability of 0.7, and another where a shorter study time (\"short-studytime\") is given with a probability of 0.3.\n\n2. The results show the impact of this intervention on the G1 grade. The \"0\" and \"1\" represent possible outcomes for the G1 grade. The outcome \"0\" happened with a probability of approximately 0.25 or 25%, and the outcome \"1\" happened with a probability of approximately 0.75 or 75%.\n\n3. The notable insight here is that with the given intervention of more study time, the likelihood of a higher G1 grade (outcome \"1\") is significantly more probable (75%) than a lower G1 grade (outcome \"0\"). This suggests that longer study times are strongly associated with higher grades, according to this model. However, remember that this is a simplified model and real-life outcomes can be influenced by a variety of other factors.", "1. Intervention or Query Performed:\nIn this scenario, there was no specific intervention made. Rather, a query was performed focusing on the \"Dalc\" node with a value of 4. \"Dalc\" typically refers to weekday alcohol consumption, so we can infer that this analysis is looking at the effect of moderate to high weekday alcohol consumption (given that the value is 4 on a scale that typically goes from 1-5) on a certain outcome.\n\n2. Results in Terms of the Target Variable (G1 grade):\nThe results are presented for the variable \"G1\" which we'll assume is indicative of first period grades on a binary scale (0 indicating a fail and 1 indicating a pass). The outcome shows that with a weekday alcohol consumption level of 4, there is roughly a 25% chance (0.25002332150965434) of getting a failing grade (0), and approximately a 75% chance (0.7499766784903457) of passing (1).\n\n3. Notable Insights or Implications:\nEven with higher levels of weekday alcohol consumption, this analysis indicates that there's a higher probability of passing than failing. However, this is merely a probability and not a guarantee. The results might also indicate that other factors, not considered in this analysis, may have a stronger impact on the G1 grade.", "1. This causal analysis looks at the impact of certain factors on a student's G1 grade. These factors include daily alcohol consumption (Dalc), weekend alcohol consumption (Walc), aspiration for higher education (higher), any past failures (failures), current health status (health), and the status of the student's parents living together or not (Pstatus). No interventions were made in this analysis.\n\n2. The results show two probabilities for G1 grade: around 18.8% for getting a 0 and about 81.2% for getting a 1. This suggests that, given the conditions or factors laid out, a student is more likely to achieve a G1 grade of 1.\n\n3. The insights from this analysis could be that maintaining good health, having aspirations for higher education, and not having any past failures may contribute to a student's likelihood of achieving a higher G1 grade. However, this analysis doesn't directly show the impact of each individual factor on the grade. Also, the results hint that even with some daily and weekend alcohol consumption, students can still perform well acadically, provided other factors are favorable. But this should be interpreted with caution, as excessive alcohol consumption can have negative impacts on academic performance and overall health.", "1. The intervention that was performed involved manipulating the amount of study time. The probabilities were set at 70% for long study time and 30% for short study time. The query then measured the effect of this intervention on the level of daily alcohol consumption (Dalc), specifically when Dalc is at level 4. \n\n2. The results show the impact of the intervention on the first period grade (G1). The target variable, G1, has two possible states: '0' and '1'. The results indicate that, given the intervention and high daily alcohol consumption, there is a 25% probability that the G1 grade will be '0' and a 75% probability that the G1 grade will be '1'. \n\n3. The key insight from these results is that when students invest a long time in studying (as per the 70% probability), even with high daily alcohol consumption (Dalc at level 4), they are still significantly more likely to receive a '1' grade in the first period (75% chance) than a '0' grade (25% chance). This could imply that the negative impact of high alcohol consumption on grades can be mitigated to some extent by longer study times."], "system": {"handlers": {"CONTEXT_UPDATE": [{"name": "CausalResponseGenerator", "updated_keys": ["scenarios"]}]}}}
+2025-06-17 18:07:24 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:308 | After context: {"_conversation_start": "2025-06-17T18:00:44.650119", "_timestamp": 1750154444.6501195, "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json", "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5", "_previous_state": "confirm_classification", "_current_state": "provide_summary", "user_question": "Does exam pressure lead to reduction in curiosity", "question_nature": "noticed", "target_variable": "reduction in curiosity", "input_variables": ["exam pressure", "lack of sleep", "focus on memorisation over understanding"], "summary": "You've noticed a pattern where 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding' lead to a 'reduction in curiosity'.", "scenarios": ["1. The intervention that was performed involved changing the amount of study time. The model was manipulated to represent two scenarios: one where a longer study time (\"long-studytime\") is allocated with a probability of 0.7, and another where a shorter study time (\"short-studytime\") is given with a probability of 0.3.\n\n2. The results show the impact of this intervention on the G1 grade. The \"0\" and \"1\" represent possible outcomes for the G1 grade. The outcome \"0\" happened with a probability of approximately 0.25 or 25%, and the outcome \"1\" happened with a probability of approximately 0.75 or 75%.\n\n3. The notable insight here is that with the given intervention of more study time, the likelihood of a higher G1 grade (outcome \"1\") is significantly more probable (75%) than a lower G1 grade (outcome \"0\"). This suggests that longer study times are strongly associated with higher grades, according to this model. However, remember that this is a simplified model and real-life outcomes can be influenced by a variety of other factors.", "1. Intervention or Query Performed:\nIn this scenario, there was no specific intervention made. Rather, a query was performed focusing on the \"Dalc\" node with a value of 4. \"Dalc\" typically refers to weekday alcohol consumption, so we can infer that this analysis is looking at the effect of moderate to high weekday alcohol consumption (given that the value is 4 on a scale that typically goes from 1-5) on a certain outcome.\n\n2. Results in Terms of the Target Variable (G1 grade):\nThe results are presented for the variable \"G1\" which we'll assume is indicative of first period grades on a binary scale (0 indicating a fail and 1 indicating a pass). The outcome shows that with a weekday alcohol consumption level of 4, there is roughly a 25% chance (0.25002332150965434) of getting a failing grade (0), and approximately a 75% chance (0.7499766784903457) of passing (1).\n\n3. Notable Insights or Implications:\nEven with higher levels of weekday alcohol consumption, this analysis indicates that there's a higher probability of passing than failing. However, this is merely a probability and not a guarantee. The results might also indicate that other factors, not considered in this analysis, may have a stronger impact on the G1 grade.", "1. This causal analysis looks at the impact of certain factors on a student's G1 grade. These factors include daily alcohol consumption (Dalc), weekend alcohol consumption (Walc), aspiration for higher education (higher), any past failures (failures), current health status (health), and the status of the student's parents living together or not (Pstatus). No interventions were made in this analysis.\n\n2. The results show two probabilities for G1 grade: around 18.8% for getting a 0 and about 81.2% for getting a 1. This suggests that, given the conditions or factors laid out, a student is more likely to achieve a G1 grade of 1.\n\n3. The insights from this analysis could be that maintaining good health, having aspirations for higher education, and not having any past failures may contribute to a student's likelihood of achieving a higher G1 grade. However, this analysis doesn't directly show the impact of each individual factor on the grade. Also, the results hint that even with some daily and weekend alcohol consumption, students can still perform well acadically, provided other factors are favorable. But this should be interpreted with caution, as excessive alcohol consumption can have negative impacts on academic performance and overall health.", "1. The intervention that was performed involved manipulating the amount of study time. The probabilities were set at 70% for long study time and 30% for short study time. The query then measured the effect of this intervention on the level of daily alcohol consumption (Dalc), specifically when Dalc is at level 4. \n\n2. The results show the impact of the intervention on the first period grade (G1). The target variable, G1, has two possible states: '0' and '1'. The results indicate that, given the intervention and high daily alcohol consumption, there is a 25% probability that the G1 grade will be '0' and a 75% probability that the G1 grade will be '1'. \n\n3. The key insight from these results is that when students invest a long time in studying (as per the 70% probability), even with high daily alcohol consumption (Dalc at level 4), they are still significantly more likely to receive a '1' grade in the first period (75% chance) than a '0' grade (25% chance). This could imply that the negative impact of high alcohol consumption on grades can be mitigated to some extent by longer study times."], "system": {"handlers": {"CONTEXT_UPDATE": [{"name": "CausalResponseGenerator", "updated_keys": ["scenarios"]}]}}}
+2025-06-17 18:07:24 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:175 | Validating transition from provide_summary to present_scenarios
+2025-06-17 18:07:24 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: provide_summary
+2025-06-17 18:07:24 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:223 | Transition from provide_summary to present_scenarios is valid
+2025-06-17 18:07:24 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:367 | State transition: provide_summary -> present_scenarios
+2025-06-17 18:07:24 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: To summarize, you've noticed a pattern where 'exam...
+2025-06-17 18:07:24 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: present_scenarios
+2025-06-17 18:07:24 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: present_scenarios
+2025-06-17 18:07:24 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: present_scenarios
+2025-06-17 18:08:32 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, user_question, question_nature, target_variable, input_variables, summary, scenarios, system
+2025-06-17 18:08:32 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:process_message:512 | Processing message: yes
+2025-06-17 18:08:32 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: present_scenarios
+2025-06-17 18:08:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: yes
+2025-06-17 18:08:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:271 | Trimmed 2 old messages from conversation history
+2025-06-17 18:08:32 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: present_scenarios
+2025-06-17 18:08:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: present_scenarios
+2025-06-17 18:08:32 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis.
+</persona>
+<current_state>
+<id>present_scenarios</id>
+<description>Present the generated scenarios</description>
+<purpose>Present the generated scenarios</purpose>
+<state_instructions>
+Present the generated scenarios in bullet points. 
+</state_instructions>
+<information_to_collect>
+scenarios
+</information_to_collect>
+<information_collection_instructions>
+- Collect all required information explicitly mentioned by the user.
+- If information is ambiguous or unclear, ask for clarification.
+- Store collected information in the `context_update` field of your response.
+- Only transition to a new state when all required information is collected.
+- If extra information seems relevant but the key is not declared, nest it under `_extra`.
+- Do not create or populate undeclared context keys, except within the `_extra` object.
+</information_collection_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "_conversation_start": "2025-06-17T18:00:44.650119",
+ "_timestamp": 1750154444.6501195,
+ "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json",
+ "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5",
+ "_previous_state": "provide_summary",
+ "_current_state": "present_scenarios",
+ "user_question": "Does exam pressure lead to reduction in curiosity",
+ "question_nature": "noticed",
+ "target_variable": "reduction in curiosity",
+ "input_variables": [
+  "exam pressure",
+  "lack of sleep",
+  "focus on memorisation over understanding"
+ ],
+ "summary": "You've noticed a pattern where 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding' lead to a 'reduction in curiosity'.",
+ "scenarios": [
+  "1. The intervention that was performed involved changing the amount of study time. The model was manipulated to represent two scenarios: one where a longer study time (\"long-studytime\") is allocated with a probability of 0.7, and another where a shorter study time (\"short-studytime\") is given with a probability of 0.3.\n\n2. The results show the impact of this intervention on the G1 grade. The \"0\" and \"1\" represent possible outcomes for the G1 grade. The outcome \"0\" happened with a probability of approximately 0.25 or 25%, and the outcome \"1\" happened with a probability of approximately 0.75 or 75%.\n\n3. The notable insight here is that with the given intervention of more study time, the likelihood of a higher G1 grade (outcome \"1\") is significantly more probable (75%) than a lower G1 grade (outcome \"0\"). This suggests that longer study times are strongly associated with higher grades, according to this model. However, remember that this is a simplified model and real-life outcomes can be influenced by a variety of other factors.",
+  "1. Intervention or Query Performed:\nIn this scenario, there was no specific intervention made. Rather, a query was performed focusing on the \"Dalc\" node with a value of 4. \"Dalc\" typically refers to weekday alcohol consumption, so we can infer that this analysis is looking at the effect of moderate to high weekday alcohol consumption (given that the value is 4 on a scale that typically goes from 1-5) on a certain outcome.\n\n2. Results in Terms of the Target Variable (G1 grade):\nThe results are presented for the variable \"G1\" which we'll assume is indicative of first period grades on a binary scale (0 indicating a fail and 1 indicating a pass). The outcome shows that with a weekday alcohol consumption level of 4, there is roughly a 25% chance (0.25002332150965434) of getting a failing grade (0), and approximately a 75% chance (0.7499766784903457) of passing (1).\n\n3. Notable Insights or Implications:\nEven with higher levels of weekday alcohol consumption, this analysis indicates that there's a higher probability of passing than failing. However, this is merely a probability and not a guarantee. The results might also indicate that other factors, not considered in this analysis, may have a stronger impact on the G1 grade.",
+  "1. This causal analysis looks at the impact of certain factors on a student's G1 grade. These factors include daily alcohol consumption (Dalc), weekend alcohol consumption (Walc), aspiration for higher education (higher), any past failures (failures), current health status (health), and the status of the student's parents living together or not (Pstatus). No interventions were made in this analysis.\n\n2. The results show two probabilities for G1 grade: around 18.8% for getting a 0 and about 81.2% for getting a 1. This suggests that, given the conditions or factors laid out, a student is more likely to achieve a G1 grade of 1.\n\n3. The insights from this analysis could be that maintaining good health, having aspirations for higher education, and not having any past failures may contribute to a student's likelihood of achieving a higher G1 grade. However, this analysis doesn't directly show the impact of each individual factor on the grade. Also, the results hint that even with some daily and weekend alcohol consumption, students can still perform well acadically, provided other factors are favorable. But this should be interpreted with caution, as excessive alcohol consumption can have negative impacts on academic performance and overall health.",
+  "1. The intervention that was performed involved manipulating the amount of study time. The probabilities were set at 70% for long study time and 30% for short study time. The query then measured the effect of this intervention on the level of daily alcohol consumption (Dalc), specifically when Dalc is at level 4. \n\n2. The results show the impact of the intervention on the first period grade (G1). The target variable, G1, has two possible states: '0' and '1'. The results indicate that, given the intervention and high daily alcohol consumption, there is a 25% probability that the G1 grade will be '0' and a 75% probability that the G1 grade will be '1'. \n\n3. The key insight from these results is that when students invest a long time in studying (as per the 70% probability), even with high daily alcohol consumption (Dalc at level 4), they are still significantly more likely to receive a '1' grade in the first period (75% chance) than a '0' grade (25% chance). This could imply that the negative impact of high alcohol consumption on grades can be mitigated to some extent by longer study times."
+ ],
+ "system": {
+  "handlers": {
+   "CONTEXT_UPDATE": [
+    {
+     "name": "CausalResponseGenerator",
+     "updated_keys": [
+      "scenarios"
+     ]
+    }
+   ]
+  }
+ }
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "system": "I see, you've noticed this pattern. Now, let's try to identify the factors that might influence this situation. Could you please list any factors that you think might be relevant?"
+ },
+ {
+  "user": "I've noticed this"
+ },
+ {
+  "system": "I understand that you've noticed this pattern. Now, could you please tell me what you believe is the target variable (the outcome you're interested in) and the input variables (factors that might influence the outcome) in this situation?"
+ },
+ {
+  "user": "lack of sleep and focus on memorisation over understanding"
+ },
+ {
+  "system": "Thank you for providing the factors. So, you're interested in the outcome 'reduction in curiosity', and you believe it might be influenced by 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding'. Is that correct?"
+ },
+ {
+  "user": "yus"
+ },
+ {
+  "system": "Great! Let's move on to providing some guidance on how to approach your analysis."
+ },
+ {
+  "user": "ok"
+ },
+ {
+  "system": "To summarize, you've noticed a pattern where 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding' lead to a 'reduction in curiosity'. Is my understanding correct?"
+ },
+ {
+  "user": "yes"
+ }
+]
+]]></conversation_history>
+<valid_states>
+present_scenarios, welcome
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "welcome",
+  "desc": "User wants to continue the conversation",
+  "priority": 1,
+  "conditions": [
+   {
+    "desc": "User wants to modify their topic",
+    "keys": []
+   }
+  ]
+ },
+ {
+  "to": "present_scenarios",
+  "desc": "Remain in current state if needed",
+  "priority": 101
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-17 18:08:32 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4
+2025-06-17 18:08:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: yes
+2025-06-17 18:08:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, user
+2025-06-17 18:08:32 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:166 | Using enhanced prompt with JSON instructions for gpt-4
+2025-06-17 18:08:36 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4 in 3.46s
+2025-06-17 18:08:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-17 18:08:36 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "welcome",
+    "context_update": {}
+  },
+  "message": "Great! Let's continue. How can I assist you further?",
+  "reasoning": "The user has confirmed the presented scenarios. Now, we can transition to the welcome state to continue the conversation."
+})
+2025-06-17 18:08:36 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:175 | Validating transition from present_scenarios to welcome
+2025-06-17 18:08:36 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: present_scenarios
+2025-06-17 18:08:36 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:223 | Transition from present_scenarios to welcome is valid
+2025-06-17 18:08:36 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:367 | State transition: present_scenarios -> welcome
+2025-06-17 18:08:36 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Great! Let's continue. How can I assist you furthe...
+2025-06-17 18:08:36 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: welcome
+2025-06-17 18:08:36 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-17 18:08:36 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-17 18:08:41 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: _conversation_start, _timestamp, _fsm_id, _conversation_id, _previous_state, _current_state, user_question, question_nature, target_variable, input_variables, summary, scenarios, system
+2025-06-17 18:08:41 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:process_message:512 | Processing message: no
+2025-06-17 18:08:41 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: welcome
+2025-06-17 18:08:41 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: no
+2025-06-17 18:08:41 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:271 | Trimmed 2 old messages from conversation history
+2025-06-17 18:08:41 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-17 18:08:41 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: welcome
+2025-06-17 18:08:41 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis.
+</persona>
+<current_state>
+<id>welcome</id>
+<description>Welcome state</description>
+<purpose>Introduce the system and understand the user's topic of interest</purpose>
+<state_instructions>
+Welcome the user and explain that you'll help them understand their questions. Ask them if are ready to start.
+</state_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "_conversation_start": "2025-06-17T18:00:44.650119",
+ "_timestamp": 1750154444.6501195,
+ "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json",
+ "_conversation_id": "fa1f89be-4f11-4069-9da0-83d0c305e5b5",
+ "_previous_state": "present_scenarios",
+ "_current_state": "welcome",
+ "user_question": "Does exam pressure lead to reduction in curiosity",
+ "question_nature": "noticed",
+ "target_variable": "reduction in curiosity",
+ "input_variables": [
+  "exam pressure",
+  "lack of sleep",
+  "focus on memorisation over understanding"
+ ],
+ "summary": "You've noticed a pattern where 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding' lead to a 'reduction in curiosity'.",
+ "scenarios": [
+  "1. The intervention that was performed involved changing the amount of study time. The model was manipulated to represent two scenarios: one where a longer study time (\"long-studytime\") is allocated with a probability of 0.7, and another where a shorter study time (\"short-studytime\") is given with a probability of 0.3.\n\n2. The results show the impact of this intervention on the G1 grade. The \"0\" and \"1\" represent possible outcomes for the G1 grade. The outcome \"0\" happened with a probability of approximately 0.25 or 25%, and the outcome \"1\" happened with a probability of approximately 0.75 or 75%.\n\n3. The notable insight here is that with the given intervention of more study time, the likelihood of a higher G1 grade (outcome \"1\") is significantly more probable (75%) than a lower G1 grade (outcome \"0\"). This suggests that longer study times are strongly associated with higher grades, according to this model. However, remember that this is a simplified model and real-life outcomes can be influenced by a variety of other factors.",
+  "1. Intervention or Query Performed:\nIn this scenario, there was no specific intervention made. Rather, a query was performed focusing on the \"Dalc\" node with a value of 4. \"Dalc\" typically refers to weekday alcohol consumption, so we can infer that this analysis is looking at the effect of moderate to high weekday alcohol consumption (given that the value is 4 on a scale that typically goes from 1-5) on a certain outcome.\n\n2. Results in Terms of the Target Variable (G1 grade):\nThe results are presented for the variable \"G1\" which we'll assume is indicative of first period grades on a binary scale (0 indicating a fail and 1 indicating a pass). The outcome shows that with a weekday alcohol consumption level of 4, there is roughly a 25% chance (0.25002332150965434) of getting a failing grade (0), and approximately a 75% chance (0.7499766784903457) of passing (1).\n\n3. Notable Insights or Implications:\nEven with higher levels of weekday alcohol consumption, this analysis indicates that there's a higher probability of passing than failing. However, this is merely a probability and not a guarantee. The results might also indicate that other factors, not considered in this analysis, may have a stronger impact on the G1 grade.",
+  "1. This causal analysis looks at the impact of certain factors on a student's G1 grade. These factors include daily alcohol consumption (Dalc), weekend alcohol consumption (Walc), aspiration for higher education (higher), any past failures (failures), current health status (health), and the status of the student's parents living together or not (Pstatus). No interventions were made in this analysis.\n\n2. The results show two probabilities for G1 grade: around 18.8% for getting a 0 and about 81.2% for getting a 1. This suggests that, given the conditions or factors laid out, a student is more likely to achieve a G1 grade of 1.\n\n3. The insights from this analysis could be that maintaining good health, having aspirations for higher education, and not having any past failures may contribute to a student's likelihood of achieving a higher G1 grade. However, this analysis doesn't directly show the impact of each individual factor on the grade. Also, the results hint that even with some daily and weekend alcohol consumption, students can still perform well acadically, provided other factors are favorable. But this should be interpreted with caution, as excessive alcohol consumption can have negative impacts on academic performance and overall health.",
+  "1. The intervention that was performed involved manipulating the amount of study time. The probabilities were set at 70% for long study time and 30% for short study time. The query then measured the effect of this intervention on the level of daily alcohol consumption (Dalc), specifically when Dalc is at level 4. \n\n2. The results show the impact of the intervention on the first period grade (G1). The target variable, G1, has two possible states: '0' and '1'. The results indicate that, given the intervention and high daily alcohol consumption, there is a 25% probability that the G1 grade will be '0' and a 75% probability that the G1 grade will be '1'. \n\n3. The key insight from these results is that when students invest a long time in studying (as per the 70% probability), even with high daily alcohol consumption (Dalc at level 4), they are still significantly more likely to receive a '1' grade in the first period (75% chance) than a '0' grade (25% chance). This could imply that the negative impact of high alcohol consumption on grades can be mitigated to some extent by longer study times."
+ ],
+ "system": {
+  "handlers": {
+   "CONTEXT_UPDATE": [
+    {
+     "name": "CausalResponseGenerator",
+     "updated_keys": [
+      "scenarios"
+     ]
+    }
+   ]
+  }
+ }
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "system": "I understand that you've noticed this pattern. Now, could you please tell me what you believe is the target variable (the outcome you're interested in) and the input variables (factors that might influence the outcome) in this situation?"
+ },
+ {
+  "user": "lack of sleep and focus on memorisation over understanding"
+ },
+ {
+  "system": "Thank you for providing the factors. So, you're interested in the outcome 'reduction in curiosity', and you believe it might be influenced by 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding'. Is that correct?"
+ },
+ {
+  "user": "yus"
+ },
+ {
+  "system": "Great! Let's move on to providing some guidance on how to approach your analysis."
+ },
+ {
+  "user": "ok"
+ },
+ {
+  "system": "To summarize, you've noticed a pattern where 'exam pressure', 'lack of sleep', and 'focus on memorisation over understanding' lead to a 'reduction in curiosity'. Is my understanding correct?"
+ },
+ {
+  "user": "yes"
+ },
+ {
+  "system": "Great! Let's continue. How can I assist you further?"
+ },
+ {
+  "user": "no"
+ }
+]
+]]></conversation_history>
+<valid_states>
+end_conversation, gather_question, welcome
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "end_conversation",
+  "desc": "End the conversation",
+  "priority": 0
+ },
+ {
+  "to": "gather_question",
+  "desc": "After greeting, move to gathering the question",
+  "priority": 0
+ },
+ {
+  "to": "welcome",
+  "desc": "Remain in current state if needed",
+  "priority": 100
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-17 18:08:41 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4
+2025-06-17 18:08:41 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: no
+2025-06-17 18:08:41 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, user
+2025-06-17 18:08:41 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:166 | Using enhanced prompt with JSON instructions for gpt-4
+2025-06-17 18:08:47 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4 in 5.35s
+2025-06-17 18:08:47 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-17 18:08:47 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "welcome",
+    "context_update": {}
+  },
+  "message": "No problem, take your time. Let me know when you're ready to start.",
+  "reasoning": "The user is not ready to start yet, so I'm keeping the state as 'welcome' and letting the user know they can start whenever they're ready."
+})
+2025-06-17 18:08:47 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:175 | Validating transition from welcome to welcome
+2025-06-17 18:08:47 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-17 18:08:47 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:validate_transition:188 | Staying in the same state - valid
+2025-06-17 18:08:47 | INFO     | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:_process_user_input:367 | State transition: welcome -> welcome
+2025-06-17 18:08:47 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: No problem, take your time. Let me know when you'r...
+2025-06-17 18:08:47 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: welcome
+2025-06-17 18:08:47 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-17 18:08:47 | DEBUG    | conv_id: fa1f89be-4f11-4069-9da0-83d0c305e5b5 | llm_fsm.fsm:get_current_state:154 | Current state: welcome

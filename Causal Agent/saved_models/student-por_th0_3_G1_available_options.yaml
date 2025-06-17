@@ -1,0 +1,131 @@
+nodes:
+  address:
+    type: categorical
+    values:
+    - R
+    - U
+  Pstatus:
+    type: categorical
+    values:
+    - A
+    - T
+  Medu:
+    type: discretized
+    states:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+  Fedu:
+    type: discretized
+    states:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+  traveltime:
+    type: discretized
+    states:
+    - 1
+    - 2
+    - 3
+    - 4
+  studytime:
+    type: categorical
+    values:
+    - long-studytime
+    - short-studytime
+  failures:
+    type: categorical
+    values:
+    - have-failure
+    - no-failure
+  schoolsup:
+    type: categorical
+    values:
+    - 'no'
+    - 'yes'
+  paid:
+    type: categorical
+    values:
+    - 'no'
+    - 'yes'
+  activities:
+    type: categorical
+    values:
+    - 'no'
+    - 'yes'
+  nursery:
+    type: categorical
+    values:
+    - 'no'
+    - 'yes'
+  higher:
+    type: categorical
+    values:
+    - 'no'
+    - 'yes'
+  internet:
+    type: categorical
+    values:
+    - 'no'
+    - 'yes'
+  romantic:
+    type: categorical
+    values:
+    - 'no'
+    - 'yes'
+  famrel:
+    type: discretized
+    states:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+  freetime:
+    type: discretized
+    states:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+  goout:
+    type: discretized
+    states:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+  Dalc:
+    type: discretized
+    states:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+  Walc:
+    type: discretized
+    states:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+  health:
+    type: discretized
+    states:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+notes:
+  interventions: Probabilities must sum to 1.0
+  queries: Use the original categorical values or discretized states
+  target_column: Target column G1 is excluded from available options

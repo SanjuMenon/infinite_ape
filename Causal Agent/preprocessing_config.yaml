@@ -1,0 +1,34 @@
+# preprocessing_config.yaml
+drop_columns:
+  - school
+  - sex
+  - age
+  - Mjob
+  - Fjob
+  - reason
+  - guardian
+
+categorical_mappings:
+  failures:
+    0: no-failure
+    1: have-failure
+    2: have-failure
+    3: have-failure
+  studytime:
+    1: short-studytime
+    2: short-studytime
+    3: long-studytime
+    4: long-studytime
+
+discretize_params:
+  absences:
+    split_points: [1, 10]
+  G1:
+    split_points: [10]
+  G2:
+    split_points: [10]
+  G3:
+    split_points: [10]
+
+tabu_edges:
+  - [higher, Medu]

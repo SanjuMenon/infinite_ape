@@ -1,0 +1,19 @@
+2025-06-08 20:33:01 | INFO     | conv_id: GENERAL      | llm_fsm.llm:__init__:80 | Initializing LiteLLMInterface with model: gpt-4o-mini
+2025-06-08 20:33:01 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:__init__:97 | No API key provided, assuming it's set in environment variables
+2025-06-08 20:33:01 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:__init__:102 | Enabled JSON schema validation in LiteLLM
+2025-06-08 20:33:01 | INFO     | conv_id: GENERAL      | llm_fsm.api:__init__:311 | LLM_FSM initialized with default LiteLLM interface, model=gpt-4o-mini
+2025-06-08 20:33:01 | INFO     | conv_id: GENERAL      | llm_fsm.utilities:load_fsm_from_file:106 | Loading FSM definition from file: fsm.json
+2025-06-08 20:33:01 | INFO     | conv_id: GENERAL      | llm_fsm.utilities:load_fsm_from_file:112 | Successfully loaded FSM definition: fsm_builder_bot
+2025-06-08 20:33:01 | ERROR    | conv_id: GENERAL      | llm_fsm.utilities:load_fsm_from_file:127 | Error loading FSM definition from fsm.json: 4 validation errors for FSMDefinition
+states.delegate_to_metadata.transitions.0.target_state
+  Field required [type=missing, input_value={'to': 'add_state', 'desc...mplete', 'priority': 10}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+states.delegate_to_metadata.transitions.0.description
+  Field required [type=missing, input_value={'to': 'add_state', 'desc...mplete', 'priority': 10}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+states.delegate_to_metadata.transitions.1.target_state
+  Field required [type=missing, input_value={'to': 'delegate_to_metad...omplete', 'priority': 5}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+states.delegate_to_metadata.transitions.1.description
+  Field required [type=missing, input_value={'to': 'delegate_to_metad...omplete', 'priority': 5}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing

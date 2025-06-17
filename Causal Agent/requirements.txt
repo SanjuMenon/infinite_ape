@@ -1,0 +1,3 @@
+python-dotenv==1.1.0
+openai-agents==0.0.16
+causalnex==0.12.1

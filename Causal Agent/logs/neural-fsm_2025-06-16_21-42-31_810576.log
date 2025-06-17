@@ -1,0 +1,341 @@
+2025-06-16 21:42:33 | INFO     | conv_id: GENERAL      | llm_fsm.llm:__init__:80 | Initializing LiteLLMInterface with model: gpt-4
+2025-06-16 21:42:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:__init__:87 | Setting OPENAI_API_KEY environment variable
+2025-06-16 21:42:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:__init__:102 | Enabled JSON schema validation in LiteLLM
+2025-06-16 21:42:33 | INFO     | conv_id: GENERAL      | llm_fsm.api:__init__:311 | LLM_FSM initialized with default LiteLLM interface, model=gpt-4
+2025-06-16 21:42:33 | INFO     | conv_id: GENERAL      | llm_fsm.utilities:load_fsm_from_file:106 | Loading FSM definition from file: C:\Users\Sanju Menon\Documents\GitHub\OrchestrableAI\stigmergicai\openai-agents\form_filling.json
+2025-06-16 21:42:33 | INFO     | conv_id: GENERAL      | llm_fsm.utilities:load_fsm_from_file:112 | Successfully loaded FSM definition: Counterfactual Question Classification FSM
+2025-06-16 21:42:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: Counterfactual Question Classification FSM
+2025-06-16 21:42:33 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: Counterfactual Question Classification FSM
+2025-06-16 21:42:33 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: end_conversation
+2025-06-16 21:42:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:__post_init__:158 | PromptBuilder initialized with effective max_history_size=5
+2025-06-16 21:42:33 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:__init__:65 | FSM Manager initialized with max_history_size=5, max_message_length=1000
+2025-06-16 21:42:33 | INFO     | conv_id: GENERAL      | llm_fsm.api:__init__:354 | LLM_FSM fully initialized with max_history_size=5
+2025-06-16 21:42:33 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:get_fsm_definition:101 | Loading FSM definition: fsm_file_C:\Users\Sanju Menon\Documents\GitHub\OrchestrableAI\stigmergicai\openai-agents\form_filling.json
+2025-06-16 21:42:33 | INFO     | conv_id: GENERAL      | llm_fsm.fsm:_create_instance:116 | Creating new FSM instance for fsm_file_C:\Users\Sanju Menon\Documents\GitHub\OrchestrableAI\stigmergicai\openai-agents\form_filling.json, starting at state: welcome
+2025-06-16 21:42:33 | INFO     | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:start_conversation:462 | Started new conversation [4b5aa4c1-ed3c-4df0-8746-056beaf564c7] with FSM [fsm_file_C:\Users\Sanju Menon\Documents\GitHub\OrchestrableAI\stigmergicai\openai-agents\form_filling.json]
+2025-06-16 21:42:33 | INFO     | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: welcome
+2025-06-16 21:42:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: 
+2025-06-16 21:42:33 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-16 21:42:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: welcome
+2025-06-16 21:42:33 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis.
+</persona>
+<current_state>
+<id>welcome</id>
+<description>Welcome state</description>
+<purpose>Introduce the system and understand the user's topic of interest</purpose>
+<state_instructions>
+Welcome the user and explain that you'll help them understand their questions. Ask them if are ready to start.
+</state_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "_conversation_start": "2025-06-16T21:42:33.871365",
+ "_timestamp": 1750081353.8713655,
+ "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json",
+ "_conversation_id": "4b5aa4c1-ed3c-4df0-8746-056beaf564c7"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ }
+]
+]]></conversation_history>
+<valid_states>
+end_conversation, gather_topic, welcome
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "end_conversation",
+  "desc": "End the conversation",
+  "priority": 0
+ },
+ {
+  "to": "gather_topic",
+  "desc": "After greeting, move to gathering the topic",
+  "priority": 0
+ },
+ {
+  "to": "welcome",
+  "desc": "Remain in current state if needed",
+  "priority": 100
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-16 21:42:33 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4
+2025-06-16 21:42:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: 
+2025-06-16 21:42:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, user
+2025-06-16 21:42:33 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:166 | Using enhanced prompt with JSON instructions for gpt-4
+2025-06-16 21:42:42 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4 in 8.49s
+2025-06-16 21:42:42 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-16 21:42:42 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "gather_topic",
+    "context_update": {}
+  },
+  "message": "Welcome! I'm here to help you understand and classify your counterfactual questions, providing guidance on how to approach your analysis. Are you ready to start?",
+  "reasoning": "As per the state instructions, I welcomed the user and asked if they are ready to start. Since there is no user input to process in this state, I'm transitioning to the 'gather_topic' state."
+})
+2025-06-16 21:42:42 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:validate_transition:175 | Validating transition from welcome to gather_topic
+2025-06-16 21:42:42 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-16 21:42:42 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:validate_transition:223 | Transition from welcome to gather_topic is valid
+2025-06-16 21:42:42 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Welcome! I'm here to help you understand and class...
+2025-06-16 21:42:42 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:validate_states:173 | Validating FSM definition: Counterfactual Question Classification FSM
+2025-06-16 21:42:42 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:229 | FSM definition validated successfully: Counterfactual Question Classification FSM
+2025-06-16 21:42:42 | INFO     | conv_id: GENERAL      | llm_fsm.definitions:validate_states:230 | Reachable terminal states: end_conversation
+2025-06-16 21:42:42 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-16 21:42:50 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:get_conversation_data:584 | Retrieving collected data with keys: _conversation_start, _timestamp, _fsm_id, _conversation_id
+2025-06-16 21:42:50 | INFO     | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:process_message:512 | Processing message: yes
+2025-06-16 21:42:50 | INFO     | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:_process_user_input:246 | Processing user input in state: welcome
+2025-06-16 21:42:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_user_message:261 | Adding user message: yes
+2025-06-16 21:42:50 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-16 21:42:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.prompts:build_system_prompt:555 | Building system prompt for state: welcome
+2025-06-16 21:42:50 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:_process_user_input:280 | system_prompt:
+<task>
+You are the Natural Language Understanding component in a Finite State Machine (FSM) based conversational system.
+Your responsibilities:
+- Process user input based on current state (<current_state>)
+- Collect required information from input to `context_update`
+- Select appropriate transitions from <transitions>
+- Generate messages based on the instructions
+- Follow the <response> instructions to generate valid JSON output
+</task>
+<fsm>
+<persona>
+A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis.
+</persona>
+<current_state>
+<id>welcome</id>
+<description>Welcome state</description>
+<purpose>Introduce the system and understand the user's topic of interest</purpose>
+<state_instructions>
+Welcome the user and explain that you'll help them understand their questions. Ask them if are ready to start.
+</state_instructions>
+</current_state>
+<current_context><![CDATA[
+{
+ "_conversation_start": "2025-06-16T21:42:33.871365",
+ "_timestamp": 1750081353.8713655,
+ "_fsm_id": "fsm_file_C:\\Users\\Sanju Menon\\Documents\\GitHub\\OrchestrableAI\\stigmergicai\\openai-agents\\form_filling.json",
+ "_conversation_id": "4b5aa4c1-ed3c-4df0-8746-056beaf564c7"
+}
+]]></current_context>
+<conversation_history><![CDATA[
+[
+ {
+  "user": ""
+ },
+ {
+  "system": "Welcome! I'm here to help you understand and classify your counterfactual questions, providing guidance on how to approach your analysis. Are you ready to start?"
+ },
+ {
+  "user": "yes"
+ }
+]
+]]></conversation_history>
+<valid_states>
+end_conversation, gather_topic, welcome
+</valid_states>
+<transitions><![CDATA[
+[
+ {
+  "to": "end_conversation",
+  "desc": "End the conversation",
+  "priority": 0
+ },
+ {
+  "to": "gather_topic",
+  "desc": "After greeting, move to gathering the topic",
+  "priority": 0
+ },
+ {
+  "to": "welcome",
+  "desc": "Remain in current state if needed",
+  "priority": 100
+ }
+]
+]]></transitions>
+<response>
+Your response must be valid JSON with the following structure:
+{
+          "transition": {
+            "target_state": "state_id",
+            "context_update": {
+              "key1": "value1",
+              "_extra": {}
+            }
+          },
+          "message": "Your message",
+          "reasoning": "Your reasoning"
+        }
+Where:
+- `transition.target_state` is REQUIRED and must be one of the valid states
+- `transition.context_update` is REQUIRED, containing any extracted information
+- `message` is REQUIRED and contains the user-facing text
+- `reasoning` is OPTIONAL and explains your decision (not shown to user)
+- `_extra` is for storing relevant information not explicitly requested
+</response>
+<examples><![CDATA[
+
+Example 1:
+User message: "My name is John Smith"
+Current state: collect_name
+Required information: name
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_email",
+    "context_update": {
+      "name": "John Smith"
+    }
+  },
+  "message": "Nice to meet you, John Smith! Could you please provide your email address?",
+  "reasoning": "User provided their name, so I'm transitioning to collect email"
+}
+
+Example 2:
+User message: "I'd like to change my phone number to 555-123-4567"
+Current state: summary
+Required information: none
+
+Response:
+{
+  "transition": {
+    "target_state": "collect_phone",
+    "context_update": {
+      "_extra": {
+        "phone_number": "555-123-4567"
+      }
+    }
+  },
+  "message": "I understand you'd like to update your phone number. Let me help you with that.",
+  "reasoning": "User wants to change phone number, so transitioning to phone collection state"
+}
+
+]]></examples>
+<guidelines>
+- Extract all required information from user input
+- Store relevant information even if unexpected (using `_extra`)
+- Reference current context for continuity
+- Only transition when conditions are met
+- Maintain the specified persona consistently
+</guidelines>
+<format_rules>
+Return ONLY valid JSON - no markdown code fences, no additional explanations, no comments.
+Do not add keys not specified in the schema.
+Ensure all values are properly quoted and formatted according to JSON standards.
+Do not mention any of the above to the user. You can use the context, but never show it to the user
+</format_rules>
+</fsm>
+2025-06-16 21:42:50 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:123 | Sending request to gpt-4
+2025-06-16 21:42:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:124 | User message: yes
+2025-06-16 21:42:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:134 | Supported parameters for gpt-4: frequency_penalty, logit_bias, logprobs, top_logprobs, max_tokens, max_completion_tokens, modalities, prediction, n, presence_penalty, seed, stop, stream, stream_options, temperature, top_p, tools, tool_choice, function_call, functions, max_retries, extra_headers, parallel_tool_calls, audio, web_search_options, user
+2025-06-16 21:42:50 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:166 | Using enhanced prompt with JSON instructions for gpt-4
+2025-06-16 21:42:56 | INFO     | conv_id: GENERAL      | llm_fsm.llm:send_request:194 | Received response from gpt-4 in 5.76s
+2025-06-16 21:42:56 | DEBUG    | conv_id: GENERAL      | llm_fsm.llm:send_request:214 | Parsing response as JSON
+2025-06-16 21:42:56 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:_process_user_input:285 | system_response:
+{
+  "transition": {
+    "target_state": "gather_topic",
+    "context_update": {}
+  },
+  "message": "Great! Let's get started. Could you please tell me the topic of your counterfactual question?",
+  "reasoning": "The user has confirmed they are ready to start, so I am transitioning to the 'gather_topic' state to collect the topic of their counterfactual question."
+})
+2025-06-16 21:42:56 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:validate_transition:175 | Validating transition from welcome to gather_topic
+2025-06-16 21:42:56 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:get_current_state:154 | Current state: welcome
+2025-06-16 21:42:56 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:validate_transition:223 | Transition from welcome to gather_topic is valid
+2025-06-16 21:42:56 | INFO     | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:_process_user_input:367 | State transition: welcome -> gather_topic
+2025-06-16 21:42:56 | DEBUG    | conv_id: GENERAL      | llm_fsm.definitions:add_system_message:285 | Adding system message: Great! Let's get started. Could you please tell me...
+2025-06-16 21:42:56 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:get_conversation_state:612 | Current conversation state: gather_topic
+2025-06-16 21:42:56 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:get_current_state:154 | Current state: gather_topic
+2025-06-16 21:42:56 | DEBUG    | conv_id: 4b5aa4c1-ed3c-4df0-8746-056beaf564c7 | llm_fsm.fsm:get_current_state:154 | Current state: gather_topic

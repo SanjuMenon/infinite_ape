@@ -1,0 +1,5 @@
+strict digraph {
+G3;
+G1;
+G3 -> G1 [origin=unknown];
+}
