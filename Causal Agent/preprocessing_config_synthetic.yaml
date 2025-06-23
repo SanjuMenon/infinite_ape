@@ -1,0 +1,27 @@
+# preprocessing_config_synthetic.yaml
+categorical_mappings:
+  Currency:
+    USD: USD
+    SGD: SGD
+    HKD: HKD
+  "Tenor Bucket":
+    0m: 0m
+    1m: 1m
+    3m: 3m
+    6m: 6m
+    1yr: 1yr
+    "Other Tenors": Other Tenors
+  "Amount Bucket":
+    "Less_than_10m_USD": Less_than_10m_USD
+    "Between_10m_and_50m_USD": Between_10m_and_50m_USD
+    "More_than_50m_USD": More_than_50m_USD
+  "Margin Utilisation Category":
+    Low: Low
+    Medium: Medium
+    High: High
+
+# No discretize_params needed since all columns are already categorical
+# and have predefined buckets/categories
+
+# No tabu_edges needed for this dataset as it doesn't have the same
+# hierarchical relationships as the student dataset 

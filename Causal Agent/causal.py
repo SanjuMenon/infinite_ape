@@ -98,7 +98,12 @@ class CausalInferenceModel:
         config = self._load_config()
         if config and 'discretize_params' in config:
             return config['discretize_params']
+        
+        # For synthetic dataset, no discretization needed
+        if 'synthetic_dataset' in self.data_file:
+            return {}
             
+        # Default for student dataset
         return {
             'absences': {'split_points': [1, 10]},
             'G1': {'split_points': [10]},
@@ -111,7 +116,12 @@ class CausalInferenceModel:
         config = self._load_config()
         if config and 'drop_columns' in config:
             return config['drop_columns']
+        
+        # For synthetic dataset, don't drop any columns
+        if 'synthetic_dataset' in self.data_file:
+            return []
             
+        # Default for student dataset
         return ['school', 'sex', 'age', 'Mjob', 'Fjob', 'reason', 'guardian']
 
     def _get_tabu_edges(self):
@@ -119,7 +129,12 @@ class CausalInferenceModel:
         config = self._load_config()
         if config and 'tabu_edges' in config:
             return config['tabu_edges']
+        
+        # For synthetic dataset, no tabu edges defined
+        if 'synthetic_dataset' in self.data_file:
+            return []
             
+        # Default for student dataset
         return [("higher", "Medu")]
 
     def preprocess_data(self, data, drop_columns=None, discretize_columns=None, categorical_mappings=None):
@@ -140,24 +155,21 @@ class CausalInferenceModel:
                 raise ValueError(f"Cannot drop target column '{self.target_column}'")
             data = data.drop(columns=drop_columns)
             
-        # Handle categorical variables
+        # Apply custom categorical mappings first
+        if categorical_mappings:
+            for col, mapping in categorical_mappings.items():
+                if col in data.columns:
+                    data[col] = data[col].astype(str).str.strip()
+                    data[col] = data[col].map(mapping).fillna(data[col])
+                    print(f"After mapping {col}: {data[col].unique()}")
+        
+        # Now label encode all non-numeric columns
         non_numeric_columns = list(data.select_dtypes(exclude=[np.number]).columns)
         for col in non_numeric_columns:
             le = LabelEncoder()
             data[col] = le.fit_transform(data[col])
             self.label_encoders[col] = le
-            
-        # Apply custom categorical mappings and encode them
-        if categorical_mappings:
-            for col, mapping in categorical_mappings.items():
-                if col in data.columns:
-                    # Apply the mapping
-                    data[col] = data[col].map(mapping)
-                    # Encode the mapped values back to numeric
-                    le = LabelEncoder()
-                    data[col] = le.fit_transform(data[col])
-                    self.label_encoders[col] = le
-            
+        
         # Discretize specified columns
         if discretize_columns:
             for col, params in discretize_columns.items():
@@ -166,27 +178,27 @@ class CausalInferenceModel:
                         method=params.get('method', 'fixed'),
                         numeric_split_points=params.get('split_points', [])
                     ).transform(data[col].values)
-                    
+        
         # Ensure all columns are numeric
         for col in data.columns:
             if not np.issubdtype(data[col].dtype, np.number):
                 raise ValueError(f"Column '{col}' is not numeric after preprocessing")
-                
+        
         # Check for any NaN or infinite values
         if data.isna().any().any():
             raise ValueError("Data contains NaN values after preprocessing")
         if np.isinf(data.values).any():
             raise ValueError("Data contains infinite values after preprocessing")
-            
+        
         # Ensure all values are non-negative
         if (data < 0).any().any():
             raise ValueError("Data contains negative values after preprocessing")
-            
+        
         # Ensure all columns have at least 2 unique values
         for col in data.columns:
             if len(data[col].unique()) < 2:
                 raise ValueError(f"Column '{col}' has less than 2 unique values after preprocessing")
-                
+        
         self.discretised_data = data
         return data
     
@@ -348,46 +360,46 @@ class CausalInferenceModel:
     def query_marginals(self, observations=None):
         """
         Query the marginal probabilities
-        
         Args:
-            observations (dict): Dictionary of observed values. Can use original categorical values
-                               which will be automatically converted to their numeric encodings.
+            observations (dict): Dictionary of observed values. Can use original categorical values (strings)
+                                   which will be automatically converted to their numeric encodings.
         """
         if self.ie is None:
             raise ValueError("Model must be fitted before querying marginals")
-            
+        
         if observations:
             # Convert categorical string values to their numeric encodings
             encoded_observations = {}
             for var, val in observations.items():
                 if var in self.label_encoders:
-                    # Get the encoder for this variable
                     le = self.label_encoders[var]
-                    # Convert the string value to its numeric encoding
+                    # If value is not in classes_, raise a helpful error
+                    if val not in le.classes_:
+                        raise ValueError(f"Value '{val}' not valid for variable '{var}'. Valid values: {list(le.classes_)}")
                     encoded_observations[var] = le.transform([val])[0]
                 else:
                     encoded_observations[var] = val
             return self.ie.query(encoded_observations)
         return self.ie.query()
-    
+
     def do_intervention(self, node, distribution):
         """
         Perform do-calculus intervention
-        
         Args:
             node (str): Node to intervene on
-            distribution (dict): New distribution for the node. Can use original categorical values
-                               which will be automatically converted to their numeric encodings.
+            distribution (dict): New distribution for the node. Can use original categorical values (strings)
+                                   which will be automatically converted to their numeric encodings.
         """
         if self.ie is None:
             raise ValueError("Model must be fitted before performing interventions")
-            
+        
         if node in self.label_encoders:
-            # Convert categorical string values to their numeric encodings
             le = self.label_encoders[node]
             encoded_distribution = {}
             for val, prob in distribution.items():
-                # Convert the string value to its numeric encoding
+                # If value is not in classes_, raise a helpful error
+                if val not in le.classes_:
+                    raise ValueError(f"Value '{val}' not valid for variable '{node}'. Valid values: {list(le.classes_)}")
                 encoded_val = le.transform([val])[0]
                 encoded_distribution[encoded_val] = prob
             self.ie.do_intervention(node, encoded_distribution)
@@ -505,8 +517,22 @@ class CausalInferenceModel:
                 self.model = self.load_model(self.full_model_path)
             else:
                 print(f"Creating new model and saving to {self.full_model_path}")
+                
+                # Determine delimiter based on file content
+                delimiter = self._detect_delimiter()
+                print(f"Detected delimiter: '{delimiter}'")
+                
                 # Load and preprocess data
-                data = pd.read_csv(self.data_file, delimiter=';')
+                data = pd.read_csv(self.data_file, delimiter=delimiter)
+                print("Columns in loaded data:", data.columns.tolist())
+                for col in data.columns:
+                    unique_vals = data[col].unique()
+                    print(f"Column '{col}' unique values ({len(unique_vals)}): {unique_vals}")
+                    if len(unique_vals) < 2:
+                        print(f"WARNING: Column '{col}' has less than 2 unique values in the raw input data!")
+                
+                # Sanitize column names to be valid variable names
+                data.columns = [col.strip().replace(' ', '_').replace('-', '_') for col in data.columns]
                 
                 # Define preprocessing configuration
                 if preprocessing_config is None:
@@ -544,14 +570,41 @@ class CausalInferenceModel:
             print(f"Querying marginals with conditions: {query}")
             marginals = self.model.query_marginals(query)
             
-            # Return only the target variable's probabilities
+            # Return only the target variable's probabilities, mapped back to original values if categorical
             if self.target_column in marginals:
-                return {self.target_column: marginals[self.target_column]}
+                result = marginals[self.target_column]
+                if self.target_column in self.label_encoders:
+                    le = self.label_encoders[self.target_column]
+                    # Map keys back to original values
+                    result = {le.inverse_transform([k])[0]: v for k, v in result.items()}
+                return {self.target_column: result}
             else:
                 raise ValueError(f"Target column '{self.target_column}' not found in marginals")
         except Exception as e:
             print(f"Error in run_causal_analysis: {e}")
             return None
+
+    def _detect_delimiter(self):
+        """
+        Detect the delimiter used in the CSV file by reading the first few lines
+        """
+        try:
+            with open(self.data_file, 'r') as f:
+                first_line = f.readline().strip()
+                
+            # Check for common delimiters
+            if ';' in first_line:
+                return ';'
+            elif ',' in first_line:
+                return ','
+            elif '\t' in first_line:
+                return '\t'
+            else:
+                # Default to comma if no obvious delimiter found
+                return ','
+        except Exception as e:
+            print(f"Warning: Could not detect delimiter, using comma as default: {e}")
+            return ','
 
     def show_available_options(self):
         """
@@ -605,36 +658,73 @@ class CausalInferenceModel:
 
 # Example usage:
 if __name__ == "__main__":
-    # Initialize the model once
-    model = CausalInferenceModel(
-        data_file='student-por.csv',
-        model_path='saved_models',
-        target_column='G1',
-        threshold=0.3,
-        config_file='preprocessing_config.yaml'
-    )
+    # # Initialize the model once
+    # model = CausalInferenceModel(
+    #     data_file='student-por.csv',
+    #     model_path='saved_models',
+    #     target_column='G1',
+    #     threshold=0.3,
+    #     config_file='preprocessing_config.yaml'
+    # )
     
-    # Basic query
-    results = model.run_causal_analysis()
-    print("\nBasic query results:")
-    print(results)
+    # # Basic query
+    # results = model.run_causal_analysis()
+    # print("\nBasic query results:")
+    # print(results)
     
-    # With intervention
-    results = model.run_causal_analysis(
-        intervention={'higher': {'yes': 1.0, 'no': 0.0}}
-    )
-    print("\nResults with intervention:")
-    print(results)
+    # # With intervention
+    # results = model.run_causal_analysis(
+    #     intervention={'higher': {'yes': 1.0, 'no': 0.0}}
+    # )
+    # print("\nResults with intervention:")
+    # print(results)
     
 
-    # With intervention and query
-    results = model.run_causal_analysis(
-        intervention={'higher': {'yes': 1.0, 'no': 0.0}},
-        query={'studytime': 'short-studytime'}
+    # # With intervention and query
+    # results = model.run_causal_analysis(
+    #     intervention={'higher': {'yes': 1.0, 'no': 0.0}},
+    #     query={'studytime': 'short-studytime'}
+    # )
+    # print("\nResults with intervention and query:")
+    # print(results)
+    # print(model.show_available_options())
+
+    # Synthetic Dataset Example
+    print("\n" + "="*50)
+    print("SYNTHETIC DATASET ANALYSIS")
+    print("="*50)
+    
+    # Initialize the synthetic dataset model
+    synthetic_model = CausalInferenceModel(
+        data_file='synthetic_dataset.csv',
+        model_path='saved_models_synthetic',
+        target_column='Margin_Utilisation_Category',
+        threshold=0.0,
+        config_file='preprocessing_config_synthetic.yaml'
     )
-    print("\nResults with intervention and query:")
-    print(results)
-    print(model.show_available_options())
+    
+    print("\nRunning basic query (no intervention, no query):")
+    results = synthetic_model.run_causal_analysis()
+    print("Results:", results)
+
+    print("\nRunning intervention on Currency (USD):")
+    results = synthetic_model.run_causal_analysis(
+        intervention={'Currency': {'USD': 1.0, 'SGD': 0.0, 'HKD': 0.0}}
+    )
+    print("Results:", results)
+
+    print("\nRunning intervention on Amount_Bucket (More_than_50m_USD) and query Currency=USD:")
+    results = synthetic_model.run_causal_analysis(
+        intervention={'Amount_Bucket': {'More_than_50m_USD': 1.0, 'Between_10m_and_50m_USD': 0.0, 'Less_than_10m_USD': 0.0}},
+        query={'Currency': 'USD'}
+    )
+    print("Results:", results)
+    
+    # Show available options for synthetic dataset
+    print(synthetic_model.show_available_options())
+
+    for col in synthetic_model.label_encoders:
+        print(f"Label encoder for {col}: {synthetic_model.label_encoders[col].classes_}")
 
 
 

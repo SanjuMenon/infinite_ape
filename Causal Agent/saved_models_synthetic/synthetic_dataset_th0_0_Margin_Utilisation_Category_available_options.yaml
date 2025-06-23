@@ -1,0 +1,27 @@
+nodes:
+  Currency:
+    type: categorical
+    values:
+    - HKD
+    - SGD
+    - USD
+  Tenor_Bucket:
+    type: categorical
+    values:
+    - 0m
+    - 1m
+    - 1yr
+    - 3m
+    - 6m
+    - Other Tenors
+  Amount_Bucket:
+    type: categorical
+    values:
+    - Between_10m_and_50m_USD
+    - Less_than_10m_USD
+    - More_than_50m_USD
+notes:
+  interventions: Probabilities must sum to 1.0
+  queries: Use the original categorical values or discretized states
+  target_column: Target column Margin_Utilisation_Category is excluded from available
+    options

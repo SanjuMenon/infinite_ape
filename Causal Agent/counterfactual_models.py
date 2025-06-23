@@ -359,8 +359,12 @@ def query_model(options_file, prompt):
         # Extract model path
         model_path = os.path.dirname(options_file)
         
-        # Extract target column (G1)
-        target_column = filename.split('_')[-3]
+        # Extract target column using regex to handle underscores
+        match = re.match(r'.+_th\d+_\d+_(.+)_available_options\.yaml', filename)
+        if match:
+            target_column = match.group(1)
+        else:
+            raise ValueError("Could not extract target column from filename")
         
         # Extract threshold (0.3)
         threshold_match = re.search(r'th(\d+)_(\d+)', filename)
@@ -375,7 +379,7 @@ def query_model(options_file, prompt):
             'target_column': target_column,
             'threshold': threshold
         }
-    options_file="saved_models/student-por_th0_3_G1_available_options.yaml"
+    # options_file="saved_models/student-por_th0_3_G1_available_options.yaml"
     params = extract_parameters_from_options_file(options_file)
     print(params)
     try:
@@ -431,5 +435,8 @@ def query_model(options_file, prompt):
 
 
 if __name__ == "__main__":
-    for summary in query_model(options_file="saved_models/student-por_th0_3_G1_available_options.yaml", prompt="Generate an intervention on study habits and a query about academic performance. Make some connections to traveltime as well"):
-        print("Summary Generated: ", summary)  
+    # for summary in query_model(options_file="saved_models/student-por_th0_3_G1_available_options.yaml", prompt="Generate an intervention on study habits and a query about academic performance. Make some connections to traveltime as well"):
+    #     print("Summary Generated: ", summary)  
+    
+    for summary in query_model(options_file="saved_models_synthetic\synthetic_dataset_th0_0_Margin_Utilisation_Category_available_options.yaml", prompt="Generate an intervention for currency impacting margin utilisation "):
+        print("Summary Generated: ", summary)

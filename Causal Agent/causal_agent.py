@@ -94,7 +94,7 @@ def main():
                         k: v for k, v in data.items() 
                         if not k.startswith('_') 
                         and k not in ['user_message']
-                        and k in ['user_question', 'question_type', 'target_variable', 'input_variables']
+                        and k in ['user_question', 'question_type', 'target_variable', 'input_variables', 'scenarios']
                     }
 
                     for key, value in classification_data.items():

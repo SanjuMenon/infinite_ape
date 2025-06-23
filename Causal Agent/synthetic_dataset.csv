@@ -1,0 +1,1001 @@
+Currency,Tenor Bucket,Amount Bucket,Margin Utilisation Category
+USD,6m,Between_10m_and_50m_USD,Low
+SGD,1m,More_than_50m_USD,Medium
+HKD,6m,More_than_50m_USD,High
+SGD,3m,Less_than_10m_USD,Medium
+HKD,6m,More_than_50m_USD,Low
+SGD,3m,More_than_50m_USD,Medium
+SGD,1yr,Between_10m_and_50m_USD,Low
+HKD,1yr,More_than_50m_USD,Low
+USD,1yr,Less_than_10m_USD,Low
+USD,3m,More_than_50m_USD,Low
+SGD,1m,Between_10m_and_50m_USD,High
+HKD,1yr,Between_10m_and_50m_USD,Low
+SGD,6m,Between_10m_and_50m_USD,Medium
+USD,1m,Less_than_10m_USD,Low
+SGD,3m,More_than_50m_USD,High
+SGD,Other Tenors,More_than_50m_USD,High
+HKD,Other Tenors,Between_10m_and_50m_USD,Medium
+USD,1yr,Between_10m_and_50m_USD,High
+USD,Other Tenors,Between_10m_and_50m_USD,Medium
+HKD,0m,Between_10m_and_50m_USD,High
+USD,1m,Between_10m_and_50m_USD,High
+HKD,1m,More_than_50m_USD,Medium
+SGD,1yr,Less_than_10m_USD,High
+USD,3m,Between_10m_and_50m_USD,Low
+USD,1m,More_than_50m_USD,Medium
+SGD,1m,Between_10m_and_50m_USD,High
+SGD,6m,Between_10m_and_50m_USD,High
+SGD,1m,Less_than_10m_USD,Medium
+USD,Other Tenors,More_than_50m_USD,Medium
+USD,Other Tenors,More_than_50m_USD,Low
+USD,0m,More_than_50m_USD,Low
+HKD,6m,More_than_50m_USD,Low
+SGD,1m,More_than_50m_USD,Low
+SGD,6m,Less_than_10m_USD,Medium
+HKD,Other Tenors,More_than_50m_USD,Medium
+HKD,6m,More_than_50m_USD,Low
+HKD,3m,More_than_50m_USD,High
+HKD,3m,Less_than_10m_USD,High
+USD,3m,More_than_50m_USD,Medium
+USD,3m,More_than_50m_USD,High
+SGD,6m,Between_10m_and_50m_USD,Medium
+SGD,0m,Less_than_10m_USD,Medium
+SGD,3m,Between_10m_and_50m_USD,Medium
+USD,1yr,Between_10m_and_50m_USD,Low
+HKD,6m,Less_than_10m_USD,Low
+SGD,1yr,Between_10m_and_50m_USD,Low
+SGD,1yr,Less_than_10m_USD,Medium
+SGD,1yr,Less_than_10m_USD,Medium
+USD,0m,Between_10m_and_50m_USD,Medium
+USD,3m,Less_than_10m_USD,Medium
+HKD,3m,Between_10m_and_50m_USD,High
+HKD,1yr,More_than_50m_USD,Medium
+USD,3m,More_than_50m_USD,High
+SGD,1m,More_than_50m_USD,Medium
+SGD,3m,Between_10m_and_50m_USD,Medium
+USD,6m,Between_10m_and_50m_USD,Low
+HKD,0m,More_than_50m_USD,Medium
+HKD,0m,Less_than_10m_USD,High
+HKD,0m,More_than_50m_USD,Low
+HKD,0m,Less_than_10m_USD,High
+SGD,1m,Between_10m_and_50m_USD,Medium
+HKD,6m,Between_10m_and_50m_USD,High
+HKD,Other Tenors,Between_10m_and_50m_USD,High
+SGD,3m,Less_than_10m_USD,Medium
+SGD,3m,More_than_50m_USD,Low
+HKD,Other Tenors,Less_than_10m_USD,High
+USD,3m,More_than_50m_USD,Low
+USD,6m,Between_10m_and_50m_USD,Low
+HKD,0m,Between_10m_and_50m_USD,Medium
+HKD,1m,Between_10m_and_50m_USD,Low
+SGD,3m,Less_than_10m_USD,Low
+HKD,1yr,More_than_50m_USD,High
+HKD,3m,More_than_50m_USD,High
+USD,Other Tenors,Between_10m_and_50m_USD,High
+USD,0m,Less_than_10m_USD,Low
+USD,Other Tenors,More_than_50m_USD,High
+SGD,6m,More_than_50m_USD,Low
+USD,Other Tenors,Less_than_10m_USD,Medium
+HKD,1m,Between_10m_and_50m_USD,High
+SGD,1yr,More_than_50m_USD,Medium
+USD,1yr,Less_than_10m_USD,High
+SGD,0m,Between_10m_and_50m_USD,High
+HKD,3m,Less_than_10m_USD,Medium
+USD,3m,Between_10m_and_50m_USD,Low
+USD,1yr,Less_than_10m_USD,Low
+SGD,6m,Between_10m_and_50m_USD,Medium
+SGD,0m,More_than_50m_USD,Low
+SGD,6m,Between_10m_and_50m_USD,Low
+HKD,3m,Between_10m_and_50m_USD,Medium
+HKD,1m,Between_10m_and_50m_USD,Medium
+USD,1m,Between_10m_and_50m_USD,Low
+SGD,1yr,Less_than_10m_USD,High
+HKD,1yr,Less_than_10m_USD,Medium
+HKD,3m,Less_than_10m_USD,Low
+USD,1yr,Less_than_10m_USD,Medium
+USD,3m,Between_10m_and_50m_USD,Low
+USD,3m,More_than_50m_USD,Medium
+USD,0m,More_than_50m_USD,Low
+USD,Other Tenors,Less_than_10m_USD,High
+USD,1m,Between_10m_and_50m_USD,High
+HKD,1yr,More_than_50m_USD,Low
+HKD,1yr,Less_than_10m_USD,High
+USD,1m,More_than_50m_USD,Low
+USD,Other Tenors,Less_than_10m_USD,Low
+USD,3m,Less_than_10m_USD,High
+HKD,3m,Less_than_10m_USD,Medium
+HKD,3m,Less_than_10m_USD,Low
+HKD,1yr,More_than_50m_USD,High
+USD,1yr,More_than_50m_USD,Medium
+SGD,1yr,Less_than_10m_USD,Low
+SGD,1yr,More_than_50m_USD,High
+SGD,1m,Between_10m_and_50m_USD,Medium
+SGD,1m,More_than_50m_USD,Low
+USD,0m,More_than_50m_USD,Low
+USD,1m,Less_than_10m_USD,High
+SGD,0m,Between_10m_and_50m_USD,High
+SGD,1yr,Between_10m_and_50m_USD,Medium
+SGD,3m,Less_than_10m_USD,Low
+SGD,Other Tenors,Less_than_10m_USD,Low
+SGD,6m,Between_10m_and_50m_USD,High
+USD,0m,Less_than_10m_USD,Low
+SGD,1m,Less_than_10m_USD,Low
+SGD,6m,Less_than_10m_USD,High
+SGD,Other Tenors,Less_than_10m_USD,Low
+USD,6m,Between_10m_and_50m_USD,Medium
+SGD,1m,Between_10m_and_50m_USD,Low
+HKD,6m,Between_10m_and_50m_USD,Low
+SGD,3m,Less_than_10m_USD,Low
+USD,0m,Between_10m_and_50m_USD,High
+SGD,0m,Less_than_10m_USD,Low
+SGD,3m,Between_10m_and_50m_USD,Medium
+USD,1yr,Less_than_10m_USD,Low
+SGD,1yr,Between_10m_and_50m_USD,High
+SGD,1m,More_than_50m_USD,High
+USD,3m,Less_than_10m_USD,High
+SGD,Other Tenors,Less_than_10m_USD,Medium
+USD,1m,Less_than_10m_USD,Low
+SGD,0m,Between_10m_and_50m_USD,High
+SGD,1m,Less_than_10m_USD,High
+SGD,6m,More_than_50m_USD,High
+HKD,Other Tenors,More_than_50m_USD,High
+HKD,3m,Between_10m_and_50m_USD,Medium
+SGD,3m,Less_than_10m_USD,Medium
+USD,3m,More_than_50m_USD,High
+USD,1m,Less_than_10m_USD,Low
+USD,1m,More_than_50m_USD,High
+SGD,0m,Less_than_10m_USD,Medium
+HKD,1yr,More_than_50m_USD,Low
+USD,1m,More_than_50m_USD,High
+HKD,3m,Less_than_10m_USD,High
+SGD,Other Tenors,Between_10m_and_50m_USD,High
+USD,Other Tenors,Less_than_10m_USD,High
+HKD,3m,More_than_50m_USD,Low
+SGD,3m,More_than_50m_USD,High
+USD,1yr,Less_than_10m_USD,Low
+SGD,1m,More_than_50m_USD,Low
+SGD,1yr,More_than_50m_USD,Medium
+HKD,6m,Less_than_10m_USD,Medium
+HKD,0m,Between_10m_and_50m_USD,Low
+SGD,1m,Less_than_10m_USD,High
+SGD,0m,More_than_50m_USD,High
+USD,3m,Less_than_10m_USD,Medium
+SGD,0m,Between_10m_and_50m_USD,Low
+USD,1m,Between_10m_and_50m_USD,High
+USD,6m,More_than_50m_USD,Medium
+SGD,3m,Between_10m_and_50m_USD,High
+USD,3m,Between_10m_and_50m_USD,Medium
+USD,1m,Less_than_10m_USD,High
+SGD,1m,More_than_50m_USD,High
+SGD,3m,More_than_50m_USD,Medium
+HKD,1m,Less_than_10m_USD,Low
+HKD,1m,More_than_50m_USD,High
+HKD,6m,Between_10m_and_50m_USD,Low
+USD,0m,Between_10m_and_50m_USD,High
+HKD,6m,Less_than_10m_USD,High
+HKD,1m,More_than_50m_USD,Medium
+SGD,0m,More_than_50m_USD,Medium
+SGD,1m,Between_10m_and_50m_USD,Low
+HKD,0m,Between_10m_and_50m_USD,Medium
+USD,1m,Between_10m_and_50m_USD,Medium
+USD,0m,Less_than_10m_USD,High
+SGD,1m,Between_10m_and_50m_USD,Medium
+SGD,1yr,Less_than_10m_USD,High
+SGD,3m,Less_than_10m_USD,Medium
+SGD,0m,Between_10m_and_50m_USD,Medium
+HKD,1yr,More_than_50m_USD,Medium
+SGD,3m,Less_than_10m_USD,Low
+HKD,1m,More_than_50m_USD,High
+HKD,3m,Between_10m_and_50m_USD,Low
+HKD,0m,More_than_50m_USD,Medium
+HKD,3m,More_than_50m_USD,Low
+SGD,3m,Less_than_10m_USD,Low
+SGD,Other Tenors,Less_than_10m_USD,High
+USD,1m,More_than_50m_USD,High
+SGD,Other Tenors,Less_than_10m_USD,High
+SGD,6m,Less_than_10m_USD,Medium
+SGD,1m,More_than_50m_USD,High
+USD,3m,Less_than_10m_USD,Medium
+USD,0m,More_than_50m_USD,Medium
+HKD,6m,More_than_50m_USD,Medium
+USD,6m,More_than_50m_USD,Low
+HKD,1yr,Less_than_10m_USD,High
+HKD,0m,Less_than_10m_USD,Medium
+SGD,3m,More_than_50m_USD,Low
+USD,0m,Less_than_10m_USD,Low
+SGD,1m,Between_10m_and_50m_USD,Low
+HKD,1m,More_than_50m_USD,Low
+HKD,0m,Less_than_10m_USD,High
+USD,3m,More_than_50m_USD,Medium
+USD,Other Tenors,Less_than_10m_USD,High
+SGD,1yr,More_than_50m_USD,Low
+SGD,0m,More_than_50m_USD,Medium
+SGD,3m,Less_than_10m_USD,Low
+SGD,1yr,Less_than_10m_USD,High
+SGD,Other Tenors,Less_than_10m_USD,Low
+USD,1yr,Less_than_10m_USD,Medium
+HKD,1yr,More_than_50m_USD,Medium
+HKD,3m,Between_10m_and_50m_USD,High
+USD,3m,Less_than_10m_USD,Low
+SGD,6m,Less_than_10m_USD,Low
+USD,1yr,Less_than_10m_USD,Medium
+HKD,Other Tenors,Less_than_10m_USD,Low
+USD,1yr,More_than_50m_USD,Medium
+USD,1m,More_than_50m_USD,Low
+USD,1m,Less_than_10m_USD,High
+USD,0m,Less_than_10m_USD,Low
+HKD,0m,Between_10m_and_50m_USD,Low
+HKD,6m,Less_than_10m_USD,High
+USD,0m,Less_than_10m_USD,Medium
+USD,1yr,Between_10m_and_50m_USD,High
+SGD,0m,More_than_50m_USD,High
+USD,0m,Between_10m_and_50m_USD,Low
+HKD,1m,More_than_50m_USD,Low
+HKD,6m,Between_10m_and_50m_USD,Low
+SGD,Other Tenors,More_than_50m_USD,Low
+HKD,3m,Between_10m_and_50m_USD,Medium
+HKD,0m,More_than_50m_USD,Low
+USD,0m,Less_than_10m_USD,Low
+HKD,1m,Between_10m_and_50m_USD,Medium
+USD,Other Tenors,More_than_50m_USD,High
+USD,1m,Between_10m_and_50m_USD,Low
+HKD,3m,More_than_50m_USD,Medium
+SGD,0m,More_than_50m_USD,Low
+HKD,1yr,More_than_50m_USD,High
+SGD,3m,More_than_50m_USD,Low
+SGD,Other Tenors,More_than_50m_USD,High
+HKD,6m,Less_than_10m_USD,Medium
+USD,6m,Between_10m_and_50m_USD,Medium
+SGD,0m,Less_than_10m_USD,Medium
+USD,1m,More_than_50m_USD,Low
+USD,1m,Less_than_10m_USD,High
+USD,0m,Less_than_10m_USD,High
+HKD,1yr,Between_10m_and_50m_USD,Low
+SGD,6m,Between_10m_and_50m_USD,High
+USD,1yr,Less_than_10m_USD,Low
+SGD,3m,Less_than_10m_USD,Low
+HKD,Other Tenors,Between_10m_and_50m_USD,High
+USD,1m,Between_10m_and_50m_USD,Low
+SGD,Other Tenors,More_than_50m_USD,Medium
+HKD,Other Tenors,More_than_50m_USD,Low
+HKD,1yr,More_than_50m_USD,Low
+SGD,0m,Between_10m_and_50m_USD,High
+USD,Other Tenors,More_than_50m_USD,Low
+USD,1yr,More_than_50m_USD,High
+SGD,1yr,Less_than_10m_USD,Medium
+HKD,Other Tenors,Less_than_10m_USD,Low
+HKD,0m,Between_10m_and_50m_USD,Medium
+HKD,3m,Less_than_10m_USD,Low
+HKD,1yr,More_than_50m_USD,Low
+USD,1m,Less_than_10m_USD,High
+USD,1yr,Less_than_10m_USD,Medium
+SGD,3m,Less_than_10m_USD,Low
+HKD,0m,Less_than_10m_USD,Low
+USD,1yr,Less_than_10m_USD,Low
+USD,6m,More_than_50m_USD,Low
+USD,Other Tenors,More_than_50m_USD,Low
+HKD,3m,More_than_50m_USD,Medium
+SGD,1m,Between_10m_and_50m_USD,High
+HKD,1yr,Less_than_10m_USD,Medium
+SGD,3m,More_than_50m_USD,High
+HKD,1m,More_than_50m_USD,Medium
+HKD,6m,More_than_50m_USD,Low
+HKD,6m,Less_than_10m_USD,Low
+HKD,1m,Between_10m_and_50m_USD,Low
+HKD,0m,More_than_50m_USD,Medium
+SGD,6m,Between_10m_and_50m_USD,Medium
+SGD,6m,More_than_50m_USD,High
+HKD,1m,Less_than_10m_USD,Low
+HKD,1m,More_than_50m_USD,Low
+USD,Other Tenors,More_than_50m_USD,High
+HKD,Other Tenors,Less_than_10m_USD,Medium
+HKD,0m,Between_10m_and_50m_USD,High
+SGD,6m,Between_10m_and_50m_USD,Medium
+SGD,3m,Between_10m_and_50m_USD,Low
+USD,1m,Between_10m_and_50m_USD,Low
+SGD,6m,More_than_50m_USD,Low
+SGD,Other Tenors,Between_10m_and_50m_USD,Low
+HKD,3m,Between_10m_and_50m_USD,High
+HKD,1m,Between_10m_and_50m_USD,Low
+SGD,6m,Less_than_10m_USD,Low
+USD,0m,Less_than_10m_USD,Low
+HKD,3m,Between_10m_and_50m_USD,Low
+HKD,6m,Between_10m_and_50m_USD,Medium
+SGD,6m,Between_10m_and_50m_USD,High
+HKD,1yr,Less_than_10m_USD,High
+SGD,1yr,Less_than_10m_USD,High
+SGD,0m,Less_than_10m_USD,Medium
+SGD,0m,Less_than_10m_USD,High
+USD,Other Tenors,More_than_50m_USD,Medium
+USD,1yr,More_than_50m_USD,Low
+USD,0m,Less_than_10m_USD,Low
+HKD,Other Tenors,More_than_50m_USD,Low
+USD,6m,More_than_50m_USD,Low
+SGD,Other Tenors,More_than_50m_USD,High
+HKD,1yr,More_than_50m_USD,Medium
+USD,Other Tenors,Between_10m_and_50m_USD,Low
+HKD,6m,More_than_50m_USD,Low
+HKD,1yr,More_than_50m_USD,Medium
+SGD,Other Tenors,More_than_50m_USD,High
+HKD,0m,Less_than_10m_USD,Low
+SGD,Other Tenors,More_than_50m_USD,Low
+USD,1m,Between_10m_and_50m_USD,Medium
+SGD,6m,More_than_50m_USD,Low
+SGD,3m,More_than_50m_USD,Low
+HKD,3m,Less_than_10m_USD,Medium
+SGD,1m,Between_10m_and_50m_USD,Medium
+HKD,Other Tenors,Less_than_10m_USD,Low
+USD,6m,Less_than_10m_USD,High
+SGD,3m,More_than_50m_USD,Low
+USD,6m,Less_than_10m_USD,Low
+HKD,Other Tenors,Less_than_10m_USD,High
+HKD,1m,Less_than_10m_USD,Medium
+HKD,1m,More_than_50m_USD,High
+HKD,Other Tenors,Between_10m_and_50m_USD,High
+SGD,3m,Less_than_10m_USD,High
+HKD,3m,Less_than_10m_USD,High
+HKD,1m,Less_than_10m_USD,Medium
+USD,1yr,Between_10m_and_50m_USD,Low
+USD,0m,Less_than_10m_USD,High
+HKD,Other Tenors,Between_10m_and_50m_USD,Low
+USD,3m,Less_than_10m_USD,High
+USD,3m,Less_than_10m_USD,Medium
+USD,1m,Less_than_10m_USD,Medium
+USD,1m,Less_than_10m_USD,Medium
+USD,Other Tenors,Less_than_10m_USD,Medium
+HKD,1m,Between_10m_and_50m_USD,Medium
+SGD,0m,Less_than_10m_USD,Low
+SGD,1yr,Between_10m_and_50m_USD,Low
+USD,Other Tenors,Less_than_10m_USD,High
+SGD,1yr,Between_10m_and_50m_USD,High
+HKD,1yr,Between_10m_and_50m_USD,High
+USD,1m,More_than_50m_USD,High
+SGD,0m,Less_than_10m_USD,High
+USD,3m,Between_10m_and_50m_USD,Medium
+USD,1m,Between_10m_and_50m_USD,High
+HKD,Other Tenors,Less_than_10m_USD,Medium
+USD,1m,Less_than_10m_USD,Low
+SGD,6m,Less_than_10m_USD,Low
+SGD,Other Tenors,More_than_50m_USD,Low
+HKD,1yr,Between_10m_and_50m_USD,High
+HKD,Other Tenors,Between_10m_and_50m_USD,Medium
+HKD,6m,More_than_50m_USD,High
+SGD,1yr,Between_10m_and_50m_USD,Medium
+USD,3m,Less_than_10m_USD,Low
+USD,3m,Between_10m_and_50m_USD,Medium
+HKD,3m,Less_than_10m_USD,High
+USD,3m,Between_10m_and_50m_USD,Low
+USD,3m,Between_10m_and_50m_USD,High
+USD,0m,Between_10m_and_50m_USD,Low
+SGD,1m,More_than_50m_USD,Medium
+SGD,Other Tenors,Less_than_10m_USD,High
+USD,1m,Between_10m_and_50m_USD,Medium
+SGD,3m,Less_than_10m_USD,High
+SGD,1yr,More_than_50m_USD,Low
+USD,Other Tenors,Less_than_10m_USD,High
+HKD,1m,More_than_50m_USD,Medium
+HKD,1m,Less_than_10m_USD,High
+HKD,1m,Less_than_10m_USD,High
+SGD,3m,Between_10m_and_50m_USD,Medium
+USD,3m,Less_than_10m_USD,Low
+USD,6m,Less_than_10m_USD,High
+HKD,6m,More_than_50m_USD,High
+USD,1yr,Less_than_10m_USD,Low
+USD,6m,More_than_50m_USD,Low
+SGD,3m,More_than_50m_USD,Medium
+USD,0m,More_than_50m_USD,Medium
+SGD,1yr,More_than_50m_USD,Low
+HKD,0m,Between_10m_and_50m_USD,High
+HKD,6m,Between_10m_and_50m_USD,Low
+SGD,0m,Between_10m_and_50m_USD,Medium
+HKD,1yr,More_than_50m_USD,Low
+USD,Other Tenors,Between_10m_and_50m_USD,Low
+HKD,0m,Less_than_10m_USD,Medium
+HKD,6m,Between_10m_and_50m_USD,Low
+SGD,3m,Less_than_10m_USD,Medium
+USD,1yr,Less_than_10m_USD,Low
+HKD,6m,More_than_50m_USD,Medium
+SGD,1yr,Between_10m_and_50m_USD,High
+USD,1m,More_than_50m_USD,High
+USD,Other Tenors,More_than_50m_USD,Medium
+SGD,1yr,Less_than_10m_USD,High
+HKD,1yr,More_than_50m_USD,Medium
+SGD,3m,Less_than_10m_USD,High
+SGD,Other Tenors,More_than_50m_USD,High
+HKD,1m,More_than_50m_USD,Low
+USD,1yr,Less_than_10m_USD,High
+USD,1yr,Less_than_10m_USD,Medium
+SGD,0m,Between_10m_and_50m_USD,Medium
+USD,1m,Between_10m_and_50m_USD,Medium
+HKD,Other Tenors,More_than_50m_USD,High
+SGD,Other Tenors,Less_than_10m_USD,Low
+USD,3m,More_than_50m_USD,Medium
+SGD,1yr,More_than_50m_USD,High
+HKD,0m,Less_than_10m_USD,Medium
+USD,1m,Less_than_10m_USD,High
+HKD,Other Tenors,More_than_50m_USD,Medium
+SGD,0m,More_than_50m_USD,High
+USD,3m,Between_10m_and_50m_USD,Medium
+USD,6m,Between_10m_and_50m_USD,High
+SGD,1yr,Less_than_10m_USD,High
+USD,1m,More_than_50m_USD,Low
+USD,3m,Between_10m_and_50m_USD,Medium
+SGD,0m,Less_than_10m_USD,Medium
+HKD,0m,Less_than_10m_USD,High
+USD,0m,Between_10m_and_50m_USD,High
+HKD,6m,More_than_50m_USD,Medium
+SGD,3m,Between_10m_and_50m_USD,Medium
+SGD,Other Tenors,Between_10m_and_50m_USD,Low
+SGD,Other Tenors,Less_than_10m_USD,Low
+SGD,1yr,More_than_50m_USD,High
+USD,3m,Between_10m_and_50m_USD,High
+HKD,Other Tenors,More_than_50m_USD,Low
+SGD,1yr,Between_10m_and_50m_USD,Low
+HKD,Other Tenors,Between_10m_and_50m_USD,Medium
+SGD,Other Tenors,Less_than_10m_USD,Medium
+HKD,Other Tenors,More_than_50m_USD,Low
+HKD,Other Tenors,Less_than_10m_USD,Medium
+HKD,6m,More_than_50m_USD,Medium
+SGD,0m,Between_10m_and_50m_USD,Low
+SGD,1m,More_than_50m_USD,Low
+USD,0m,Between_10m_and_50m_USD,Medium
+HKD,6m,More_than_50m_USD,High
+SGD,1m,More_than_50m_USD,High
+USD,1m,Less_than_10m_USD,Medium
+HKD,0m,Between_10m_and_50m_USD,High
+USD,Other Tenors,More_than_50m_USD,Medium
+HKD,1yr,More_than_50m_USD,High
+SGD,1m,Between_10m_and_50m_USD,High
+SGD,0m,Less_than_10m_USD,Medium
+HKD,1yr,More_than_50m_USD,Medium
+HKD,6m,Less_than_10m_USD,Low
+HKD,1m,Less_than_10m_USD,High
+USD,1m,Between_10m_and_50m_USD,High
+SGD,0m,Between_10m_and_50m_USD,High
+SGD,6m,More_than_50m_USD,High
+SGD,6m,Less_than_10m_USD,High
+HKD,1yr,Between_10m_and_50m_USD,Low
+USD,Other Tenors,More_than_50m_USD,Medium
+HKD,6m,More_than_50m_USD,Medium
+SGD,0m,More_than_50m_USD,Medium
+SGD,Other Tenors,Between_10m_and_50m_USD,High
+HKD,6m,Less_than_10m_USD,High
+USD,1yr,Less_than_10m_USD,Low
+SGD,1m,Between_10m_and_50m_USD,Low
+SGD,0m,More_than_50m_USD,Medium
+SGD,Other Tenors,Between_10m_and_50m_USD,Medium
+SGD,1m,Between_10m_and_50m_USD,Medium
+HKD,0m,Less_than_10m_USD,Medium
+USD,1m,Between_10m_and_50m_USD,Medium
+SGD,Other Tenors,More_than_50m_USD,High
+SGD,1m,Between_10m_and_50m_USD,Low
+SGD,Other Tenors,Between_10m_and_50m_USD,High
+USD,3m,Between_10m_and_50m_USD,High
+HKD,6m,Less_than_10m_USD,Medium
+USD,Other Tenors,More_than_50m_USD,Low
+HKD,1yr,Between_10m_and_50m_USD,High
+SGD,0m,Less_than_10m_USD,High
+SGD,3m,Between_10m_and_50m_USD,High
+SGD,0m,Between_10m_and_50m_USD,Medium
+SGD,3m,Less_than_10m_USD,Medium
+USD,1m,Between_10m_and_50m_USD,High
+USD,6m,More_than_50m_USD,High
+USD,1m,Less_than_10m_USD,Low
+SGD,Other Tenors,More_than_50m_USD,Medium
+HKD,1yr,More_than_50m_USD,Low
+HKD,1yr,Between_10m_and_50m_USD,High
+USD,0m,Less_than_10m_USD,Low
+HKD,1m,More_than_50m_USD,Medium
+HKD,Other Tenors,More_than_50m_USD,Low
+USD,3m,Less_than_10m_USD,Medium
+USD,1yr,More_than_50m_USD,High
+HKD,Other Tenors,Less_than_10m_USD,Medium
+USD,1m,Between_10m_and_50m_USD,Medium
+HKD,1yr,Less_than_10m_USD,Low
+HKD,1m,More_than_50m_USD,Low
+HKD,0m,More_than_50m_USD,High
+SGD,6m,More_than_50m_USD,High
+USD,3m,More_than_50m_USD,High
+USD,Other Tenors,More_than_50m_USD,Low
+SGD,6m,More_than_50m_USD,Low
+HKD,1yr,Between_10m_and_50m_USD,High
+HKD,0m,Less_than_10m_USD,Low
+USD,3m,Between_10m_and_50m_USD,High
+SGD,1m,Less_than_10m_USD,High
+HKD,0m,More_than_50m_USD,Low
+SGD,1yr,Less_than_10m_USD,Medium
+HKD,0m,Less_than_10m_USD,Low
+SGD,6m,Less_than_10m_USD,Medium
+USD,1m,Less_than_10m_USD,High
+SGD,3m,More_than_50m_USD,Low
+SGD,0m,Between_10m_and_50m_USD,High
+USD,1yr,Between_10m_and_50m_USD,High
+SGD,0m,Between_10m_and_50m_USD,Medium
+SGD,1m,Between_10m_and_50m_USD,High
+SGD,1m,Between_10m_and_50m_USD,High
+HKD,Other Tenors,Less_than_10m_USD,Medium
+HKD,Other Tenors,Less_than_10m_USD,Medium
+USD,0m,More_than_50m_USD,High
+SGD,1yr,More_than_50m_USD,High
+USD,0m,Less_than_10m_USD,Low
+USD,6m,Less_than_10m_USD,Low
+USD,0m,Between_10m_and_50m_USD,High
+USD,3m,Less_than_10m_USD,High
+USD,3m,Less_than_10m_USD,Medium
+SGD,1m,Between_10m_and_50m_USD,High
+HKD,1yr,More_than_50m_USD,High
+USD,6m,Between_10m_and_50m_USD,Medium
+HKD,6m,More_than_50m_USD,Medium
+HKD,Other Tenors,More_than_50m_USD,Medium
+HKD,6m,Between_10m_and_50m_USD,Medium
+SGD,1m,Less_than_10m_USD,Low
+SGD,6m,Between_10m_and_50m_USD,High
+USD,1yr,More_than_50m_USD,Low
+HKD,6m,Between_10m_and_50m_USD,Medium
+HKD,1m,Less_than_10m_USD,Low
+SGD,Other Tenors,Less_than_10m_USD,Low
+HKD,6m,More_than_50m_USD,Medium
+USD,1m,Less_than_10m_USD,Medium
+HKD,1yr,More_than_50m_USD,High
+USD,6m,Between_10m_and_50m_USD,High
+HKD,1yr,Less_than_10m_USD,Medium
+HKD,0m,Less_than_10m_USD,Medium
+USD,Other Tenors,Between_10m_and_50m_USD,High
+USD,6m,Less_than_10m_USD,Low
+USD,0m,Less_than_10m_USD,High
+SGD,6m,More_than_50m_USD,Low
+HKD,3m,Less_than_10m_USD,Medium
+HKD,3m,Between_10m_and_50m_USD,High
+SGD,1m,More_than_50m_USD,Low
+SGD,3m,Between_10m_and_50m_USD,Low
+USD,1yr,Between_10m_and_50m_USD,High
+HKD,3m,Less_than_10m_USD,High
+SGD,1m,Between_10m_and_50m_USD,High
+USD,6m,Between_10m_and_50m_USD,Medium
+USD,Other Tenors,Between_10m_and_50m_USD,High
+HKD,1m,Less_than_10m_USD,High
+SGD,0m,More_than_50m_USD,Low
+USD,3m,More_than_50m_USD,High
+SGD,1m,More_than_50m_USD,Low
+HKD,6m,Between_10m_and_50m_USD,Medium
+SGD,Other Tenors,Between_10m_and_50m_USD,Medium
+SGD,1yr,Between_10m_and_50m_USD,Medium
+USD,1m,Between_10m_and_50m_USD,Low
+USD,0m,Between_10m_and_50m_USD,Low
+SGD,3m,Less_than_10m_USD,High
+HKD,Other Tenors,More_than_50m_USD,Low
+USD,Other Tenors,Between_10m_and_50m_USD,High
+HKD,3m,Less_than_10m_USD,High
+HKD,Other Tenors,Between_10m_and_50m_USD,Medium
+SGD,3m,Between_10m_and_50m_USD,Medium
+SGD,Other Tenors,Less_than_10m_USD,High
+SGD,Other Tenors,Between_10m_and_50m_USD,High
+HKD,6m,Less_than_10m_USD,Low
+HKD,Other Tenors,Between_10m_and_50m_USD,Low
+USD,1m,Less_than_10m_USD,Medium
+HKD,1m,Less_than_10m_USD,High
+SGD,3m,Less_than_10m_USD,High
+SGD,1m,Between_10m_and_50m_USD,High
+USD,0m,More_than_50m_USD,High
+SGD,Other Tenors,More_than_50m_USD,Low
+USD,0m,Between_10m_and_50m_USD,Low
+SGD,1yr,Between_10m_and_50m_USD,Low
+SGD,3m,Less_than_10m_USD,Low
+SGD,6m,More_than_50m_USD,High
+HKD,1m,Between_10m_and_50m_USD,High
+USD,6m,Between_10m_and_50m_USD,High
+HKD,1m,More_than_50m_USD,Low
+HKD,0m,Between_10m_and_50m_USD,Low
+HKD,Other Tenors,More_than_50m_USD,High
+USD,3m,More_than_50m_USD,High
+USD,6m,Less_than_10m_USD,High
+USD,1m,Between_10m_and_50m_USD,High
+HKD,1m,More_than_50m_USD,High
+SGD,0m,Less_than_10m_USD,Medium
+USD,1yr,Between_10m_and_50m_USD,High
+HKD,1yr,Between_10m_and_50m_USD,Medium
+SGD,3m,More_than_50m_USD,Low
+USD,0m,More_than_50m_USD,Low
+USD,3m,More_than_50m_USD,Medium
+SGD,6m,Less_than_10m_USD,High
+SGD,1yr,More_than_50m_USD,Low
+SGD,1m,More_than_50m_USD,High
+HKD,3m,Between_10m_and_50m_USD,Medium
+SGD,6m,More_than_50m_USD,High
+SGD,3m,Less_than_10m_USD,Low
+HKD,6m,Between_10m_and_50m_USD,Low
+SGD,1m,Less_than_10m_USD,Medium
+HKD,1yr,Less_than_10m_USD,High
+SGD,Other Tenors,More_than_50m_USD,Medium
+USD,1m,More_than_50m_USD,Medium
+HKD,0m,Less_than_10m_USD,High
+USD,1yr,Between_10m_and_50m_USD,Medium
+SGD,0m,Between_10m_and_50m_USD,Low
+SGD,1m,Less_than_10m_USD,Medium
+SGD,1yr,Between_10m_and_50m_USD,Medium
+HKD,Other Tenors,More_than_50m_USD,High
+SGD,1m,Between_10m_and_50m_USD,Low
+HKD,6m,More_than_50m_USD,High
+USD,1m,More_than_50m_USD,High
+USD,Other Tenors,Less_than_10m_USD,Low
+SGD,Other Tenors,Less_than_10m_USD,Medium
+SGD,1m,Between_10m_and_50m_USD,High
+USD,1yr,Between_10m_and_50m_USD,Medium
+USD,0m,More_than_50m_USD,Medium
+HKD,0m,More_than_50m_USD,Medium
+HKD,6m,More_than_50m_USD,High
+SGD,1yr,Less_than_10m_USD,High
+USD,1m,More_than_50m_USD,Medium
+HKD,3m,More_than_50m_USD,Low
+HKD,1m,More_than_50m_USD,Medium
+HKD,6m,Less_than_10m_USD,Low
+HKD,0m,Between_10m_and_50m_USD,Low
+SGD,0m,Less_than_10m_USD,Medium
+USD,0m,Between_10m_and_50m_USD,High
+HKD,Other Tenors,Less_than_10m_USD,High
+HKD,1m,Less_than_10m_USD,Medium
+SGD,1m,Less_than_10m_USD,Low
+SGD,Other Tenors,More_than_50m_USD,Low
+SGD,Other Tenors,Between_10m_and_50m_USD,High
+SGD,3m,Less_than_10m_USD,Medium
+USD,6m,Less_than_10m_USD,High
+USD,0m,Between_10m_and_50m_USD,Medium
+SGD,0m,More_than_50m_USD,Medium
+HKD,Other Tenors,Between_10m_and_50m_USD,High
+HKD,Other Tenors,More_than_50m_USD,Medium
+USD,0m,More_than_50m_USD,Medium
+USD,Other Tenors,Less_than_10m_USD,Low
+SGD,Other Tenors,More_than_50m_USD,Low
+SGD,0m,Less_than_10m_USD,Medium
+USD,0m,Between_10m_and_50m_USD,Medium
+HKD,0m,More_than_50m_USD,Medium
+HKD,Other Tenors,Between_10m_and_50m_USD,High
+HKD,1m,More_than_50m_USD,Low
+SGD,1yr,Less_than_10m_USD,High
+USD,0m,More_than_50m_USD,Low
+HKD,Other Tenors,Less_than_10m_USD,Low
+USD,Other Tenors,More_than_50m_USD,High
+HKD,3m,More_than_50m_USD,High
+SGD,6m,Less_than_10m_USD,Low
+SGD,0m,Less_than_10m_USD,High
+USD,3m,Less_than_10m_USD,High
+HKD,1yr,Between_10m_and_50m_USD,High
+SGD,3m,More_than_50m_USD,Low
+HKD,1yr,More_than_50m_USD,Medium
+HKD,0m,Between_10m_and_50m_USD,High
+SGD,1m,Less_than_10m_USD,Medium
+HKD,1m,Less_than_10m_USD,High
+USD,1m,Between_10m_and_50m_USD,High
+HKD,Other Tenors,Less_than_10m_USD,High
+SGD,1yr,Less_than_10m_USD,High
+SGD,Other Tenors,Between_10m_and_50m_USD,Low
+HKD,0m,More_than_50m_USD,Low
+SGD,3m,Less_than_10m_USD,Low
+USD,0m,More_than_50m_USD,Low
+HKD,1m,Between_10m_and_50m_USD,High
+USD,0m,More_than_50m_USD,Medium
+USD,1m,More_than_50m_USD,High
+SGD,3m,More_than_50m_USD,Medium
+SGD,1m,More_than_50m_USD,High
+SGD,1m,More_than_50m_USD,Low
+HKD,6m,Between_10m_and_50m_USD,Medium
+SGD,1m,Between_10m_and_50m_USD,High
+HKD,1m,Between_10m_and_50m_USD,High
+USD,1yr,More_than_50m_USD,High
+SGD,Other Tenors,More_than_50m_USD,High
+SGD,0m,Between_10m_and_50m_USD,High
+HKD,1yr,More_than_50m_USD,Low
+USD,1m,Less_than_10m_USD,Medium
+SGD,1m,Less_than_10m_USD,Low
+HKD,3m,More_than_50m_USD,Low
+SGD,1yr,Less_than_10m_USD,High
+HKD,3m,Less_than_10m_USD,High
+USD,1yr,More_than_50m_USD,Medium
+USD,6m,Between_10m_and_50m_USD,Low
+USD,3m,More_than_50m_USD,High
+HKD,1yr,Less_than_10m_USD,Low
+HKD,3m,Less_than_10m_USD,Low
+SGD,1yr,More_than_50m_USD,Medium
+HKD,3m,More_than_50m_USD,Medium
+HKD,1m,Less_than_10m_USD,Medium
+SGD,0m,More_than_50m_USD,High
+SGD,Other Tenors,More_than_50m_USD,High
+HKD,1m,More_than_50m_USD,High
+USD,1yr,More_than_50m_USD,Medium
+USD,3m,More_than_50m_USD,High
+SGD,1m,Between_10m_and_50m_USD,High
+SGD,6m,Less_than_10m_USD,High
+SGD,6m,More_than_50m_USD,High
+USD,1yr,Less_than_10m_USD,Low
+HKD,Other Tenors,Between_10m_and_50m_USD,Low
+HKD,Other Tenors,More_than_50m_USD,Medium
+HKD,Other Tenors,More_than_50m_USD,Low
+USD,1yr,More_than_50m_USD,Medium
+USD,3m,Less_than_10m_USD,High
+HKD,0m,Between_10m_and_50m_USD,Low
+USD,3m,More_than_50m_USD,Low
+USD,3m,Between_10m_and_50m_USD,Medium
+HKD,0m,Less_than_10m_USD,Low
+USD,3m,Less_than_10m_USD,High
+HKD,Other Tenors,Less_than_10m_USD,Low
+HKD,1yr,Between_10m_and_50m_USD,Medium
+SGD,0m,More_than_50m_USD,Low
+SGD,3m,Less_than_10m_USD,Medium
+HKD,0m,Between_10m_and_50m_USD,High
+USD,0m,Between_10m_and_50m_USD,Medium
+SGD,3m,More_than_50m_USD,High
+USD,0m,Less_than_10m_USD,Medium
+USD,6m,Between_10m_and_50m_USD,High
+HKD,1m,Between_10m_and_50m_USD,Low
+SGD,1yr,Less_than_10m_USD,High
+SGD,1m,Between_10m_and_50m_USD,Low
+USD,3m,Between_10m_and_50m_USD,Low
+SGD,6m,Less_than_10m_USD,Medium
+SGD,1yr,Between_10m_and_50m_USD,High
+HKD,3m,Between_10m_and_50m_USD,Medium
+HKD,6m,Between_10m_and_50m_USD,Low
+HKD,1yr,More_than_50m_USD,Low
+USD,1m,Between_10m_and_50m_USD,Low
+HKD,1yr,More_than_50m_USD,High
+SGD,0m,Between_10m_and_50m_USD,Low
+HKD,0m,Between_10m_and_50m_USD,High
+SGD,0m,Less_than_10m_USD,Low
+USD,1yr,Between_10m_and_50m_USD,Low
+USD,0m,More_than_50m_USD,Medium
+USD,1m,More_than_50m_USD,High
+SGD,3m,More_than_50m_USD,High
+HKD,1yr,Between_10m_and_50m_USD,Low
+SGD,1m,Less_than_10m_USD,High
+HKD,0m,Between_10m_and_50m_USD,Medium
+USD,1yr,Less_than_10m_USD,Low
+HKD,1m,More_than_50m_USD,Low
+HKD,0m,Less_than_10m_USD,Medium
+HKD,6m,More_than_50m_USD,Medium
+HKD,3m,Between_10m_and_50m_USD,Low
+USD,0m,More_than_50m_USD,Low
+HKD,3m,Between_10m_and_50m_USD,High
+HKD,1m,Between_10m_and_50m_USD,Low
+HKD,6m,More_than_50m_USD,High
+HKD,1yr,More_than_50m_USD,Low
+HKD,3m,More_than_50m_USD,High
+HKD,3m,Less_than_10m_USD,High
+USD,1yr,Less_than_10m_USD,Low
+SGD,0m,Less_than_10m_USD,Low
+SGD,6m,More_than_50m_USD,Medium
+HKD,6m,Less_than_10m_USD,Low
+HKD,3m,Between_10m_and_50m_USD,High
+SGD,3m,More_than_50m_USD,High
+SGD,1yr,More_than_50m_USD,High
+SGD,1yr,Between_10m_and_50m_USD,Low
+USD,Other Tenors,Between_10m_and_50m_USD,Medium
+HKD,0m,Between_10m_and_50m_USD,Low
+SGD,0m,More_than_50m_USD,Low
+HKD,1yr,Less_than_10m_USD,High
+HKD,6m,Between_10m_and_50m_USD,Low
+USD,1yr,Less_than_10m_USD,Medium
+HKD,3m,More_than_50m_USD,High
+SGD,Other Tenors,More_than_50m_USD,Medium
+HKD,1m,Less_than_10m_USD,Low
+USD,6m,Between_10m_and_50m_USD,Medium
+HKD,3m,More_than_50m_USD,High
+USD,1yr,Less_than_10m_USD,Low
+USD,1m,Between_10m_and_50m_USD,Medium
+HKD,1m,Less_than_10m_USD,High
+SGD,6m,Between_10m_and_50m_USD,Low
+HKD,1yr,Between_10m_and_50m_USD,Low
+SGD,6m,More_than_50m_USD,High
+HKD,6m,Less_than_10m_USD,Low
+USD,Other Tenors,Less_than_10m_USD,Medium
+HKD,1yr,More_than_50m_USD,Medium
+HKD,1m,Between_10m_and_50m_USD,High
+HKD,3m,Between_10m_and_50m_USD,Low
+HKD,Other Tenors,More_than_50m_USD,Medium
+SGD,Other Tenors,More_than_50m_USD,Medium
+SGD,1yr,Less_than_10m_USD,Low
+HKD,1yr,Less_than_10m_USD,Medium
+HKD,0m,Less_than_10m_USD,High
+USD,3m,Less_than_10m_USD,Low
+SGD,6m,Between_10m_and_50m_USD,High
+USD,1m,Less_than_10m_USD,Medium
+USD,3m,Less_than_10m_USD,Medium
+HKD,Other Tenors,Less_than_10m_USD,Medium
+HKD,1m,Less_than_10m_USD,Low
+USD,3m,More_than_50m_USD,Medium
+SGD,6m,Less_than_10m_USD,Low
+SGD,Other Tenors,Between_10m_and_50m_USD,Medium
+SGD,1yr,Between_10m_and_50m_USD,High
+SGD,3m,Less_than_10m_USD,Low
+HKD,Other Tenors,Between_10m_and_50m_USD,High
+SGD,6m,Less_than_10m_USD,Low
+HKD,6m,Between_10m_and_50m_USD,Low
+USD,Other Tenors,Less_than_10m_USD,High
+USD,Other Tenors,More_than_50m_USD,Medium
+USD,1yr,More_than_50m_USD,High
+USD,3m,Between_10m_and_50m_USD,Low
+SGD,6m,More_than_50m_USD,Medium
+USD,Other Tenors,More_than_50m_USD,High
+HKD,Other Tenors,Between_10m_and_50m_USD,Medium
+USD,1m,Less_than_10m_USD,High
+SGD,Other Tenors,More_than_50m_USD,Low
+SGD,6m,More_than_50m_USD,Low
+USD,6m,Between_10m_and_50m_USD,Low
+SGD,3m,Less_than_10m_USD,High
+USD,1m,Between_10m_and_50m_USD,High
+SGD,1yr,More_than_50m_USD,High
+USD,1yr,More_than_50m_USD,High
+USD,Other Tenors,More_than_50m_USD,High
+USD,0m,Less_than_10m_USD,Low
+SGD,6m,More_than_50m_USD,Medium
+HKD,0m,Less_than_10m_USD,Low
+HKD,1yr,More_than_50m_USD,Medium
+HKD,6m,Between_10m_and_50m_USD,Medium
+HKD,6m,More_than_50m_USD,Medium
+SGD,0m,Between_10m_and_50m_USD,Medium
+HKD,0m,Less_than_10m_USD,Medium
+USD,Other Tenors,More_than_50m_USD,Low
+SGD,1m,More_than_50m_USD,High
+HKD,1yr,More_than_50m_USD,High
+HKD,Other Tenors,Between_10m_and_50m_USD,Low
+SGD,1m,Less_than_10m_USD,Low
+HKD,Other Tenors,More_than_50m_USD,Medium
+SGD,1m,Between_10m_and_50m_USD,High
+SGD,Other Tenors,Between_10m_and_50m_USD,Low
+HKD,6m,Less_than_10m_USD,High
+SGD,3m,Less_than_10m_USD,High
+HKD,Other Tenors,Between_10m_and_50m_USD,High
+USD,0m,Between_10m_and_50m_USD,Low
+HKD,3m,Between_10m_and_50m_USD,Low
+USD,6m,Between_10m_and_50m_USD,Low
+HKD,1yr,Less_than_10m_USD,Medium
+USD,Other Tenors,Less_than_10m_USD,Medium
+HKD,6m,More_than_50m_USD,High
+SGD,0m,More_than_50m_USD,Low
+USD,1yr,Between_10m_and_50m_USD,High
+HKD,0m,More_than_50m_USD,Medium
+HKD,3m,Less_than_10m_USD,Medium
+USD,0m,Less_than_10m_USD,Medium
+SGD,1yr,Between_10m_and_50m_USD,Low
+SGD,1m,Less_than_10m_USD,Medium
+HKD,6m,More_than_50m_USD,High
+SGD,0m,Less_than_10m_USD,Medium
+HKD,1m,Less_than_10m_USD,High
+USD,1yr,More_than_50m_USD,Low
+HKD,0m,Between_10m_and_50m_USD,Low
+USD,1yr,Less_than_10m_USD,High
+USD,3m,Between_10m_and_50m_USD,Medium
+SGD,3m,More_than_50m_USD,High
+HKD,6m,Less_than_10m_USD,Low
+HKD,Other Tenors,More_than_50m_USD,Medium
+USD,6m,Between_10m_and_50m_USD,Medium
+USD,6m,Between_10m_and_50m_USD,Medium
+USD,1m,Less_than_10m_USD,Medium
+SGD,1yr,Less_than_10m_USD,Medium
+SGD,3m,Less_than_10m_USD,Medium
+HKD,3m,Between_10m_and_50m_USD,Low
+USD,1m,More_than_50m_USD,High
+USD,6m,Between_10m_and_50m_USD,Medium
+USD,6m,Between_10m_and_50m_USD,Medium
+HKD,1m,Less_than_10m_USD,Medium
+USD,1m,Less_than_10m_USD,Low
+SGD,0m,More_than_50m_USD,Low
+SGD,Other Tenors,Between_10m_and_50m_USD,Low
+USD,6m,Between_10m_and_50m_USD,Medium
+SGD,Other Tenors,More_than_50m_USD,Medium
+USD,Other Tenors,Between_10m_and_50m_USD,Low
+HKD,0m,Less_than_10m_USD,High
+SGD,Other Tenors,Between_10m_and_50m_USD,High
+SGD,1m,Between_10m_and_50m_USD,Low
+HKD,6m,Less_than_10m_USD,Low
+SGD,1yr,More_than_50m_USD,Medium
+HKD,1yr,Less_than_10m_USD,High
+HKD,3m,Between_10m_and_50m_USD,Medium
+SGD,3m,Between_10m_and_50m_USD,Medium
+SGD,6m,Between_10m_and_50m_USD,Medium
+USD,1m,Between_10m_and_50m_USD,Medium
+HKD,1m,More_than_50m_USD,Low
+USD,0m,Between_10m_and_50m_USD,Low
+USD,6m,More_than_50m_USD,Low
+SGD,6m,Between_10m_and_50m_USD,High
+SGD,0m,Between_10m_and_50m_USD,Medium
+HKD,6m,Between_10m_and_50m_USD,High
+USD,0m,More_than_50m_USD,Low
+USD,3m,Less_than_10m_USD,Low
+SGD,1yr,More_than_50m_USD,Low
+HKD,0m,More_than_50m_USD,Medium
+HKD,Other Tenors,More_than_50m_USD,Medium
+HKD,3m,Between_10m_and_50m_USD,High
+USD,1m,More_than_50m_USD,High
+SGD,1yr,Between_10m_and_50m_USD,Low
+HKD,1m,Less_than_10m_USD,Low
+HKD,6m,More_than_50m_USD,High
+HKD,Other Tenors,Less_than_10m_USD,High
+HKD,Other Tenors,More_than_50m_USD,Medium
+HKD,0m,Between_10m_and_50m_USD,High
+SGD,1yr,Less_than_10m_USD,Medium
+USD,Other Tenors,Less_than_10m_USD,High
+USD,1yr,Between_10m_and_50m_USD,Medium
+HKD,1yr,Between_10m_and_50m_USD,High
+USD,6m,More_than_50m_USD,Medium
+SGD,6m,More_than_50m_USD,High
+SGD,0m,Less_than_10m_USD,Medium
+HKD,1m,More_than_50m_USD,Medium
+HKD,Other Tenors,Between_10m_and_50m_USD,Low
+USD,0m,Less_than_10m_USD,Medium
+SGD,1yr,Between_10m_and_50m_USD,High
+USD,0m,Less_than_10m_USD,Low
+SGD,Other Tenors,More_than_50m_USD,High
+SGD,3m,Between_10m_and_50m_USD,Low
+HKD,0m,Less_than_10m_USD,High
+SGD,Other Tenors,More_than_50m_USD,Low
+USD,6m,More_than_50m_USD,High
+SGD,1m,Less_than_10m_USD,Low
+USD,Other Tenors,More_than_50m_USD,Low
+USD,0m,Between_10m_and_50m_USD,High
+SGD,1yr,More_than_50m_USD,High
+SGD,0m,Between_10m_and_50m_USD,Medium
+SGD,1m,More_than_50m_USD,High
+USD,3m,Between_10m_and_50m_USD,High
+SGD,1yr,Less_than_10m_USD,Medium
+SGD,0m,Less_than_10m_USD,Medium
+SGD,0m,Between_10m_and_50m_USD,Low
+USD,1yr,More_than_50m_USD,Low
+USD,6m,More_than_50m_USD,Medium
+HKD,6m,More_than_50m_USD,Low
+USD,1yr,Between_10m_and_50m_USD,Low
+USD,0m,More_than_50m_USD,High
+SGD,6m,Between_10m_and_50m_USD,Low
+USD,6m,Less_than_10m_USD,Low
+SGD,6m,Between_10m_and_50m_USD,Low
+SGD,6m,Between_10m_and_50m_USD,Low
+USD,Other Tenors,Less_than_10m_USD,High
+USD,3m,Between_10m_and_50m_USD,Low
+USD,1m,Between_10m_and_50m_USD,Medium
+USD,1yr,Less_than_10m_USD,High
+USD,1yr,Less_than_10m_USD,High
+USD,6m,Less_than_10m_USD,High
+HKD,3m,More_than_50m_USD,High
+USD,Other Tenors,Between_10m_and_50m_USD,Low
+SGD,3m,More_than_50m_USD,Low
+USD,1yr,Between_10m_and_50m_USD,Medium
+SGD,1yr,Between_10m_and_50m_USD,High
+HKD,6m,More_than_50m_USD,Low
+HKD,0m,Between_10m_and_50m_USD,Medium
+SGD,1yr,Less_than_10m_USD,High
+USD,1yr,More_than_50m_USD,High
+SGD,3m,Between_10m_and_50m_USD,Low
+USD,1yr,More_than_50m_USD,High
+HKD,1m,Between_10m_and_50m_USD,Low
+SGD,6m,Less_than_10m_USD,High
+USD,1yr,Less_than_10m_USD,Low
+USD,Other Tenors,More_than_50m_USD,Medium
+HKD,6m,Between_10m_and_50m_USD,Low
+SGD,1yr,More_than_50m_USD,High
+SGD,3m,More_than_50m_USD,Low
+HKD,3m,More_than_50m_USD,Low
+USD,1yr,Less_than_10m_USD,Medium
+USD,0m,Less_than_10m_USD,High
+SGD,Other Tenors,Between_10m_and_50m_USD,High
+HKD,1yr,More_than_50m_USD,Low
+SGD,1yr,Between_10m_and_50m_USD,Low
+SGD,1m,Less_than_10m_USD,High
+USD,1m,Between_10m_and_50m_USD,High
+SGD,0m,Between_10m_and_50m_USD,Medium
+USD,0m,More_than_50m_USD,Low
+HKD,6m,Less_than_10m_USD,Medium
+HKD,1m,Less_than_10m_USD,Medium
+USD,3m,Between_10m_and_50m_USD,Low
+USD,0m,More_than_50m_USD,High
+USD,0m,Less_than_10m_USD,High
+SGD,Other Tenors,Between_10m_and_50m_USD,Medium
+USD,6m,More_than_50m_USD,Medium
+HKD,3m,Less_than_10m_USD,Medium
+USD,3m,Less_than_10m_USD,Low
+HKD,6m,Between_10m_and_50m_USD,Low
+HKD,3m,Between_10m_and_50m_USD,Medium
+USD,Other Tenors,Less_than_10m_USD,Low
+HKD,6m,More_than_50m_USD,Low
+HKD,0m,Less_than_10m_USD,High
+SGD,3m,Less_than_10m_USD,Medium
+HKD,1yr,Less_than_10m_USD,Low
+SGD,6m,More_than_50m_USD,Medium
