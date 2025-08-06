@@ -1,0 +1,166 @@
+{
+    "name": "Counterfactual Question Classification FSM",
+    "description": "A conversational system to classify and understand counterfactual questions",
+    "initial_state": "welcome",
+    "version": "3.0",
+    "states": {
+      "welcome": {
+        "id": "welcome",
+        "description": "Welcome state",
+        "purpose": "Introduce the system and understand the user's topic of interest",
+        "transitions": [
+          {
+            "target_state": "gather_question",
+            "description": "After greeting, move to gathering the question",
+            "priority": 0
+          },
+          {
+            "target_state": "end_conversation",
+            "description": "End the conversation",
+            "priority": 0
+          }
+        ],
+        "instructions": "Welcome the user and explain that you'll help them understand their questions. Ask them if are ready to start. If they don't want to continue end the conversation."
+      },
+      "gather_question": {
+        "id": "gather_question",
+        "description": "Collect the user's question of interest",
+        "purpose": "Understand what the user wants to explore or understand",
+        "required_context_keys": ["user_question"],
+        "transitions": [
+          {
+            "target_state": "clarify_nature",
+            "description": "Once question is obtained, clarify if it's noticed or trying",
+            "conditions": [
+              {
+                "description": "Question has been provided",
+                "requires_context_keys": ["user_question"]
+              }
+            ],
+            "priority": 0
+          },
+          {
+            "target_state": "end_conversation",
+            "description": "End the conversation",
+            "priority": 0
+          }
+        ],
+        "instructions": "Ask the user to describe the question they want to understand better. Store their response in the 'user_question' context variable."
+      },
+      "clarify_nature": {
+        "id": "clarify_nature",
+        "description": "Clarify if the topic is something noticed or something to try",
+        "purpose": "Classify the nature of the user's interest (noticed/trying)",
+        "required_context_keys": ["question_nature"],
+        "transitions": [
+          {
+            "target_state": "gather_factors",
+            "description": "Once nature is clarified, gather factors",
+            "conditions": [
+              {
+                "description": "Nature has been clarified",
+                "requires_context_keys": ["question_nature"]
+              }
+            ],
+            "priority": 0
+          }
+        ],
+        "instructions": "Ask the user: 'Is this something you noticed or something you're thinking of trying?' Do not use the words 'query' or 'intervention'. Store the response as 'noticed' or 'trying' in the 'question_nature' context variable."
+      },
+      "gather_factors": {
+        "id": "gather_factors",
+        "description": "Collect information about variables involved",
+        "purpose": "Understand the variables and relationships in the topic",
+        "required_context_keys": ["target_variable", "input_variables"],
+        "transitions": [
+          {
+            "target_state": "confirm_classification",
+            "description": "Once variables are collected, move to confirmation",
+            "conditions": [
+              {
+                "description": "Variables have been provided",
+                "requires_context_keys": ["target_variable", "input_variables"]
+              }
+            ],
+            "priority": 0
+          }
+        ],
+        "instructions": "Ask what the user thinks the topic affects (target variable) and what might affect it (input variables). Store these in 'target_variable' and 'input_variables' context variables."
+      },
+      "confirm_classification": {
+        "id": "confirm_classification",
+        "description": "Confirm the classification and details.",
+        "purpose": "Verify understanding and provide guidance",
+        "required_context_keys": ["summary"],
+        "transitions": [
+          {
+            "target_state": "provide_summary",
+            "description": "User confirms the summary",
+            "conditions": [
+              {
+                "description": "User confirms understanding"
+              }
+            ],
+            "priority": 0
+          },
+          {
+            "target_state": "gather_question",
+            "description": "User wants to clarify their question",
+            "conditions": [
+              {
+                "description": "User wants to modify their question"
+              }
+            ],
+            "priority": 1
+          }
+        ],
+        "instructions": "Summarize the topic, the nature (noticed/trying), and the variables. Ask if this understanding is correct. If yes, proceed to guidance. If no, allow them to clarify their topic."
+      },
+      "provide_summary": {
+        "id": "provide_summary",
+        "description": "Provide a final summary of the user's input",
+        "purpose": "Summarize the user's topic, nature, and variables as a conclusion",
+        "required_context_keys": ["summary", "scenarios"],
+        "transitions": [
+            {
+                "target_state": "present_scenarios",
+                "description": "User wants to see the generated scenarios",
+                "conditions": [
+                  {
+                    "description": "User wants to see the generated scenarios"
+                  }
+                ],
+                "priority": 1
+              }
+        ],
+        "instructions": "Summarize the topic, the nature (noticed/trying), and the variables. Ask if this understanding is correct. Store it in the 'summary' context variable."
+      },
+      "present_scenarios": {
+        "id": "present_scenarios",
+        "description": "Present the generated scenarios",
+        "purpose": "Present the generated scenarios",
+        "required_context_keys": ["scenarios"],
+        "transitions": [
+            {
+                "target_state": "welcome",
+                "description": "User wants to continue the conversation",
+                "conditions": [
+                  {
+                    "description": "User wants to modify their topic"
+                  }
+                ],
+                "priority": 1
+              }
+        ],
+        "instructions": "Tell the user what you learned from the context variable scenarios "
+      },
+      "end_conversation": {
+        "id": "end_conversation",
+        "description": "End the conversation",
+        "purpose": "End the conversation",
+        "transitions": [],
+        "instructions": "End the conversation."
+       }
+    },
+    "persona": "A knowledgeable assistant who helps users understand and classify their counterfactual questions, providing clear guidance on how to approach their analysis."
+}

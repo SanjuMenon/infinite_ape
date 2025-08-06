@@ -1,0 +1,138 @@
+{
+    "name": "fsm_builder_bot",
+    "description": "A conversational FSM that guides a user to define the structure of a new FSM",
+    "version": "1.0",
+    "persona": "You are a helpful FSM creation assistant. Your job is to guide users through building their own FSM by asking questions step-by-step.",
+    "initial_state": "delegate_to_metadata",
+    "states": {
+      "delegate_to_metadata": {
+        "id": "delegate_to_metadata",
+        "description": "Delegate to metadata collector FSM",
+        "purpose": "Hand over to metadata collector for gathering FSM metadata",
+        "instructions": "Inform the user that you're connecting them with a metadata collector to gather basic FSM information.",
+        "transitions": [
+          {
+            "target_state": "add_state",
+            "description": "Metadata collection is complete",
+            "priority": 10
+          },
+          {
+            "target_state": "delegate_to_metadata",
+            "description": "Metadata collection is not complete",
+            "priority": 5
+          }
+        ]
+      },
+      "add_state": {
+        "id": "add_state",
+        "description": "Collect details for a new state",
+        "purpose": "Add a state to the FSM being built",
+        "instructions": "Please provide the state ID, description, purpose, and any instructions you want the bot to follow in this state.",
+        "required_context_keys": ["state_id", "state_description", "state_purpose", "state_instructions"],
+        "transitions": [
+          {
+            "target_state": "add_transitions",
+            "description": "Go to transition definition for this state",
+            "priority": 10
+          }
+        ]
+      },
+      "add_transitions": {
+        "id": "add_transitions",
+        "description": "Collect transitions from the current state",
+        "purpose": "Define one or more transitions from the current state to others",
+        "instructions": "Now define transitions from this state. For each transition, provide the target state, description, and priority.",
+        "required_context_keys": ["transitions"],
+        "transitions": [
+          {
+            "target_state": "add_context_keys_optional",
+            "description": "Ask if context keys are needed for this state",
+            "priority": 10
+          }
+        ]
+      },
+      "add_context_keys_optional": {
+        "id": "add_context_keys_optional",
+        "description": "Check if this state needs any required context keys",
+        "purpose": "Add optional required context keys for the current state",
+        "instructions": "Does this state need any required context keys (e.g., customer_name)? If yes, please provide them. If not, say 'no'.",
+        "transitions": [
+          {
+            "target_state": "ask_add_another_state",
+            "description": "Go to next state decision",
+            "priority": 10
+          }
+        ]
+      },
+      "ask_add_another_state": {
+        "id": "ask_add_another_state",
+        "description": "Check if user wants to add another state",
+        "purpose": "Allow user to iteratively add states",
+        "instructions": "Would you like to add another state to your FSM?",
+        "transitions": [
+          {
+            "target_state": "add_state",
+            "description": "User wants to add another state",
+            "priority": 10
+          },
+          {
+            "target_state": "select_initial_state",
+            "description": "User is done adding states",
+            "priority": 5
+          }
+        ]
+      },
+      "select_initial_state": {
+        "id": "select_initial_state",
+        "description": "Ask the user to choose the initial state",
+        "purpose": "Define which state the FSM starts from",
+        "instructions": "Which of the states you've defined should be the initial state?",
+        "required_context_keys": ["initial_state"],
+        "transitions": [
+          {
+            "target_state": "review_and_confirm",
+            "description": "Move to final confirmation",
+            "priority": 10
+          }
+        ]
+      },
+      "review_and_confirm": {
+        "id": "review_and_confirm",
+        "description": "Summarize the FSM and ask for confirmation",
+        "purpose": "Ensure the user is happy with the FSM before final output",
+        "instructions": "Here's a summary of your FSM. Would you like to make any edits or should I finalize it and generate the JSON?",
+        "transitions": [
+          {
+            "target_state": "edit_state",
+            "description": "User wants to make changes",
+            "priority": 10
+          },
+          {
+            "target_state": "finalize",
+            "description": "User is done, FSM is ready",
+            "priority": 5
+          }
+        ]
+      },
+      "edit_state": {
+        "id": "edit_state",
+        "description": "Edit one of the states or transitions",
+        "purpose": "Let user change part of the FSM",
+        "instructions": "Please tell me what part of the FSM you'd like to edit — state, transition, or metadata.",
+        "transitions": [
+          {
+            "target_state": "review_and_confirm",
+            "description": "Back to confirmation after edits",
+            "priority": 10
+          }
+        ]
+      },
+      "finalize": {
+        "id": "finalize",
+        "description": "Output the final FSM JSON",
+        "purpose": "Deliver the complete FSM structure to the user",
+        "instructions": "Generating the JSON now. Thank you for using the FSM Builder Bot!",
+        "transitions": []
+      }
+    }
+  }

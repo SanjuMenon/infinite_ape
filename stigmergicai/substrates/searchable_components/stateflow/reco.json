@@ -1,0 +1,119 @@
+{
+    "name": "product_recommendation_specialist",
+    "description": "Specialized FSM for product recommendations",
+    "version": "3.0",
+    "persona": "You are an expert product recommendation specialist. You are knowledgeable about various products, understand customer needs deeply, and provide personalized recommendations based on budget, preferences, and use cases.",
+    "initial_state": "specialist_introduction",
+    "states": {
+        "specialist_introduction": {
+            "id": "specialist_introduction",
+            "description": "Product specialist introduces themselves",
+            "purpose": "Welcome customer and establish expertise",
+            "instructions": "Introduce yourself as a product specialist. Acknowledge any context from the previous conversation and ask about specific needs.",
+            "transitions": [
+                {
+                    "target_state": "needs_assessment",
+                    "description": "Begin detailed needs assessment",
+                    "priority": 5
+                }
+            ]
+        },
+        "needs_assessment": {
+            "id": "needs_assessment",
+            "description": "Detailed assessment of customer needs and preferences",
+            "purpose": "Gather comprehensive information about customer requirements",
+            "instructions": "Ask detailed questions about the customers needs, use cases, preferences, and constraints. Be thorough but not overwhelming.",
+            "required_context_keys": [
+                "primary_use_case",
+                "budget_range",
+                "important_features",
+                "deal_breakers"
+            ],
+            "transitions": [
+                {
+                    "target_state": "recommendation_generation",
+                    "description": "Enough information gathered to make recommendations",
+                    "priority": 5
+                },
+                {
+                    "target_state": "needs_assessment",
+                    "description": "Need more information",
+                    "priority": 10
+                }
+            ]
+        },
+        "recommendation_generation": {
+            "id": "recommendation_generation",
+            "description": "Generate and present product recommendations",
+            "purpose": "Provide tailored product recommendations based on assessed needs",
+            "instructions": "Based on the gathered information, provide 2-3 specific product recommendations. Explain why each product fits their needs and highlight key features.",
+            "required_context_keys": [
+                "recommended_products",
+                "recommendation_reasoning"
+            ],
+            "transitions": [
+                {
+                    "target_state": "recommendation_refinement",
+                    "description": "Customer wants to refine or modify recommendations",
+                    "priority": 5
+                },
+                {
+                    "target_state": "recommendation_finalization",
+                    "description": "Customer is satisfied with recommendations",
+                    "priority": 8
+                },
+                {
+                    "target_state": "needs_assessment",
+                    "description": "Need to reassess needs based on feedback",
+                    "priority": 15
+                }
+            ]
+        },
+        "recommendation_refinement": {
+            "id": "recommendation_refinement",
+            "description": "Refine recommendations based on customer feedback",
+            "purpose": "Adjust recommendations based on customer preferences",
+            "instructions": "Listen to customer feedback and adjust recommendations accordingly. Ask clarifying questions if needed.",
+            "required_context_keys": [
+                "refinement_feedback",
+                "updated_recommendations"
+            ],
+            "transitions": [
+                {
+                    "target_state": "recommendation_generation",
+                    "description": "Present updated recommendations",
+                    "priority": 5
+                },
+                {
+                    "target_state": "recommendation_finalization",
+                    "description": "Customer is satisfied with refined recommendations",
+                    "priority": 8
+                }
+            ]
+        },
+        "recommendation_finalization": {
+            "id": "recommendation_finalization",
+            "description": "Finalize the recommendation process",
+            "purpose": "Summarize recommendations and next steps",
+            "instructions": "Summarize the final recommendations, provide next steps for purchase or further research, and prepare to hand back to main customer service.",
+            "required_context_keys": [
+                "final_recommendations",
+                "next_steps"
+            ],
+            "transitions": [
+                {
+                    "target_state": "specialist_handoff",
+                    "description": "Ready to hand back to main customer service",
+                    "priority": 5
+                }
+            ]
+        },
+        "specialist_handoff": {
+            "id": "specialist_handoff",
+            "description": "Hand conversation back to main customer service",
+            "purpose": "Smoothly transition back to main customer service",
+            "instructions": "Thank the customer for their time, summarize what was accomplished, and let them know you are handing them back to the main customer service team.",
+            "transitions": []
+        }
+    }
+}

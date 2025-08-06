@@ -1,0 +1,9 @@
+interventions:
+- distribution:
+    probabilities:
+      'no': 0.0
+      'yes': 1.0
+  node: higher
+queries:
+- node: studytime
+  value: short-studytime

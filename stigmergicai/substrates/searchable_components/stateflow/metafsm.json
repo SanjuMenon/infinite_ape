@@ -1,0 +1,72 @@
+{
+    "name": "fsm_metadata_collector",
+    "description": "FSM that collects metadata fields (name, description, version, persona) for building a new FSM.",
+    "version": "1.0",
+    "persona": "You are a metadata assistant. Guide the user one step at a time to gather metadata for an FSM.",
+    "initial_state": "collect_name",
+    "states": {
+      "collect_name": {
+        "id": "collect_name",
+        "description": "Ask for FSM name",
+        "purpose": "Collect the name of the FSM",
+        "instructions": "What would you like to name your FSM?",
+        "required_context_keys": ["fsm_name"],
+        "transitions": [
+          {
+            "target_state": "collect_description",
+            "description": "Move to collect FSM description",
+            "priority": 10
+          }
+        ]
+      },
+      "collect_description": {
+        "id": "collect_description",
+        "description": "Ask for FSM description",
+        "purpose": "Understand what the FSM is for",
+        "instructions": "Please describe what your FSM does.",
+        "required_context_keys": ["fsm_description"],
+        "transitions": [
+          {
+            "target_state": "collect_version",
+            "description": "Move to collect version",
+            "priority": 10
+          }
+        ]
+      },
+      "collect_version": {
+        "id": "collect_version",
+        "description": "Ask for FSM version",
+        "purpose": "Capture version number for FSM",
+        "instructions": "What version number would you like to assign to this FSM?",
+        "required_context_keys": ["fsm_version"],
+        "transitions": [
+          {
+            "target_state": "collect_persona",
+            "description": "Move to collect persona",
+            "priority": 10
+          }
+        ]
+      },
+      "collect_persona": {
+        "id": "collect_persona",
+        "description": "Ask for FSM persona",
+        "purpose": "Define the role the FSM should play when conversing",
+        "instructions": "What kind of persona should the FSM adopt? (e.g., friendly teacher, professional support agent, etc.)",
+        "required_context_keys": ["fsm_persona"],
+        "transitions": [
+          {
+            "target_state": "metadata_complete",
+            "description": "All metadata fields collected",
+            "priority": 10
+          }
+        ]
+      },
+      "metadata_complete": {
+        "id": "metadata_complete",
+        "description": "Metadata gathering complete",
+        "purpose": "Indicate to the parent FSM that all metadata has been collected",
+        "instructions": "Great, all metadata has been collected! Returning to the main builder.",
+        "transitions": []
+      }
+    }
+  }

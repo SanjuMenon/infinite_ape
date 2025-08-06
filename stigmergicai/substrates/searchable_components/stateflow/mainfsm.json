@@ -1,0 +1,142 @@
+{
+    "name": "customer_service_main",
+    "description": "Main customer service FSM handling general inquiries",
+    "version": "3.0",
+    "persona": "You are a helpful customer service representative. You are friendly, professional, and always try to assist customers with their needs.",
+    "initial_state": "greeting",
+    "states": {
+        "greeting": {
+            "id": "greeting",
+            "description": "Initial greeting and customer identification",
+            "purpose": "Welcome the customer and identify how to help them",
+            "instructions": "Greet the customer warmly and ask how you can help them today. Try to understand their needs.",
+            "required_context_keys": [
+                "customer_name",
+                "inquiry_type"
+            ],
+            "transitions": [
+                {
+                    "target_state": "general_help",
+                    "description": "Customer has a general question or issue",
+                    "priority": 10
+                },
+                {
+                    "target_state": "product_inquiry",
+                    "description": "Customer is asking about products or wants recommendations",
+                    "priority": 5
+                },
+                {
+                    "target_state": "farewell",
+                    "description": "Customer wants to end the conversation",
+                    "priority": 20
+                }
+            ]
+        },
+        "general_help": {
+            "id": "general_help",
+            "description": "Handle general customer service inquiries",
+            "purpose": "Provide general assistance and information",
+            "instructions": "Help the customer with their general inquiry. Be informative and helpful.",
+            "transitions": [
+                {
+                    "target_state": "product_inquiry",
+                    "description": "Customer now wants product recommendations",
+                    "priority": 5
+                },
+                {
+                    "target_state": "resolution",
+                    "description": "Customer issue has been resolved",
+                    "priority": 10
+                },
+                {
+                    "target_state": "farewell",
+                    "description": "Customer wants to end the conversation",
+                    "priority": 15
+                }
+            ]
+        },
+        "product_inquiry": {
+            "id": "product_inquiry",
+            "description": "Customer is interested in product recommendations",
+            "purpose": "Identify that customer needs product recommendations and prepare to delegate",
+            "instructions": "Acknowledge the customers interest in products. Explain that you will connect them with our product recommendation specialist.",
+            "required_context_keys": [
+                "product_category",
+                "budget_range"
+            ],
+            "transitions": [
+                {
+                    "target_state": "delegate_to_product_specialist",
+                    "description": "Ready to delegate to product recommendation system",
+                    "priority": 5
+                },
+                {
+                    "target_state": "general_help",
+                    "description": "Customer has other questions first",
+                    "priority": 10
+                }
+            ]
+        },
+        "delegate_to_product_specialist": {
+            "id": "delegate_to_product_specialist",
+            "description": "Delegate to specialized product recommendation FSM",
+            "purpose": "Hand over to product specialist with context",
+            "instructions": "Inform the customer that you are connecting them with a product specialist who will help them find the perfect product.",
+            "transitions": [
+                {
+                    "target_state": "post_recommendation_followup",
+                    "description": "Return from product recommendation system",
+                    "priority": 5
+                }
+            ]
+        },
+        "post_recommendation_followup": {
+            "id": "post_recommendation_followup",
+            "description": "Follow up after product recommendation session",
+            "purpose": "Check if customer needs additional help after product recommendations",
+            "instructions": "Welcome the customer back and ask if they need any additional assistance with their product selection or have other questions.",
+            "transitions": [
+                {
+                    "target_state": "resolution",
+                    "description": "Customer is satisfied and ready to proceed",
+                    "priority": 5
+                },
+                {
+                    "target_state": "general_help",
+                    "description": "Customer has additional questions",
+                    "priority": 10
+                },
+                {
+                    "target_state": "farewell",
+                    "description": "Customer wants to end the conversation",
+                    "priority": 15
+                }
+            ]
+        },
+        "resolution": {
+            "id": "resolution",
+            "description": "Customers needs have been addressed",
+            "purpose": "Confirm resolution and offer additional help",
+            "instructions": "Summarize what was accomplished and ask if there is anything else you can help with.",
+            "transitions": [
+                {
+                    "target_state": "farewell",
+                    "description": "Customer is ready to end the conversation",
+                    "priority": 5
+                },
+                {
+                    "target_state": "general_help",
+                    "description": "Customer has additional questions",
+                    "priority": 10
+                }
+            ]
+        },
+        "farewell": {
+            "id": "farewell",
+            "description": "End the conversation",
+            "purpose": "Thank the customer and close the conversation",
+            "instructions": "Thank the customer for their time, summarize key outcomes, and wicitricitrish them well.",
+            "transitions": []
+        }
+    }
+}
