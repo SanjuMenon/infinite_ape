@@ -6,4 +6,4 @@ This repository contains early code for experiments I am running across differen
 - **Causal Agent** - Click on the `causalagent/` folder to find out more about this project
 - **Stigmergic AI** - Click on the `stigmergicai/` folder to find out more about this project
 
-Building Evolvable AI (or formerly Stigmergic AI) here : https://gitlab.com/orchestrableai/stigmergyexperiments/
+Building Evolvable AI (or formerly Stigmergic AI) here : https://github.com/SanjuMenon/OrchestrableAI/ (currently private repo)
