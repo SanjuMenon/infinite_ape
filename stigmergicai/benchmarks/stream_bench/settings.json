@@ -1,0 +1,49 @@
+[
+    {
+        "id": "asst_sg6QkVoNSU4PR9S3mPPq9REz",
+        "created_at": 1738241225,
+        "description": "This is a description of my agent.",
+        "instructions": "Use perplexity tool to help you when you answer a question. Respond in JSON string format, with the answer as the key.",
+        "metadata": {},
+        "model": "gpt-4o-2024-08-06",
+        "name": "My P-Agent",
+        "object": "assistant",
+        "tools": [
+            {
+                "function": {
+                    "name": "PerplexityTool",
+                    "description": "A useful tool in delivering helpful, up-to-date, and factual responses to all your questions",
+                    "parameters": {
+                        "properties": {
+                            "name": {
+                                "description": "the name of the assistant to be called",
+                                "title": "name",
+                                "type": "string"
+                            },
+                            "query": {
+                                "description": "query to the assistant",
+                                "title": "query",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "name",
+                            "query"
+                        ],
+                        "type": "object"
+                    },
+                    "strict": false
+                },
+                "type": "function"
+            }
+        ],
+        "response_format": "auto",
+        "temperature": 0.3,
+        "tool_resources": {
+            "code_interpreter": null,
+            "file_search": null
+        },
+        "top_p": 1.0,
+        "reasoning_effort": null
+    }
+]

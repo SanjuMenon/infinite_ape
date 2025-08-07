@@ -1,0 +1,60 @@
+agent_name: "stigmergic"
+seed: 42
+warmup_steps: 0
+
+# LLM hyperparameters
+llm:
+  series: "openai"  # Options: "openai", "hf_model", "anthropic", "google"
+  model_name: "gpt-4o-mini-2024-07-18"  # Change to your preferred model
+  temperature: 0.0
+  max_tokens: 512  # Adjust based on your task: Text-to-SQL/DS-1000: 512; Toolbench: 256; DDXPlus: 16
+
+# Stigmergic AI specific parameters
+stability_threshold: 0.7  # Threshold for fitness function
+use_stigmergic_learning: true
+trace_decay_rate: 0.1
+max_traces: 50
+
+# Personas configuration
+personas:
+  - "Expert analyst who identifies patterns and trends"
+  - "Creative problem solver who explores innovative solutions"
+  - "Systematic planner who follows structured methodologies"
+  - "Adaptive learner who adjusts strategies based on feedback"
+
+# Tacit instructions configuration
+normative_instructions:
+  name: "Normative Guidance"
+  description: "Follow established patterns and maintain consistency"
+  memory_size: 100
+
+prescriptive_instructions:
+  name: "Prescriptive Guidance"
+  description: "Achieve specific outcomes and meet performance targets"
+  memory_size: 100
+
+# Substrate configuration
+substrate:
+  max_traces: 50
+  trace_relevance_threshold: 0.3
+  pattern_extraction_method: "simple"  # Options: "simple", "semantic", "ml"
+
+# Fitness function configuration
+fitness_function:
+  stability_threshold: 0.7
+  trace_consistency_weight: 0.4
+  agent_coordination_weight: 0.3
+  task_completion_weight: 0.3
+
+# Markov planner configuration
+markov_planner:
+  max_plan_steps: 20
+  confidence_threshold: 0.6
+  transaction_fee: 0.0
+
+# Advanced features
+advanced_features:
+  use_semantic_patterns: false
+  use_embeddings_for_traces: false
+  use_multi_persona_planning: true
+  use_adaptive_thresholds: true 

@@ -1,0 +1,24 @@
+agent_name: "stigmergicai"
+seed: 42
+warmup_steps: 0
+# LLM hyperparameters
+llms:
+  - series: "openai"
+    model_name: "o1-mini-2024-09-12"
+    temperature: 0.0
+    max_tokens: 512  # Text-to-SQL / DS-1000: 512; Toolbench: 256; DDXPlus: 16
+  - series: "openai"
+    model_name: "gpt-4o-mini-2024-07-18"
+    temperature: 0.0
+    max_tokens: 512  # Text-to-SQL / DS-1000: 512; Toolbench: 256; DDXPlus: 16
+  - series: "openai"
+    model_name: "gpt-4-turbo-2024-04-09"
+    temperature: 0.0
+    max_tokens: 512  # Text-to-SQL / DS-1000: 512; Toolbench: 256; DDXPlus: 16
+# RAG configurations
+rag:
+  embedding_model: "BAAI/bge-base-en-v1.5"
+  top_k: 16
+  order: "similar_at_bottom"  # ["similar_at_top", "similar_at_bottom", "random"]
+  rag_filename: null
+  seed: 42

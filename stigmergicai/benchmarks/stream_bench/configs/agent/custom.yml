@@ -1,0 +1,24 @@
+agent_name: "custom"
+seed: 42
+warmup_steps: 0
+
+# LLM hyperparameters
+llm:
+  series: "openai"  # Options: "openai", "hf_model", "anthropic", "google"
+  model_name: "gpt-4o-mini-2024-07-18"  # Change to your preferred model
+  temperature: 0.0
+  max_tokens: 512  # Adjust based on your task: Text-to-SQL/DS-1000: 512; Toolbench: 256; DDXPlus: 16
+
+# Custom agent specific parameters
+learning_rate: 0.1
+max_memory_size: 100
+
+# Custom prompt template (optional - will use default if not specified)
+prompt_template: "Task: {task_description}\n\nInput: {input}\n\nOptions:\n{options}\n\nAnswer:"
+
+# Additional custom parameters can be added here
+# For example:
+# custom_feature: true
+# model_config:
+#   use_chain_of_thought: false
+#   use_few_shot_learning: true 
