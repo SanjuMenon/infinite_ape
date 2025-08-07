@@ -1,8 +1,8 @@
 import json
 from agency_swarm import Agency, Agent
-from searchable_components.init_agency import init_agency
+from role_loop.init_agency import init_agency
 import os
-from searchable_components.client import client
+from role_loop.client import client
 
 def load_threads():
     with open('thread_update.json', 'r') as f:

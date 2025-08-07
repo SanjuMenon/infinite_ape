@@ -1,8 +1,8 @@
 import json
 from agency_swarm import set_openai_client
 from agency_swarm import Agent, Agency
-from searchable_components.client import client
-from searchable_components.utils import clear_write_json
+from role_loop.client import client
+from role_loop.utils import clear_write_json
 
 set_openai_client(client)
 

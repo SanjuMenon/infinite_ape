@@ -162,6 +162,10 @@ This is experimental research code. Contributions are welcome! Please:
 - Submit a pull request with detailed descriptions
 - Follow the existing code style and documentation patterns
 
+## Acknowledgments
+
+- **Gao Gui** - For ideation and implementation of the scripts in `substrates/role_loop/`, including agent creation, agency initialization, structure updates, and utility functions.
+
 ## Related Work
 
 For more information about the broader research program, see: https://github.com/SanjuMenon/OrchestrableAI/ (currently private repo) 

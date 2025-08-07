@@ -1,7 +1,7 @@
 #from tools.predefined_tools import *
-from searchable_components.client import client
+from role_loop.client import client
 from searchable_components.tools.predefined_tools import CallAssistant, CallTool, CreateAssistant, CreateTool
-from searchable_components.utils import clear_write_json, run_and_poll
+from role_loop.utils import clear_write_json, run_and_poll
 
 
 assistant = client.beta.assistants.create(

@@ -1,6 +1,6 @@
 import json
-from searchable_components.utils import run_and_poll
-from searchable_components.client import client
+from role_loop.utils import run_and_poll
+from role_loop.client import client
 
 with open('config.json', 'r') as f:
     config = json.load(f)
