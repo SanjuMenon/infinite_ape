@@ -1,6 +1,42 @@
-# OpenAI Agents for Causal Analysis
+## 🧠 What is This?
 
-This module implements an intelligent agent system for causal analysis and counterfactual reasoning using OpenAI's language models. The system provides both a command-line interface and a modern web application for analyzing educational data and generating insights about causal relationships.
+**Causal Agent** is an open-source framework that brings the **LLM-Modulo architecture** to **causal inference** tasks. Based on the vision proposed by **Subbarao Kambhampati et al. (2024)**, this framework combines the creative generative power of Large Language Models (LLMs) with the formal correctness guarantees of external verifiers.
+
+It enables LLMs to suggest hypotheses, causal graphs, and estimators — while external modules (statistical tests, domain verifiers, symbolic solvers) validate, critique, and refine those suggestions in a structured loop.
+
+## 🧭 Motivation
+
+> Treat LLMs like an overconfident but helpful know-it-all.  
+> Useful for brainstorming, but always double-checked.
+
+LLMs frequently hallucinate, struggle with planning, and can't self-verify their own outputs. However, if we use them within a **Generate-Test-Critique loop**, we can harness their strengths while guarding against their weaknesses.
+
+This project applies that principle to **causal inference**.
+
+## 🧱 Architecture
+
+The system implements a **Generate-Test-Critique** loop, adapted from Kambhampati’s LLM-Modulo Framework:
+
+```text
+[1] Input: Causal Query or Dataset
+     ↓
+[2] LLM-Generated Candidate:
+    - DAG
+    - SCM (Structural Causal Model)
+    - Interventional Query
+     ↓
+[3] Bank of Critics:
+    - DAG validators (e.g., acyclicity, d-separation)
+    - Statistical independence tests
+    - Do-calculus-based estimators
+     ↓
+[4] Meta Controller:
+    - Aggregates critiques
+    - Forms improved prompts
+     ↓
+[5] LLM revises the causal candidate
+     ↓
+Repeat until all hard critics approve ✅
 
 ## Overview
 

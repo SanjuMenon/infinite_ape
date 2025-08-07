@@ -1,6 +1,23 @@
 # Stigmergic AI
 
+[![Research](https://img.shields.io/badge/Type-Research-orange)](https://github.com/SanjuMenon/infinite_ape)
+[![Status](https://img.shields.io/badge/Status-Experimental-red)](https://github.com/SanjuMenon/infinite_ape)
+[![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
+
 A research project exploring stigmergic (indirect coordination through environment) approaches to multi-agent AI systems. This project implements hierarchical agent architectures and evolvable AI components using systematic inventive thinking (SIT) principles.
+
+## Table of Contents
+- [Architecture Overview](#architecture-overview)
+- [Overview](#overview)
+- [Project Structure](#project-structure)
+- [Key Concepts](#key-concepts)
+- [Quick Start](#quick-start)
+- [Usage](#usage)
+- [Research Goals](#research-goals)
+- [Dependencies](#dependencies)
+- [Status](#status)
+- [Contributing](#contributing)
+- [Related Work](#related-work)
 
 ## Architecture Overview
 
@@ -31,6 +48,20 @@ The system is built around a **Stable Agency** that orchestrates coordination be
 ## Overview
 
 This project explores how AI agents can coordinate through environmental modifications rather than direct communication, inspired by stigmergy in nature (like ant colonies using pheromone trails). The system implements hierarchical organizational structures and evolvable components that can adapt and transform themselves.
+
+## Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/SanjuMenon/infinite_ape.git
+cd infinite_ape/stigmergicai
+
+# Install dependencies
+pip install agency_swarm pyglove openai gradio pydantic
+
+# Run a simple example
+python hierarchical_structure.py
+```
 
 ## Project Structure
 
@@ -121,6 +152,15 @@ transformed_class = manager.apply_sit_operation('subtraction', MyClass,
 ## Status
 
 This is experimental research code. The project is actively being developed and refined as part of ongoing research into stigmergic AI systems.
+
+## Contributing
+
+This is experimental research code. Contributions are welcome! Please:
+
+- Open an issue to discuss proposed changes
+- Fork the repository and create a feature branch
+- Submit a pull request with detailed descriptions
+- Follow the existing code style and documentation patterns
 
 ## Related Work
 
