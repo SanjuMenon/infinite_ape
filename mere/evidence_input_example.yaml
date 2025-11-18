@@ -1,0 +1,16 @@
+# Example input YAML file for MERE (Minimal Evidence for Reproducibility)
+# This file contains the prompt/question and all available evidence items
+
+prompt: "Who won the 2019 Nobel Prize in Physics?"
+
+evidence:
+  - "The 2019 Nobel Prize in Physics was awarded to James Peebles, Michel Mayor, and Didier Queloz"
+  - "James Peebles received half the prize for theoretical discoveries in physical cosmology"
+  - "Michel Mayor and Didier Queloz shared the other half for discovering an exoplanet orbiting a solar-type star"
+  - "The prize was announced on October 8, 2019"
+  - "The Nobel Prize in Physics is awarded by the Royal Swedish Academy of Sciences"
+  - "The prize amount in 2019 was 9 million Swedish kronor"
+  - "James Peebles is a Canadian-American physicist"
+  - "Michel Mayor is a Swiss astrophysicist"
+  - "Didier Queloz is a Swiss astronomer"
+
