@@ -10,7 +10,7 @@ This repository contains early code for experiments I am running across differen
 - **Symbolic (Agentica)** - See `symbolic/` for a sample program demonstrating the Agentica Python SDK, a type-safe AI framework that lets LLM agents integrate with your code—functions, classes, live objects, and entire SDKs.
 - **MERE (Minimal Evidence for Reproducibility)** - See `mere/` for a tool that determines which evidence items help improve reproducibility of outcomes in LLM responses. Through combinatorial testing, it identifies the minimal set of evidence that ensures consistent, reliable results while minimizing hallucination risk.
 
-Building Evolvable AI (or formerly Stigmergic AI) here : https://github.com/SanjuMenon/OrchestrableAI/ (currently private repo)
+Building Evolvable AI (or formerly Stigmergic AI) here : https://github.com/SanjuMenon/EvolvableAI (currently private repo)
 
 
 
