@@ -27,6 +27,7 @@ class ExperimentConfig:
     choice_set: ChoiceSet
     trials_per_choice: int = 50
     bayes_increment: float = 0.1
+    bayes_initial_alpha: float = 1.0
     temperature: float = 0.7
     max_tokens: int = 16
     model: str = "gpt-4.1-mini"
@@ -36,6 +37,8 @@ class ExperimentConfig:
             raise ValueError("trials_per_choice must be positive.")
         if self.bayes_increment <= 0:
             raise ValueError("bayes_increment must be positive.")
+        if self.bayes_initial_alpha <= 0:
+            raise ValueError("bayes_initial_alpha must be positive.")
         if self.temperature <= 0:
             raise ValueError("temperature must be positive.")
         if self.max_tokens <= 0:

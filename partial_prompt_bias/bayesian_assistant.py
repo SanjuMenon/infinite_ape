@@ -13,6 +13,7 @@ class BayesianAssistant:
 
     n_choices: int
     increment: float = 0.1
+    initial_alpha: float = 1.0
     alpha: List[float] = field(init=False)
 
     def __post_init__(self) -> None:
@@ -20,7 +21,9 @@ class BayesianAssistant:
             raise ValueError("n_choices must be positive.")
         if self.increment <= 0:
             raise ValueError("increment must be positive.")
-        self.alpha = [1.0] * self.n_choices
+        if self.initial_alpha <= 0:
+            raise ValueError("initial_alpha must be positive.")
+        self.alpha = [self.initial_alpha] * self.n_choices
 
     def update(self, chosen_idx: int) -> None:
         """Increment α for the chosen index."""

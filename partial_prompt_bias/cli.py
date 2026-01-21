@@ -9,10 +9,12 @@ import random
 from pathlib import Path
 from typing import Any, Dict, List, Sequence
 
-from .config import ChoiceSet, ExperimentConfig
-from .experiment import run_experiment
-from .llm_client import AzureOpenAIClient, OpenAIClient
+from config import ChoiceSet, ExperimentConfig
+from experiment import run_experiment
+from llm_client import AzureOpenAIClient, OpenAIClient
+from dotenv import load_dotenv
 
+load_dotenv()
 
 def _read_prompt_from_file(path: Path) -> str:
     if not path.exists():
@@ -200,6 +202,17 @@ async def main(argv: Sequence[str] | None = None) -> int:
         "dnui_prediction": result.dnui_prediction,
         "dnui_feedback": result.dnui_feedback,
         "dnui_assistant_final": result.dnui_assistant_final,
+        "bias_attribution": {
+            "llm_bias_dnui": result.llm_bias_dnui,
+            "loop_amplification_dnui_feedback": result.loop_amplification_dnui_feedback,
+            "loop_fraction_of_feedback_dnui": result.loop_fraction_of_feedback_dnui,
+            "loop_amplification_dnui_assistant_final": result.loop_amplification_dnui_assistant_final,
+            "loop_fraction_of_assistant_final_dnui": result.loop_fraction_of_assistant_final_dnui,
+            "loop_effect_dnui_feedback": result.loop_effect_dnui_feedback,
+            "loop_effect_over_prediction_dnui_feedback": result.loop_effect_over_prediction_dnui_feedback,
+            "loop_effect_dnui_assistant_final": result.loop_effect_dnui_assistant_final,
+            "loop_effect_over_prediction_dnui_assistant_final": result.loop_effect_over_prediction_dnui_assistant_final,
+        },
     }
     if args.include_table:
         output["pf_table"] = [
