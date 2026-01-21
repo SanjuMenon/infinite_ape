@@ -18,8 +18,14 @@ from scipy.stats import entropy as scipy_entropy
 
 try:
     from openai import OpenAI  # pip install openai>=1.0.0
+    # Azure OpenAI support (same SDK)
+    try:
+        from openai import AzureOpenAI  # type: ignore
+    except Exception:
+        AzureOpenAI = None
 except Exception:
     OpenAI = None
+    AzureOpenAI = None
 
 # =====================
 # Numerics
@@ -182,8 +188,29 @@ class ChatBackend:
     def __init__(self, model: str, api_key: Optional[str] = None, request_timeout: float = 60.0,
                  system_prompt: str = "You are a precise assistant. Answer in one sentence that ends with a period.") -> None:
         if OpenAI is None:
-            raise ImportError("Install `openai>=1.0.0` and set OPENAI_API_KEY.")
-        self.client = OpenAI(api_key=api_key or os.environ.get("OPENAI_API_KEY",""))
+            raise ImportError("Install `openai>=1.0.0`.")
+
+        # Auto-detect Azure OpenAI when AZURE_OPENAI_ENDPOINT is set.
+        azure_endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT", "").strip()
+        azure_key = os.environ.get("AZURE_OPENAI_API_KEY", "").strip()
+        azure_version = os.environ.get("AZURE_OPENAI_API_VERSION", "").strip()
+
+        if azure_endpoint:
+            if AzureOpenAI is None:
+                raise ImportError("Your installed `openai` SDK does not expose AzureOpenAI. Upgrade `openai>=1.0.0`.")
+            key = (api_key or azure_key).strip()
+            if not key:
+                raise RuntimeError("Azure detected but AZURE_OPENAI_API_KEY not set (or api_key not provided).")
+            if not azure_version:
+                raise RuntimeError("Azure detected but AZURE_OPENAI_API_VERSION not set.")
+            self.client = AzureOpenAI(api_key=key, azure_endpoint=azure_endpoint, api_version=azure_version)
+        else:
+            key = (api_key or os.environ.get("OPENAI_API_KEY", "")).strip()
+            if not key:
+                raise RuntimeError("OPENAI_API_KEY not set.")
+            self.client = OpenAI(api_key=key)
+
+        # NOTE: for Azure, `model` should be your *deployment name*
         self.model = model
         self.request_timeout = float(request_timeout)
         self.system_prompt = system_prompt

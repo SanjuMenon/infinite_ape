@@ -10,6 +10,9 @@ Based on: https://github.com/leochlon/hallbayes
 
 import os
 from typing import List
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Import from credence module
 from credence import (

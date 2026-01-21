@@ -1,0 +1,49 @@
+{
+  "application_id": "CFL-2026-0007",
+  "as_of_date": "2026-01-15",
+  "borrower": {
+    "legal_name": "Harbor Freight & Marine Supplies LLC",
+    "industry": "marine_supplies_retail",
+    "years_in_business": 4,
+    "location": "Seattle, WA"
+  },
+  "loan_request": {
+    "product": "term_loan",
+    "requested_amount_usd": 250000,
+    "term_months": 24,
+    "purpose": "inventory_purchase",
+    "proposed_monthly_payment_usd": 11850
+  },
+  "bank_account_summary": {
+    "currency": "USD",
+    "accounts_analyzed": 2,
+    "analysis_window_days": 180,
+    "monthly_net_cash_flow_usd_last_6_months": [
+      { "month": "2025-08", "net_cash_flow_usd": 18200 },
+      { "month": "2025-09", "net_cash_flow_usd": 21400 },
+      { "month": "2025-10", "net_cash_flow_usd": 16750 },
+      { "month": "2025-11", "net_cash_flow_usd": 19500 },
+      { "month": "2025-12", "net_cash_flow_usd": 23100 },
+      { "month": "2026-01", "net_cash_flow_usd": 20500 }
+    ],
+    "average_monthly_deposits_usd_last_6_months": 142300,
+    "average_monthly_withdrawals_usd_last_6_months": 122900,
+    "nsf_count_last_6_months": 1
+  },
+  "cash_flow_metrics": {
+    "trailing_3_month_average_net_cash_flow_usd": 21033.33,
+    "trailing_6_month_average_net_cash_flow_usd": 19908.33,
+    "existing_debt_service_monthly_usd": 4200,
+    "proposed_total_debt_service_monthly_usd": 16050,
+    "dscr_proposed": 1.31,
+    "minimum_dscr_policy": 1.25
+  },
+  "decisioning": {
+    "policy_result": "pass",
+    "reasons": [
+      "DSCR meets policy threshold",
+      "NSF count within tolerance"
+    ]
+  }
+}
+

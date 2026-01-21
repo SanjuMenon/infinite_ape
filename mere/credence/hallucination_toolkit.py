@@ -45,8 +45,14 @@ from typing import Dict, List, Optional, Sequence, Tuple
 
 try:
     from openai import OpenAI  # type: ignore
+    # Azure OpenAI support (same SDK)
+    try:
+        from openai import AzureOpenAI  # type: ignore
+    except Exception:  # pragma: no cover
+        AzureOpenAI = None
 except Exception as e:  # pragma: no cover
     OpenAI = None
+    AzureOpenAI = None
 
 
 class OpenAIBackend:
@@ -55,14 +61,44 @@ class OpenAIBackend:
         model: str = "gpt-4o-mini",
         api_key: Optional[str] = None,
         request_timeout: float = 60.0,
+        # Azure OpenAI (optional). If not provided, can be read from env vars.
+        azure_endpoint: Optional[str] = None,
+        azure_api_version: Optional[str] = None,
     ) -> None:
         if OpenAI is None:
-            raise ImportError("Install `openai>=1.0.0` and set OPENAI_API_KEY.")
-        self.model = model
-        self.api_key = api_key or os.environ.get("OPENAI_API_KEY", "")
-        if not self.api_key:
-            raise RuntimeError("OPENAI_API_KEY not set.")
-        self.client = OpenAI(api_key=self.api_key)
+            raise ImportError("Install `openai>=1.0.0`.")
+
+        # Auto-detect Azure OpenAI when AZURE_OPENAI_ENDPOINT is set (or azure_endpoint passed).
+        env_azure_endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT", "").strip()
+        env_azure_key = os.environ.get("AZURE_OPENAI_API_KEY", "").strip()
+        env_azure_version = os.environ.get("AZURE_OPENAI_API_VERSION", "").strip()
+
+        azure_endpoint = (azure_endpoint or env_azure_endpoint).strip() if (azure_endpoint or env_azure_endpoint) else ""
+        azure_api_version = (azure_api_version or env_azure_version).strip() if (azure_api_version or env_azure_version) else ""
+
+        self.model = model  # NOTE: for Azure, this should be your *deployment name*
+
+        if azure_endpoint:
+            if AzureOpenAI is None:
+                raise ImportError("Your installed `openai` SDK does not expose AzureOpenAI. Upgrade `openai>=1.0.0`.")
+            azure_key = (api_key or env_azure_key).strip()
+            if not azure_key:
+                raise RuntimeError("Azure detected but AZURE_OPENAI_API_KEY not set (or api_key not provided).")
+            if not azure_api_version:
+                raise RuntimeError("Azure detected but AZURE_OPENAI_API_VERSION not set (or azure_api_version not provided).")
+            self.api_key = azure_key
+            self.client = AzureOpenAI(
+                api_key=azure_key,
+                azure_endpoint=azure_endpoint,
+                api_version=azure_api_version,
+            )
+        else:
+            # Standard OpenAI
+            self.api_key = (api_key or os.environ.get("OPENAI_API_KEY", "")).strip()
+            if not self.api_key:
+                raise RuntimeError("OPENAI_API_KEY not set.")
+            self.client = OpenAI(api_key=self.api_key)
+
         self.request_timeout = float(request_timeout)
 
     def chat_create(self, messages: List[Dict], **kwargs):

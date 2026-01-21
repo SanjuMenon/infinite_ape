@@ -1,0 +1,24 @@
+{
+  "model_name": "gpt-4o-mini",
+  "policy": "ANSWER iff ISR >= 1.000 and \u0394\u0304 >= B2T + 0.000 nats",
+  "h_star": 0.05,
+  "isr_threshold": 1.0,
+  "margin_extra_bits": 0.0,
+  "confidence_1_minus_alpha": 0.95,
+  "answer_rate": 0.3333333333333333,
+  "abstention_rate": 0.6666666666666666,
+  "empirical_hallucination_rate": null,
+  "wilson_upper_bound": null,
+  "edfl_worst_item_roh_bound": 9.999778782798785e-13,
+  "edfl_median_item_roh_bound": 9.999778782798785e-13,
+  "n_items": 3,
+  "n_answered_with_labels": 0,
+  "hallucinations_observed": 0,
+  "assumptions": [
+    "Skeleton family is pre-registered; no post-hoc selection.",
+    "Clipping parameter B and decision policy are fixed before evaluation.",
+    "EDFL bounds hold for the chosen rolling-prior construction.",
+    "Closed-book policy uses semantic masking (entities/numbers/quotes).",
+    "Hallucination labels (if used) reflect correctness per spec."
+  ]
+}

@@ -1,0 +1,2 @@
+What is the customer's tier for order_id A-1001?
+

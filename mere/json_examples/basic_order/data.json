@@ -1,0 +1,25 @@
+{
+  "orders": [
+    {
+      "order_id": "A-1001",
+      "customer": {
+        "name": "Ada",
+        "tier": "gold"
+      },
+      "items": [
+        {
+          "sku": "PEN-001",
+          "qty": 2,
+          "unit_price_usd": 1.25
+        },
+        {
+          "sku": "NOTE-010",
+          "qty": 1,
+          "unit_price_usd": 3.5
+        }
+      ],
+      "currency": "USD"
+    }
+  ]
+}
+

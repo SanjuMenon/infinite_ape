@@ -1,0 +1,72 @@
+# MERE: Minimal Evidence for Reproducibility - Requirements
+# ============================================================================
+# This file contains all dependencies needed to run the MERE optimizer
+# ============================================================================
+
+# Python Version Requirement
+# ============================================================================
+# Python 3.8 or higher is required
+# The code uses features like:
+#   - from __future__ import annotations (Python 3.7+)
+#   - @dataclass decorator (Python 3.7+)
+#   - Modern type hints (Python 3.5+, but better in 3.8+)
+#
+# Recommended: Python 3.9+ or Python 3.10+ for best compatibility
+
+# ============================================================================
+# Required Dependencies
+# ============================================================================
+# These are required for basic functionality
+
+PyYAML>=6.0.0              # For YAML file I/O (evidence input/output)
+numpy>=1.24.0              # For numerical operations in stable_decode module
+scipy>=1.10.0              # For statistical functions (Jensen-Shannon distance, entropy)
+
+# ============================================================================
+# LLM Backend Dependencies (Optional - install based on your backend choice)
+# ============================================================================
+# Install only the backend(s) you plan to use
+
+# OpenAI Backend (requires OPENAI_API_KEY environment variable)
+openai>=1.0.0
+
+# Anthropic Backend (requires ANTHROPIC_API_KEY environment variable)
+anthropic>=0.28.0
+
+# Ollama Backend (requires local Ollama server running)
+# Note: ollama package is optional - can use HTTP API via requests instead
+ollama>=0.1.0
+
+# HuggingFace Backend (for transformers mode)
+# Note: torch is typically installed automatically with transformers
+transformers>=4.30.0
+torch>=2.0.0                # Required for transformers mode
+
+# HTTP-based backends (TGI, OpenRouter, Ollama HTTP mode)
+requests>=2.28.0
+
+# ============================================================================
+# Installation Notes
+# ============================================================================
+#
+# Minimal installation (OpenAI only):
+#   pip install PyYAML numpy scipy openai
+#
+# Full installation (all backends):
+#   pip install -r requirements.txt
+#
+# For specific backend:
+#   pip install PyYAML numpy scipy openai          # OpenAI
+#   pip install PyYAML numpy scipy anthropic       # Anthropic
+#   pip install PyYAML numpy scipy ollama          # Ollama
+#   pip install PyYAML numpy scipy transformers torch requests  # HuggingFace
+#
+# ============================================================================
+# Environment Variables Required
+# ============================================================================
+#
+# OpenAI:     OPENAI_API_KEY
+# Anthropic:  ANTHROPIC_API_KEY
+# Ollama:     (no API key needed, but Ollama server must be running)
+# HuggingFace: HF_TOKEN (only for inference_api mode)
+# OpenRouter: OPENROUTER_API_KEY
