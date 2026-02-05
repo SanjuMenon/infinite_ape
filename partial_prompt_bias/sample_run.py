@@ -43,7 +43,8 @@ def _build_prompt_new(*, include_evidence: bool, evidence: dict | None = None) -
     base = (
         "You are a cash-flow based lending underwriter.\n"
         "Based ONLY on the Evidence JSON, pick exactly one risk tier label from the provided labels.\n"
-        "Consider DSCR vs minimum policy, NSF count, and stability of net cash flow.\n"
+        # "Consider DSCR vs minimum policy, NSF count, and stability of net cash flow.\n"
+        "Avoid extreme classifications (LOW_RISK or HIGH_RISK) unless the evidence is very strong. Most cases should be BORDERLINE.\n"
     )
     if not include_evidence:
         return base

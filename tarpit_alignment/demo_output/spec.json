@@ -1,0 +1,108 @@
+{
+  "classes": {
+    "UserService": {
+      "name": "UserService",
+      "doc_summary": "Manages users",
+      "doc_notes": [],
+      "methods": {
+        "create_user": {
+          "name": "create_user",
+          "doc_summary": "Creates a new user",
+          "doc_notes": [
+            "[2026-01-31T14:12:52.755450] Modified create_user to accept an additional parameter 'name'."
+          ],
+          "inputs": {
+            "name": "CreateUserInput",
+            "fields": {
+              "email": {
+                "name": "email",
+                "type": "str",
+                "optional": false,
+                "default": null,
+                "description": "User email"
+              },
+              "name": {
+                "name": "name",
+                "type": "str",
+                "optional": false,
+                "default": null,
+                "description": "User name"
+              }
+            }
+          },
+          "outputs": {
+            "name": "User",
+            "fields": {
+              "user": {
+                "name": "user",
+                "type": "User",
+                "optional": false,
+                "default": null,
+                "description": "Created user"
+              }
+            }
+          },
+          "errors": [],
+          "semantics_steps": [],
+          "constraints": [],
+          "deprecated": false,
+          "aliases": []
+        }
+      },
+      "deprecated": false,
+      "aliases": []
+    },
+    "InvoiceService": {
+      "name": "InvoiceService",
+      "doc_summary": "Manages invoices",
+      "doc_notes": [],
+      "methods": {
+        "create_invoice": {
+          "name": "create_invoice",
+          "doc_summary": "Creates a new invoice",
+          "doc_notes": [],
+          "inputs": {
+            "name": "CreateInvoiceInput",
+            "fields": {
+              "user_id": {
+                "name": "user_id",
+                "type": "str",
+                "optional": false,
+                "default": null,
+                "description": "User ID"
+              },
+              "amount": {
+                "name": "amount",
+                "type": "float",
+                "optional": false,
+                "default": null,
+                "description": "Invoice amount"
+              }
+            }
+          },
+          "outputs": {
+            "name": "Invoice",
+            "fields": {
+              "invoice": {
+                "name": "invoice",
+                "type": "Invoice",
+                "optional": false,
+                "default": null,
+                "description": "Created invoice"
+              }
+            }
+          },
+          "errors": [],
+          "semantics_steps": [],
+          "constraints": [],
+          "deprecated": false,
+          "aliases": []
+        }
+      },
+      "deprecated": false,
+      "aliases": []
+    }
+  },
+  "version": "1.0.3",
+  "metadata": {}
+}

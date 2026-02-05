@@ -1,0 +1,26 @@
+[
+  {
+    "timestamp": "2026-01-31T14:12:48.430702",
+    "instruction_text": "Create a UserService with method create_user(email: str) -> User",
+    "changeset_json": "{\n  \"changes\": [\n    {\n      \"kind\": \"ADD_CLASS\",\n      \"class_name\": \"UserService\",\n      \"doc\": \"Manages users\"\n    },\n    {\n      \"kind\": \"ADD_METHOD\",\n      \"class_name\": \"UserService\",\n      \"method_name\": \"create_user\",\n      \"inputs\": {\n        \"name\": \"CreateUserInput\",\n        \"fields\": [\n          {\n            \"name\": \"email\",\n            \"type\": \"str\",\n            \"optional\": false,\n            \"default\": null,\n            \"description\": \"User email\"\n          }\n        ]\n      },\n      \"outputs\": {\n        \"name\": \"User\",\n        \"fields\": [\n          {\n            \"name\": \"user\",\n            \"type\": \"User\",\n            \"optional\": false,\n            \"default\": null,\n            \"description\": \"Created user\"\n          }\n        ]\n      },\n      \"doc\": \"Creates a new user\",\n      \"constraints\": [],\n      \"steps\": []\n    }\n  ]\n}",
+    "applied_patch_summary": "Added class UserService; Added method UserService.create_user",
+    "spec_version_before": "1.0.0",
+    "spec_version_after": "1.0.1"
+  },
+  {
+    "timestamp": "2026-01-31T14:12:52.755450",
+    "instruction_text": "Modify UserService.create_user to also accept name: str",
+    "changeset_json": "{\n  \"changes\": [\n    {\n      \"kind\": \"MODIFY_METHOD_SIGNATURE\",\n      \"class_name\": \"UserService\",\n      \"method_name\": \"create_user\",\n      \"add_params\": [\n        {\n          \"name\": \"name\",\n          \"type\": \"str\",\n          \"optional\": false,\n          \"default\": null,\n          \"description\": \"User name\"\n        }\n      ],\n      \"remove_params\": [],\n      \"change_return\": {\n        \"name\": \"User\",\n        \"fields\": [\n          {\n            \"name\": \"user\",\n            \"type\": \"User\",\n            \"optional\": false,\n            \"default\": null,\n            \"description\": \"Created user\"\n          }\n        ]\n      },\n      \"doc_note\": \"Modified create_user to accept an additional parameter 'name'.\",\n      \"replace_doc_summary\": false,\n      \"new_doc_summary\": null\n    }\n  ]\n}",
+    "applied_patch_summary": "Modified UserService.create_user",
+    "spec_version_before": "1.0.1",
+    "spec_version_after": "1.0.2"
+  },
+  {
+    "timestamp": "2026-01-31T14:12:55.819624",
+    "instruction_text": "Add InvoiceService with method create_invoice(user_id: str, amount: float) -> Invoice",
+    "changeset_json": "{\n  \"changes\": [\n    {\n      \"kind\": \"ADD_CLASS\",\n      \"class_name\": \"InvoiceService\",\n      \"doc\": \"Manages invoices\"\n    },\n    {\n      \"kind\": \"ADD_METHOD\",\n      \"class_name\": \"InvoiceService\",\n      \"method_name\": \"create_invoice\",\n      \"inputs\": {\n        \"name\": \"CreateInvoiceInput\",\n        \"fields\": [\n          {\n            \"name\": \"user_id\",\n            \"type\": \"str\",\n            \"optional\": false,\n            \"default\": null,\n            \"description\": \"User ID\"\n          },\n          {\n            \"name\": \"amount\",\n            \"type\": \"float\",\n            \"optional\": false,\n            \"default\": null,\n            \"description\": \"Invoice amount\"\n          }\n        ]\n      },\n      \"outputs\": {\n        \"name\": \"Invoice\",\n        \"fields\": [\n          {\n            \"name\": \"invoice\",\n            \"type\": \"Invoice\",\n            \"optional\": false,\n            \"default\": null,\n            \"description\": \"Created invoice\"\n          }\n        ]\n      },\n      \"doc\": \"Creates a new invoice\",\n      \"constraints\": [],\n      \"steps\": []\n    }\n  ]\n}",
+    "applied_patch_summary": "Added class InvoiceService; Added method InvoiceService.create_invoice",
+    "spec_version_before": "1.0.2",
+    "spec_version_after": "1.0.3"
+  }
+]

@@ -1,0 +1,28 @@
+fields:
+  customer_name:
+    extraction_strategy:
+      check_format:
+        description: "Check if customer name format is valid"
+      validate_length:
+        description: "Validate name length constraints"
+      generation_strategy:
+        # Nested FSM - only executes if extraction_strategy passes
+        generate_template:
+          description: "Generate name template"
+        apply_formatting:
+          description: "Apply formatting rules"
+    validation_strategy:
+      check_required:
+        description: "Check if field is required"
+      check_uniqueness:
+        description: "Check if value is unique"
+  
+  email_address:
+    extraction_strategy:
+      check_format:
+        description: "Validate email format"
+      validate_domain:
+        description: "Validate email domain"
+    validation_strategy:
+      check_required:
+        description: "Check if email is required"
