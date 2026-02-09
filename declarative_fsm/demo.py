@@ -4,7 +4,6 @@ Demo script for declarative FSM system.
 """
 
 import json
-import os
 from pathlib import Path
 from declarative_fsm import FSMEngine, load_config
 
@@ -18,6 +17,7 @@ def main():
     # Get the directory where this script is located
     script_dir = Path(__file__).parent
     config_path = script_dir / "example_config.yaml"
+    data_path = script_dir / "sample_data.json"
     
     # Load configuration
     print(f"\n1. Loading configuration from {config_path}...")
@@ -33,13 +33,18 @@ def main():
     engine = FSMEngine(config)
     print("   ✓ Engine created")
     
-    # Sample data
-    print("\n3. Preparing sample data...")
-    data = {
-        "customer_name": "John Doe",
-        "email_address": "john@example.com"
-    }
-    print(f"   ✓ Data: {json.dumps(data, indent=2)}")
+    # Load sample data
+    print(f"\n3. Loading sample data from {data_path}...")
+    try:
+        with open(data_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        print(f"   ✓ Data: {json.dumps(data, indent=2)}")
+    except FileNotFoundError:
+        print(f"   ✗ Error: Sample data file not found: {data_path}")
+        return
+    except json.JSONDecodeError as e:
+        print(f"   ✗ Error: Invalid JSON in sample data file: {e}")
+        return
     
     # Execute FSMs
     print("\n4. Executing FSMs...")

@@ -1,0 +1,14 @@
+{
+  "collateral": {
+    "value_type": "Sample value type",
+    "amount": "Sample amount"
+  },
+  "real estate assets": {
+    "address": "Sample address",
+    "real_estate_type": "Sample real estate type"
+  },
+  "Financials": {
+    "net_sales": "Sample net sales",
+    "ebitda": "Sample ebitda"
+  }
+}

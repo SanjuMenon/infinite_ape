@@ -224,7 +224,7 @@ class FSMEngine:
         """
         Execute a state's criteria check.
         
-        For MVP: Returns random pass/fail.
+        For MVP: Returns random pass/fail with 80% pass rate (for demo purposes).
         Future: Will evaluate actual criteria from state_config.
         
         Args:
@@ -236,5 +236,6 @@ class FSMEngine:
         Returns:
             True if check passes, False otherwise
         """
-        # MVP: Random pass/fail
-        return random.choice([True, False])
+        # MVP: Random pass/fail with 80% pass rate (for better demo experience)
+        # This gives a reasonable chance of seeing both pass and fail scenarios
+        return random.random() < 0.8

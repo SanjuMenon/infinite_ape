@@ -1,28 +1,75 @@
 fields:
-  customer_name:
+  collateral:
+    field_selection_strategy:
+      check_completeness:
+        description:
+          - "value_type"
+          - "amount"
+      convert_to_canon:
+        description: True
     extraction_strategy:
       check_format:
-        description: "Check if customer name format is valid"
+        description: "Check if collateral format is valid"
       validate_length:
-        description: "Validate name length constraints"
+        description: "Validate collateral length constraints"
       generation_strategy:
         # Nested FSM - only executes if extraction_strategy passes
         generate_template:
-          description: "Generate name template"
+          description: "Generate collateral template"
         apply_formatting:
           description: "Apply formatting rules"
     validation_strategy:
       check_required:
-        description: "Check if field is required"
+        description: "Check if collateral is required"
       check_uniqueness:
-        description: "Check if value is unique"
+        description: "Check if collateral value is unique"
   
-  email_address:
+  real estate assets:
+    field_selection_strategy:
+      check_completeness:
+        description:
+          - "address"
+          - "real_estate_type"
+      convert_to_canon:
+        description: True
     extraction_strategy:
       check_format:
-        description: "Validate email format"
-      validate_domain:
-        description: "Validate email domain"
+        description: "Check if real estate assets format is valid"
+      validate_length:
+        description: "Validate real estate assets length constraints"
+      generation_strategy:
+        # Nested FSM - only executes if extraction_strategy passes
+        generate_template:
+          description: "Generate real estate assets template"
+        apply_formatting:
+          description: "Apply formatting rules"
     validation_strategy:
       check_required:
-        description: "Check if email is required"
+        description: "Check if real estate assets is required"
+      check_uniqueness:
+        description: "Check if real estate assets value is unique"
+  
+  Financials:
+    field_selection_strategy:
+      check_completeness:
+        description:
+          - "net_sales"
+          - "ebitda"
+      convert_to_canon:
+        description: True
+    extraction_strategy:
+      check_format:
+        description: "Check if financials format is valid"
+      validate_length:
+        description: "Validate financials length constraints"
+      generation_strategy:
+        # Nested FSM - only executes if extraction_strategy passes
+        generate_template:
+          description: "Generate financials template"
+        apply_formatting:
+          description: "Apply formatting rules"
+    validation_strategy:
+      check_required:
+        description: "Check if financials is required"
+      check_uniqueness:
+        description: "Check if financials value is unique"
