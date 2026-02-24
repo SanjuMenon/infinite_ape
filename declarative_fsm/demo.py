@@ -48,7 +48,7 @@ def main():
     
     # Execute FSMs
     print("\n4. Executing FSMs...")
-    print("   (Note: Using random pass/fail for MVP)")
+    print("   (Using strategy handlers for state validation)")
     report = engine.execute(data)
     
     # Display results
@@ -89,6 +89,27 @@ def main():
                         print(f"         └─ {nested_name}: {nested_status} (failed at: {nested_failed}, executed {nested_states} states)")
                     else:
                         print(f"         └─ {nested_name}: {nested_status} (executed {nested_states} states)")
+    
+    # Bundle demonstration (final payload after all strategies pass)
+    print("\n8. Bundle (Final Payload) Demonstration:")
+    print("=" * 60)
+    for field_name, field_result in report["fields"].items():
+        bundle = field_result.get("bundle", {})
+        if bundle:
+            print(f"\n   {field_name} bundle (final payload after all strategies pass):")
+            print(f"   {json.dumps(bundle, indent=6)}")
+            
+            # Show bundle flow explanation
+            if bundle.get('required_fields_found'):
+                print(f"      → check_completeness stored: required_fields_found, field_data")
+            if bundle.get('canonical_data'):
+                print(f"      → convert_to_canon read from context and stored: canonical_data")
+            if bundle.get('format_validated'):
+                print(f"      → check_format read from context and stored: format_validated, validated_fields")
+            if bundle.get('length_validated'):
+                print(f"      → validate_length read from context and stored: length_validated, field_count")
+        else:
+            print(f"\n   {field_name}: No bundle (field may have failed early)")
 
 
 if __name__ == "__main__":

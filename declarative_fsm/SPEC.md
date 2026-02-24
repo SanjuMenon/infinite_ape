@@ -52,8 +52,19 @@ fields:
 - Nested FSMs execute **only if parent FSM fully passes**
 
 **Criteria Evaluation:**
-- For MVP: Random pass/fail (placeholder for future implementation)
-- Each state can have criteria configuration (structure TBD)
+- Each state has its own handler function in the `strategy.py` module
+- Handlers are registered by (strategy_name, state_name) combination
+- Handlers receive: data, state_config, field_name, and context
+- If no handler is found, falls back to random pass/fail (80% pass rate)
+- Each handler implements specific validation logic for that state
+
+**Context/Payload Passing:**
+- Each field has a mutable context dictionary that persists across all states
+- Context is shared across sequential strategies (e.g., field_selection_strategy → extraction_strategy)
+- Handlers can read from and write to the context to pass data between states
+- Context is scoped per field (not shared across different fields)
+- Context is initialized as an empty dictionary `{}` for each field
+- Nested strategies share the same context as their parent strategy
 
 ### 4. FSM Execution Flow
 
@@ -134,22 +145,31 @@ The system should produce a report containing:
    - Support nested FSM execution
 
 3. **State Execution**
-   - Execute state criteria checks (random for MVP)
+   - Execute state criteria checks via strategy module handlers
+   - Each state has its own handler function in `strategy.py`
+   - Handler registry maps (strategy_name, state_name) to handler functions
    - Track pass/fail status
    - Manage state transitions
+   
+4. **Strategy Module** (`strategy.py`)
+   - Contains handler functions for each state
+   - Centralized dispatch via `execute_state()` function
+   - Handlers receive: data, state_config, field_name
+   - Fallback to random pass/fail if handler not found
 
-4. **Reporting System**
+5. **Reporting System**
    - Generate execution report
    - Track FSM initialization status
    - Identify field usability issues
 
 ### Phase 2: Future Enhancements (Out of Scope for MVP)
 
-- Real criteria evaluation (not random)
+- Enhanced criteria evaluation (more sophisticated validation logic)
 - Retry mechanisms
 - Fallback strategies
 - Visualization
 - Performance metrics
+- Dynamic handler registration
 
 ## API/Interface Design
 
@@ -207,6 +227,64 @@ print(report.execution_details())
 
 1. **State Metadata**: Optional - states can include metadata (descriptions, purposes, etc.) but it's not required
 2. **Error Handling**: Standard Python exceptions (ValueError, KeyError, etc.) for malformed YAML or invalid configurations
+
+## Strategy Module Architecture
+
+### Handler-Based State Execution
+
+The system uses a handler-based architecture where each state has its own handler function:
+
+**Key Components:**
+
+1. **Handler Functions** (`strategy.py`)
+   - Each state has a dedicated handler function
+   - Handler signature: `handler(data, state_config, field_name) -> bool`
+   - Handlers implement specific validation logic for their state
+
+2. **Handler Registry**
+   - Maps `(strategy_name, state_name)` tuples to handler functions
+   - Example: `("field_selection_strategy", "check_completeness")` → `check_completeness_handler`
+   - Allows same state name in different strategies to have different logic
+
+3. **Dispatch Function**
+   - `execute_state(strategy_name, state_name, data, state_config, field_name)`
+   - Looks up handler in registry
+   - Falls back to random pass/fail (80%) if handler not found
+   - Handles exceptions gracefully
+
+**Benefits:**
+- Separation of concerns: Engine handles flow, strategy module handles validation
+- Extensibility: Add new handlers without modifying engine code
+- Flexibility: Same state name can have different logic in different strategies
+- Maintainability: Each state's logic is isolated and testable
+
+**Current Handlers:**
+- `field_selection_strategy`: `check_completeness`, `convert_to_canon`
+- `extraction_strategy`: `check_format`, `validate_length`
+- `generation_strategy`: `generate_template`, `apply_formatting`
+- `validation_strategy`: `check_required`, `check_uniqueness`
+
+**Context/Payload System:**
+- Each handler receives a `context` parameter (mutable dictionary)
+- Context persists across all states within the same field
+- Handlers can read from context: `value = context.get('key')`
+- Handlers can write to context: `context['key'] = value`
+- Context is initialized as `{}` for each field
+- Context is shared across sequential strategies (e.g., field_selection_strategy → extraction_strategy → validation_strategy)
+- Context is NOT shared across different fields (collateral's context is separate from "real estate assets" context)
+- Nested strategies share the same context as their parent
+
+**Example Usage:**
+```python
+def my_handler(data, state_config, field_name, context):
+    # Read from context (set by previous state)
+    previous_value = context.get('some_key')
+    
+    # Write to context (available to next state)
+    context['processed_data'] = process(data)
+    
+    return True  # pass/fail
+```
 
 ## Example YAML Structure
 

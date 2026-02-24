@@ -3,8 +3,8 @@ FSM Engine for executing hierarchical FSMs from YAML configuration.
 """
 
 import json
-import random
 from typing import Dict, Any
+from . import strategy
 
 
 class FSMEngine:
@@ -47,7 +47,11 @@ class FSMEngine:
         
         # Execute FSMs for each field
         for field_name, field_config in self.fields.items():
-            field_result = self._execute_field(field_name, field_config, data)
+            # Create context dictionary for this field (shared across all strategies)
+            context = {}
+            field_result = self._execute_field(field_name, field_config, data, context)
+            # Include final bundle (context) in the report after all strategies pass
+            field_result["bundle"] = context
             report["fields"][field_name] = field_result
             
             # Update summary
@@ -58,7 +62,8 @@ class FSMEngine:
         
         return report
     
-    def _execute_field(self, field_name: str, field_config: Dict[str, Any], data: Any) -> Dict[str, Any]:
+    def _execute_field(self, field_name: str, field_config: Dict[str, Any], 
+                      data: Any, context: Dict[str, Any]) -> Dict[str, Any]:
         """
         Execute all strategy FSMs for a field.
         
@@ -66,6 +71,7 @@ class FSMEngine:
             field_name: Name of the field
             field_config: Configuration for this field
             data: Input data
+            context: Mutable context dictionary shared across all strategies for this field
             
         Returns:
             Field execution result
@@ -75,13 +81,15 @@ class FSMEngine:
             "strategies": {}
         }
         
-        # Execute each strategy FSM
+        # Execute each strategy FSM (context is shared across strategies)
         for strategy_name, strategy_config in field_config.items():
             strategy_result = self._execute_strategy(
                 strategy_name, 
                 strategy_config, 
                 data,
-                field_name
+                field_name,
+                context,
+                parent_passed=True
             )
             result["strategies"][strategy_name] = strategy_result
             
@@ -92,7 +100,8 @@ class FSMEngine:
         return result
     
     def _execute_strategy(self, strategy_name: str, strategy_config: Dict[str, Any], 
-                         data: Any, field_name: str, parent_passed: bool = True) -> Dict[str, Any]:
+                         data: Any, field_name: str, context: Dict[str, Any],
+                         parent_passed: bool = True) -> Dict[str, Any]:
         """
         Execute a strategy FSM (can be nested).
         
@@ -101,6 +110,7 @@ class FSMEngine:
             strategy_config: Configuration for this strategy
             data: Input data
             field_name: Name of the field this strategy belongs to
+            context: Mutable context dictionary shared across all strategies for this field
             parent_passed: Whether parent FSM passed (for nested FSMs)
             
         Returns:
@@ -125,8 +135,8 @@ class FSMEngine:
             result["status"] = "passed"
             return result
         
-        # Execute states sequentially
-        fsm_result = self._execute_linear_fsm(states, data, field_name, strategy_name)
+        # Execute states sequentially (context is passed through)
+        fsm_result = self._execute_linear_fsm(states, data, field_name, strategy_name, context)
         
         result["status"] = fsm_result["status"]
         result["states_executed"] = fsm_result["states_executed"]
@@ -140,6 +150,7 @@ class FSMEngine:
                     nested_config,
                     data,
                     field_name,
+                    context,  # Same context shared with parent
                     parent_passed=(fsm_result["status"] == "passed")
                 )
                 result["nested_strategies"][nested_name] = nested_result
@@ -178,7 +189,8 @@ class FSMEngine:
         return states, nested_strategies
     
     def _execute_linear_fsm(self, states: Dict[str, Any], data: Any, 
-                           field_name: str, strategy_name: str) -> Dict[str, Any]:
+                           field_name: str, strategy_name: str, 
+                           context: Dict[str, Any]) -> Dict[str, Any]:
         """
         Execute a linear FSM with sequential states.
         
@@ -187,6 +199,7 @@ class FSMEngine:
             data: Input data
             field_name: Name of the field
             strategy_name: Name of the strategy
+            context: Mutable context dictionary shared across states
             
         Returns:
             FSM execution result
@@ -204,10 +217,12 @@ class FSMEngine:
             result["status"] = "passed"
             return result
         
-        # Execute states sequentially
+        # Execute states sequentially (context persists across states)
         for i, state_name in enumerate(state_names):
-            # Execute state check (random for MVP)
-            check_passed = self._execute_state_check(state_name, states[state_name], data, field_name)
+            # Execute state check using strategy module (context is passed through)
+            check_passed = self._execute_state_check(
+                strategy_name, state_name, states[state_name], data, field_name, context
+            )
             
             result["states_executed"].append(state_name)
             
@@ -219,23 +234,21 @@ class FSMEngine:
         result["status"] = "passed"
         return result
     
-    def _execute_state_check(self, state_name: str, state_config: Any, 
-                            data: Any, field_name: str) -> bool:
+    def _execute_state_check(self, strategy_name: str, state_name: str, 
+                            state_config: Any, data: Any, field_name: str,
+                            context: Dict[str, Any]) -> bool:
         """
-        Execute a state's criteria check.
-        
-        For MVP: Returns random pass/fail with 80% pass rate (for demo purposes).
-        Future: Will evaluate actual criteria from state_config.
+        Execute a state's criteria check by delegating to the strategy module.
         
         Args:
-            state_name: Name of the state
-            state_config: State configuration
+            strategy_name: Name of the strategy (e.g., "field_selection_strategy")
+            state_name: Name of the state (e.g., "check_completeness")
+            state_config: State configuration from YAML
             data: Input data
             field_name: Name of the field
+            context: Mutable context dictionary shared across states for this field
             
         Returns:
             True if check passes, False otherwise
         """
-        # MVP: Random pass/fail with 80% pass rate (for better demo experience)
-        # This gives a reasonable chance of seeing both pass and fail scenarios
-        return random.random() < 0.8
+        return strategy.execute_state(strategy_name, state_name, data, state_config, field_name, context)
