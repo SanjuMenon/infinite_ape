@@ -7,9 +7,7 @@ from semantic_grounding_index.openai_embedder import (
     AzureOpenAIEmbedder,
     OpenAIEmbedder,
     get_embedder,
-)
-
-__all__ = [
+)__all__ = [
     "sgi",
     "Embedder",
     "AzureOpenAIEmbedder",
