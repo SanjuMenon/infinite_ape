@@ -8,21 +8,19 @@ fields:
       convert_to_canon:
         description: True
     extraction_strategy:
-      check_format:
-        description: "Check if collateral format is valid"
-      validate_length:
-        description: "Validate collateral length constraints"
-      generation_strategy:
-        # Nested FSM - only executes if extraction_strategy passes
-        generate_template:
-          description: "Generate collateral template"
-        apply_formatting:
-          description: "Apply formatting rules"
+      validate_type:
+        description: "int"
+      
+    generation_strategy:
+      # Nested FSM - only executes if extraction_strategy passes
+      format:
+        description: "table"
     validation_strategy:
-      check_required:
-        description: "Check if collateral is required"
-      check_uniqueness:
-        description: "Check if collateral value is unique"
+      llm_eval:
+        description:
+          - "score how readable it is"
+          - "score how complete the information is"
+          - "score how accurate the data appears"
   
   real estate assets:
     field_selection_strategy:
@@ -33,21 +31,19 @@ fields:
       convert_to_canon:
         description: True
     extraction_strategy:
-      check_format:
-        description: "Check if real estate assets format is valid"
-      validate_length:
-        description: "Validate real estate assets length constraints"
-      generation_strategy:
-        # Nested FSM - only executes if extraction_strategy passes
-        generate_template:
-          description: "Generate real estate assets template"
-        apply_formatting:
-          description: "Apply formatting rules"
+      validate_type:
+        description: "int"
+      
+    generation_strategy:
+      # Nested FSM - only executes if extraction_strategy passes
+      format:
+        description: "freeform"
     validation_strategy:
-      check_required:
-        description: "Check if real estate assets is required"
-      check_uniqueness:
-        description: "Check if real estate assets value is unique"
+      llm_eval:
+        description:
+          - "score how readable it is"
+          - "score how complete the information is"
+          - "score how accurate the data appears"
   
   Financials:
     field_selection_strategy:
@@ -58,18 +54,21 @@ fields:
       convert_to_canon:
         description: True
     extraction_strategy:
-      check_format:
-        description: "Check if financials format is valid"
-      validate_length:
-        description: "Validate financials length constraints"
-      generation_strategy:
-        # Nested FSM - only executes if extraction_strategy passes
-        generate_template:
-          description: "Generate financials template"
-        apply_formatting:
-          description: "Apply formatting rules"
+      validate_type:
+        description: "int"
+      
+    generation_strategy:
+      # Nested FSM - only executes if extraction_strategy passes
+      format:
+        description: "table"
     validation_strategy:
-      check_required:
-        description: "Check if financials is required"
-      check_uniqueness:
-        description: "Check if financials value is unique"
+      llm_eval:
+        description:
+          - "score how readable it is"
+          - "score how complete the information is"
+          - "score how accurate the data appears"
+    calculation_strategy:
+      debt_capacity:
+        description: "aggregation"
+        key: "category"
+        value_key: "amount"

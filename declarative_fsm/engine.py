@@ -3,7 +3,11 @@ FSM Engine for executing hierarchical FSMs from YAML configuration.
 """
 
 import json
-from typing import Dict, Any
+import copy
+import pickle
+from typing import Dict, Any, List
+from pathlib import Path
+import yaml
 from . import strategy
 
 
@@ -12,22 +16,50 @@ class FSMEngine:
     Engine for executing hierarchical FSMs defined in YAML configuration.
     """
     
-    def __init__(self, config: Dict[str, Any]):
+    def __init__(self, config: Dict[str, Any], canonical_config_path: str = None):
         """
         Initialize FSM engine with configuration.
         
         Args:
             config: Configuration dictionary loaded from YAML
+            canonical_config_path: Optional path to canonical mapping config file
         """
         self.config = config
         self.fields = config.get('fields', {})
         
-    def execute(self, data: Any) -> Dict[str, Any]:
+        # Load canonical mappings if provided
+        self.canonical_mappings = {}
+        if canonical_config_path:
+            self.canonical_mappings = self._load_canonical_config(canonical_config_path)
+    
+    def _load_canonical_config(self, config_path: str) -> Dict[str, Any]:
+        """
+        Load canonical key mappings from YAML file.
+        
+        Args:
+            config_path: Path to canonical config YAML file
+            
+        Returns:
+            Dictionary mapping field names to their canonical key mappings
+        """
+        config_file = Path(config_path)
+        
+        if not config_file.exists():
+            # Return empty dict if file doesn't exist (optional)
+            return {}
+        
+        with open(config_file, 'r', encoding='utf-8') as f:
+            config = yaml.safe_load(f)
+        
+        return config if config else {}
+        
+    def execute(self, data: Any, output_pkl_path: str = None) -> Dict[str, Any]:
         """
         Execute FSMs on provided data.
         
         Args:
             data: JSON data (dict or JSON string)
+            output_pkl_path: Optional path to save most_current_data as pickle file
             
         Returns:
             JSON report dictionary with execution results
@@ -42,23 +74,73 @@ class FSMEngine:
                 "fields_passed": 0,
                 "fields_failed": 0
             },
-            "fields": {}
+            "fields": {},
+            "list_of_bundles": []
         }
+        
+        # List to collect most_current_data for each field
+        most_current_data_list: List[Dict[str, Any]] = []
         
         # Execute FSMs for each field
         for field_name, field_config in self.fields.items():
             # Create context dictionary for this field (shared across all strategies)
             context = {}
+            
+            # Initialize most_current_data with deep copy of original field data
+            field_data = data.get(field_name, {})
+            context['most_current_data'] = copy.deepcopy(field_data) if isinstance(field_data, dict) else {}
+            
+            # Get canonical mapping for this field (if available)
+            canonical_mapping = self.canonical_mappings.get(field_name, {})
+            context['canonical_mapping'] = canonical_mapping
+            
             field_result = self._execute_field(field_name, field_config, data, context)
             # Include final bundle (context) in the report after all strategies pass
             field_result["bundle"] = context
             report["fields"][field_name] = field_result
+            
+            # Add bundle to list_of_bundles
+            report["list_of_bundles"].append(context)
+            
+            # Collect most_current_data for this field
+            most_current_data = context.get('most_current_data', {})
+            eval_type = context.get('eval_type', None)
+            metrics = context.get('metrics', None)
+            format_value = context.get('format', None)
+            
+            most_current_data_list.append({
+                'field_name': field_name,
+                'most_current_data': most_current_data,
+                'eval_type': eval_type,
+                'metrics': metrics,
+                'format': format_value
+            })
             
             # Update summary
             if field_result["status"] == "passed":
                 report["execution_summary"]["fields_passed"] += 1
             else:
                 report["execution_summary"]["fields_failed"] += 1
+        
+        # Save most_current_data to pickle file if path provided
+        if output_pkl_path:
+            pkl_path = Path(output_pkl_path)
+            pkl_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            # Print what's being saved to pickle file
+            print("\n" + "=" * 60)
+            print("Data being saved to pickle file:")
+            print("=" * 60)
+            for item in most_current_data_list:
+                print(f"\nField: {item['field_name']}")
+                print(f"  - most_current_data keys: {list(item.get('most_current_data', {}).keys())}")
+                print(f"  - eval_type: {item.get('eval_type')}")
+                print(f"  - metrics: {item.get('metrics')}")
+                print(f"  - format: {item.get('format')}")
+            print("=" * 60 + "\n")
+            
+            with open(pkl_path, 'wb') as f:
+                pickle.dump(most_current_data_list, f)
         
         return report
     
@@ -219,6 +301,9 @@ class FSMEngine:
         
         # Execute states sequentially (context persists across states)
         for i, state_name in enumerate(state_names):
+            # Backup most_current_data before state execution (for revert on failure)
+            most_current_data_backup = copy.deepcopy(context.get('most_current_data', {}))
+            
             # Execute state check using strategy module (context is passed through)
             check_passed = self._execute_state_check(
                 strategy_name, state_name, states[state_name], data, field_name, context
@@ -227,6 +312,8 @@ class FSMEngine:
             result["states_executed"].append(state_name)
             
             if not check_passed:
+                # Revert most_current_data to previous successful state
+                context['most_current_data'] = most_current_data_backup
                 result["failed_at"] = state_name
                 return result
         

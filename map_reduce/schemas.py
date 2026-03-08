@@ -12,13 +12,18 @@ class Bundle(BaseModel):
     """A structured input unit.
 
     Notes:
-    - `bundle_name` is used for aggregation headings (e.g. "collateral").
-    - `value` selects the summarizer behavior ("freeform" vs "table").
+    - `field_name` is used for aggregation headings (e.g. "collateral").
+    - `format` selects the summarizer behavior ("freeform" vs "table").
     - The rest of the payload is intentionally flexible for now.
     """
 
-    bundle_name: str = Field(..., min_length=1)
-    value: BundleValue
+    field_name: str = Field(..., min_length=1)
+    format: BundleValue = Field(...)  # Required: "freeform" or "table"
+    most_current_data: Dict[str, Any] = Field(...)  # Required field - always used for LLM summarization
+    
+    # Evaluation fields
+    eval_type: Optional[str] = None  # e.g., "llm" - triggers evaluation if not None
+    metrics: Optional[List[str]] = None  # List of metrics to evaluate (e.g., ["readability", "completeness"])
 
     # Flexible payload fields (examples from your prints)
     required_fields_found: Optional[List[str]] = None
@@ -42,7 +47,7 @@ class OutputSectionSchema(BaseModel):
     """
 
     name: str = Field(..., min_length=1)
-    bundle_names: List[str] = Field(default_factory=list)
+    field_names: List[str] = Field(default_factory=list)
     subsections: List["OutputSectionSchema"] = Field(default_factory=list)
 
 
@@ -51,11 +56,17 @@ class OutputSchema(BaseModel):
     sections: List[OutputSectionSchema] = Field(default_factory=list)
 
 
+class BundleTypeConfig(BaseModel):
+    """Configuration for a single bundle type."""
+    field_name: str = Field(..., min_length=1)
+    section_title: str = Field(..., min_length=1)
+    order: int = Field(..., ge=0)  # Order in the report (0 = first)
+
+
 class BundleConfig(BaseModel):
-    """Placeholder for future per-bundle-type configuration.
-
-    We keep it intentionally permissive for now; you’ll extend it as splitting logic evolves.
+    """Configuration for bundle ordering and section titles in the final report.
+    
+    Defines the order of bundles and which section title each bundle should appear under.
     """
-
-    bundle_types: Dict[str, Dict[str, Any]] = Field(default_factory=dict)
+    bundle_order: List[BundleTypeConfig] = Field(default_factory=list)
 

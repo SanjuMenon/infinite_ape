@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from map_reduce.config import load_output_schema
+from map_reduce.config import load_bundle_config, load_output_schema
 from map_reduce.graph import build_map_reduce_graph
 from map_reduce.llm_client import get_provider, is_llm_available
 from map_reduce.schemas import Bundle
@@ -28,12 +28,17 @@ def main() -> None:
         print("  Or create a .env file with these variables.")
         print()
     
+    bundle_config = load_bundle_config(HERE / "bundle_config.json")
     output_schema = load_output_schema(HERE / "output_schema.json")
-    bundles_raw = json.loads((HERE / "sample_bundles.json").read_text(encoding="utf-8"))
+    bundles_raw = json.loads((HERE / "proper_bundle.json").read_text(encoding="utf-8"))
     bundles = [Bundle.model_validate(b) for b in bundles_raw]
 
     graph = build_map_reduce_graph()
-    final_state = graph.invoke({"bundles": bundles, "output_schema": output_schema})
+    final_state = graph.invoke({
+        "bundles": bundles,
+        "bundle_config": bundle_config,
+        "output_schema": output_schema
+    })
     print(final_state["report"])
 
 

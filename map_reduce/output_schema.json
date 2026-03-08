@@ -3,12 +3,12 @@
   "sections": [
     {
       "name": "Assets",
-      "bundle_names": ["collateral", "real_estate_assets"],
+      "field_names": ["collateral", "real_estate_assets"],
       "subsections": []
     },
     {
       "name": "Financials",
-      "bundle_names": ["financials"],
+      "field_names": ["financials"],
       "subsections": []
     }
   ]

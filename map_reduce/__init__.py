@@ -1,5 +1,6 @@
 """LangGraph-based map-reduce utilities for processing structured 'bundles'."""
 
+from .agents import summarize_freeform, summarize_table, summarize_template_fill
 from .config import load_bundle_config, load_output_schema
 from .graph import build_map_reduce_graph
 from .llm_client import (
@@ -21,4 +22,7 @@ __all__ = [
     "is_llm_available",
     "load_bundle_config",
     "load_output_schema",
+    "summarize_freeform",
+    "summarize_table",
+    "summarize_template_fill",
 ]

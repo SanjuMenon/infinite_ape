@@ -1,0 +1,60 @@
+[
+    {
+      "field_name": "collateral",
+      "most_current_data": {
+        "canonical_value_type": "Real Estate Property",
+        "canonical_amount": "2500000"
+      },
+      "eval_type": "llm",
+      "metrics": [
+        "score how readable it is",
+        "score how complete the information is",
+        "score how accurate the data appears"
+      ],
+      "format": "table"
+    },
+    {
+      "field_name": "real estate assets",
+      "most_current_data": {
+        "canonical_address": "123 Main Street, Suite 450, New York, NY 10001",
+        "canonical_real_estate_type": "Commercial Office Building"
+      },
+      "eval_type": "llm",
+      "metrics": [
+        "score how readable it is",
+        "score how complete the information is",
+        "score how accurate the data appears"
+      ],
+      "format": "freeform"
+    },
+    {
+      "field_name": "Financials",
+      "most_current_data": {
+        "canonical_net_sales": "15000000",
+        "canonical_ebitda": "3200000",
+        "item1": {
+          "category": "revenue",
+          "amount": "5000000"
+        },
+        "item2": {
+          "category": "revenue",
+          "amount": "3000000"
+        },
+        "item3": {
+          "category": "expense",
+          "amount": "2000000"
+        },
+        "aggregation": {
+          "revenue": 8000000.0,
+          "expense": 2000000.0
+        }
+      },
+      "eval_type": "llm",
+      "metrics": [
+        "score how readable it is",
+        "score how complete the information is",
+        "score how accurate the data appears"
+      ],
+      "format": "table"
+    }
+  ]

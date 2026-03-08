@@ -80,6 +80,23 @@ LangGraph automatically merges results
 [reduce] → Aggregate into final report
     ↓
 Output Report
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```
 
 ### Key Components
@@ -92,7 +109,7 @@ Output Report
 #### 2. **Agents** (`agents.py`)
 - `summarize_freeform()`: Freeform text summarization
 - `summarize_table()`: Table-based summarization (markdown)
-- Auto-selects based on `bundle.value` field
+- Auto-selects based on `bundle.format` field
 - LLM-powered with deterministic fallback
 
 #### 3. **LLM Client** (`llm_client.py`)
@@ -119,8 +136,8 @@ output_schema = load_output_schema("output_schema.json")
 # Prepare bundles
 bundles = [
     Bundle(
-        bundle_name="collateral",
-        value="table",
+        field_name="collateral",
+        format="table",
         field_data={"value_type": "Sample", "amount": "1000"}
     ),
     # ... more bundles
@@ -139,17 +156,22 @@ print(final_state["report"])
 ### Bundle Structure
 
 A bundle must have:
-- `bundle_name`: Used for report headings (e.g., "collateral", "financials")
-- `value`: Either `"freeform"` or `"table"` (selects summarizer type)
+- `field_name`: Used for report headings (e.g., "collateral", "financials")
+- `format`: Either `"freeform"` or `"table"` (selects summarizer type). Defaults to `"freeform"` if not provided.
+- `most_current_data`: Required dictionary containing the data to be summarized by the LLM.
 - Additional fields: Flexible payload (e.g., `field_data`, `canonical_data`, etc.)
 
 Example:
 ```json
 {
-  "bundle_name": "collateral",
-  "value": "table",
+  "field_name": "collateral",
+  "format": "table",
   "required_fields_found": ["value_type", "amount"],
   "field_data": {
+    "value_type": "Sample value type",
+    "amount": "Sample amount"
+  },
+  "most_current_data": {
     "value_type": "Sample value type",
     "amount": "Sample amount"
   },
@@ -157,6 +179,8 @@ Example:
   "length_validated": true
 }
 ```
+
+**Note:** The `most_current_data` field is always used for LLM summarization (both freeform and table modes). This ensures the LLM only processes the current data and excludes metadata fields (like `format_validated`, `length_validated`).
 
 ### Output Schema
 
@@ -168,12 +192,12 @@ The `output_schema.json` defines the structure and ordering of the final report:
   "sections": [
     {
       "name": "Financial Information",
-      "bundle_names": ["financials", "collateral"],
+      "field_names": ["financials", "collateral"],
       "subsections": []
     },
     {
       "name": "Assets",
-      "bundle_names": ["real_estate_assets"],
+      "field_names": ["real_estate_assets"],
       "subsections": []
     }
   ]
@@ -190,7 +214,7 @@ Defines the final report structure:
 - `title`: Report title
 - `sections`: Ordered list of sections
   - `name`: Section heading
-  - `bundle_names`: Which bundles appear in this section (in order)
+  - `field_names`: Which field names appear in this section (in order)
   - `subsections`: Nested sections (optional)
 
 ## API Reference
@@ -270,7 +294,7 @@ from map_reduce.schemas import Bundle, OutputSchema
 
 bundles = [
     Bundle(
-        bundle_name="custom_data",
+        field_name="custom_data",
         value="freeform",
         field_data={"key1": "value1", "key2": "value2"}
     )
@@ -281,7 +305,7 @@ output_schema = OutputSchema(
     sections=[
         {
             "name": "Data",
-            "bundle_names": ["custom_data"],
+            "field_names": ["custom_data"],
             "subsections": []
         }
     ]

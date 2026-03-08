@@ -16,7 +16,10 @@ def main():
     
     # Get the directory where this script is located
     script_dir = Path(__file__).parent
+    # Get the project root (parent of declarative_fsm folder)
+    project_root = script_dir.parent
     config_path = script_dir / "example_config.yaml"
+    canonical_config_path = script_dir / "canonical_config.yaml"
     data_path = script_dir / "sample_data.json"
     
     # Load configuration
@@ -30,7 +33,7 @@ def main():
     
     # Create engine
     print("\n2. Creating FSM engine...")
-    engine = FSMEngine(config)
+    engine = FSMEngine(config, canonical_config_path=str(canonical_config_path) if canonical_config_path.exists() else None)
     print("   ✓ Engine created")
     
     # Load sample data
@@ -49,7 +52,13 @@ def main():
     # Execute FSMs
     print("\n4. Executing FSMs...")
     print("   (Using strategy handlers for state validation)")
-    report = engine.execute(data)
+    
+    # Save most_current_data to pickle file in map_reduce folder (using relative path)
+    map_reduce_dir = project_root / "map_reduce"
+    map_reduce_dir.mkdir(exist_ok=True)  # Create directory if it doesn't exist
+    output_pkl_path = map_reduce_dir / "most_current_data.pkl"
+    report = engine.execute(data, output_pkl_path=str(output_pkl_path))
+    print(f"   ✓ Saved most_current_data to {output_pkl_path}")
     
     # Display results
     print("\n5. Execution Report:")
@@ -108,8 +117,58 @@ def main():
                 print(f"      → check_format read from context and stored: format_validated, validated_fields")
             if bundle.get('length_validated'):
                 print(f"      → validate_length read from context and stored: length_validated, field_count")
+            if 'format' in bundle:
+                print(f"      → format stored: format='{bundle.get('format')}'")
+            else:
+                print(f"      → format: NOT FOUND in bundle (generation_strategy may not have executed)")
+            if bundle.get('eval_type') == 'llm':
+                print(f"      → llm_eval stored: eval_type='{bundle.get('eval_type')}', metrics={bundle.get('metrics')}")
         else:
             print(f"\n   {field_name}: No bundle (field may have failed early)")
+    
+    # NEW: Show most_current_data transformations
+    print("\n9. Data Transformation Tracking (most_current_data):")
+    print("=" * 60)
+    for field_name, field_result in report["fields"].items():
+        bundle = field_result.get("bundle", {})
+        most_current_data = bundle.get("most_current_data", {})
+        
+        if most_current_data:
+            # Get original data for comparison
+            original_data = data.get(field_name, {})
+            
+            print(f"\n   Field: {field_name}")
+            print(f"   Original data: {json.dumps(original_data, indent=6)}")
+            print(f"   Transformed data (most_current_data): {json.dumps(most_current_data, indent=6)}")
+            
+            # Show what transformations occurred
+            transformations = []
+            if bundle.get('canonical_data', {}).get('converted'):
+                transformations.append("✓ Keys converted to canonical form")
+            if bundle.get('converted_values'):
+                transformations.append("✓ String values converted to numeric types")
+            if 'aggregation' in most_current_data:
+                transformations.append("✓ Aggregation calculation performed")
+            if 'debt_capacity' in most_current_data:
+                transformations.append("✓ Debt capacity calculation performed")
+            
+            if transformations:
+                print(f"   Transformations applied:")
+                for trans in transformations:
+                    print(f"      {trans}")
+            else:
+                print(f"   No transformations applied (data unchanged)")
+        else:
+            print(f"\n   {field_name}: No most_current_data (field may have failed early)")
+    
+    # NEW: Show canonical mappings if loaded
+    if engine.canonical_mappings:
+        print("\n10. Canonical Key Mappings:")
+        print("=" * 60)
+        for field_name, mappings in engine.canonical_mappings.items():
+            print(f"\n   {field_name}:")
+            for original_key, canonical_key in mappings.items():
+                print(f"      '{original_key}' → '{canonical_key}'")
 
 
 if __name__ == "__main__":

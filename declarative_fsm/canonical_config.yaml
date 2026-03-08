@@ -1,0 +1,11 @@
+collateral:
+  value_type: canonical_value_type
+  amount: canonical_amount
+
+real estate assets:
+  address: canonical_address
+  real_estate_type: canonical_real_estate_type
+
+Financials:
+  net_sales: canonical_net_sales
+  ebitda: canonical_ebitda

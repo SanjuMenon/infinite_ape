@@ -1,8 +1,20 @@
 {
-  "bundle_types": {
-    "collateral": {},
-    "real_estate_assets": {},
-    "financials": {}
-  }
+  "bundle_order": [
+    {
+      "field_name": "collateral",
+      "section_title": "Collateral",
+      "order": 0
+    },
+    {
+      "field_name": "real estate assets",
+      "section_title": "Real Estate Assets",
+      "order": 1
+    },
+    {
+      "field_name": "Financials",
+      "section_title": "Financials",
+      "order": 2
+    }
+  ]
 }
 
