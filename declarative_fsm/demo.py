@@ -28,8 +28,18 @@ def main():
     canonical_config_path = script_dir / "canonical_config.yaml"
     data_path = script_dir / "sample_data.json"
     
+    # Get relative paths for display (relative to project root)
+    try:
+        config_path_rel = config_path.relative_to(project_root)
+    except ValueError:
+        config_path_rel = config_path
+    try:
+        data_path_rel = data_path.relative_to(project_root)
+    except ValueError:
+        data_path_rel = data_path
+    
     # Load configuration
-    print(f"\n1. Loading configuration from {config_path}...")
+    print(f"\n1. Loading configuration from {config_path_rel}...")
     try:
         config = load_config(str(config_path))
         print(f"   ✓ Loaded configuration with {len(config['fields'])} fields")
@@ -43,13 +53,13 @@ def main():
     print("   ✓ Engine created")
     
     # Load sample data
-    print(f"\n3. Loading sample data from {data_path}...")
+    print(f"\n3. Loading sample data from {data_path_rel}...")
     try:
         with open(data_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
         print(f"   ✓ Data: {json.dumps(data, indent=2)}")
     except FileNotFoundError:
-        print(f"   ✗ Error: Sample data file not found: {data_path}")
+        print(f"   ✗ Error: Sample data file not found: {data_path_rel}")
         return
     except json.JSONDecodeError as e:
         print(f"   ✗ Error: Invalid JSON in sample data file: {e}")
@@ -64,6 +74,12 @@ def main():
     map_reduce_dir = project_root / "map_reduce"
     map_reduce_dir.mkdir(exist_ok=True)  # Create directory if it doesn't exist
     output_pkl_path = map_reduce_dir / "most_current_data.pkl"
+    
+    # Get relative path for display
+    try:
+        output_pkl_path_rel = output_pkl_path.relative_to(project_root)
+    except ValueError:
+        output_pkl_path_rel = output_pkl_path
     
     # Get most_current_data_list from report
     most_current_data_list = report.get("most_current_data_list", [])
@@ -84,7 +100,7 @@ def main():
         # Write to pickle file
         with open(output_pkl_path, 'wb') as f:
             pickle.dump(most_current_data_list, f)
-        print(f"   ✓ Saved most_current_data to {output_pkl_path}")
+        print(f"   ✓ Saved most_current_data to {output_pkl_path_rel}")
     else:
         print("   ⚠ No most_current_data to save")
     
