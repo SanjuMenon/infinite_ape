@@ -79,6 +79,38 @@ Provide a concise, readable summary that highlights the important fields and the
     return summary.strip()
 
 
+def _extract_markdown_table(text: str) -> str:
+    """Extract markdown table from text that may contain extra content.
+    
+    Looks for the first markdown table (lines starting with |) and returns it.
+    """
+    lines = text.split('\n')
+    table_lines = []
+    in_table = False
+    
+    for line in lines:
+        stripped = line.strip()
+        # Check if this line is part of a markdown table
+        if stripped.startswith('|') and '|' in stripped[1:]:
+            in_table = True
+            table_lines.append(line)
+        elif in_table:
+            # If we were in a table and hit a non-table line, check if it's a separator
+            if stripped.startswith('|') or (stripped.startswith('-') and '|' in line):
+                # This might be a table separator row
+                table_lines.append(line)
+            elif stripped == '':
+                # Empty line might be within table, keep it
+                table_lines.append(line)
+            else:
+                # Non-table line after table has started - table is complete
+                break
+    
+    if table_lines:
+        return '\n'.join(table_lines).strip()
+    return text.strip()
+
+
 def _markdown_table(rows: List[Dict[str, Any]], columns: Optional[List[str]] = None) -> str:
     if not rows:
         return "| key | value |\n|---|---|\n| (empty) | (empty) |"
@@ -140,7 +172,10 @@ Guidelines for table structure:
 4. If there are aggregations or totals, consider showing them in a separate summary section or at the top
 5. Use meaningful column headers that reflect the data structure (e.g., "Metric", "Value" or "Item", "Category", "Amount")
 
-IMPORTANT: Do NOT include "Bundle Name" or the bundle name as a row in the table. Only include the actual data fields from the bundle."""
+IMPORTANT: 
+- Do NOT include "Bundle Name" or the bundle name as a row in the table. Only include the actual data fields from the bundle.
+- Return ONLY the markdown table. Do not include any explanatory text, headings, or additional content before or after the table.
+- Start your response directly with the table (e.g., "| Column1 | Column2 |")"""
 
         # Use deployment name for Azure, model name for OpenAI
         provider = get_provider()
@@ -161,7 +196,10 @@ IMPORTANT: Do NOT include "Bundle Name" or the bundle name as a row in the table
         
         table = response.choices[0].message.content
         if table:
-            return table.strip()
+            # Extract just the table from the response (in case LLM adds extra text)
+            table = _extract_markdown_table(table)
+            if table:
+                return table.strip()
         
         # Fallback if response is empty
         return _summarize_table_deterministic(bundle)
