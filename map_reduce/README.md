@@ -121,7 +121,7 @@ Output Report (with evaluation scores if applicable)
 #### 2. **Agents** (`agents.py`)
 - `summarize_freeform()`: Freeform text summarization
 - `summarize_table()`: Table-based summarization (markdown)
-- Auto-selects based on `bundle.format` field
+- Auto-selects based on `bundle.format` field (`"freeform"` → freeform, `"table"` → table, `"fill_template"` → freeform)
 - LLM-powered with deterministic fallback
 
 #### 3. **LLM Client** (`llm_client.py`)
@@ -180,13 +180,15 @@ print(final_state["report"])
 
 A bundle must have:
 - `field_name`: Used for matching bundles to configuration (e.g., "collateral", "financials_debt")
-- `format`: Either `"freeform"` or `"table"` (selects summarizer type). **Required field.**
-- `most_current_data`: **Required** dictionary containing the data to be summarized by the LLM.
+- `format`: Either `"freeform"`, `"table"`, or `"fill_template"` (selects summarizer type). **Required field.**
+- `most_current_data`: **Required** dictionary containing the data to be summarized by the LLM. This field tracks the transformed state of the data after all FSM strategies have been applied.
 
 Optional fields:
-- `eval_type`: Optional string (e.g., "llm") - triggers evaluation if not None
-- `metrics`: Optional list of metric names (e.g., ["readability", "completeness"]) - used for evaluation
+- `eval_type`: Optional string (e.g., "llm") - triggers evaluation if not None. Set by `validation_strategy` with `llm_eval` state.
+- `metrics`: Optional list of metric names (e.g., ["score how readable it is", "score how complete the information is"]) - used for evaluation. Set by `validation_strategy` with `llm_eval` state.
 - Additional fields: Flexible payload (e.g., `field_data`, `canonical_data`, etc.)
+
+**Note:** When bundles are generated from `declarative_fsm.demo.main()`, the returned list includes `field_name`, `most_current_data`, `eval_type`, `metrics`, and `format` fields. The `format` field is set by `generation_strategy` with the `format` state, and `eval_type`/`metrics` are set by `validation_strategy` with the `llm_eval` state.
 
 Example:
 ```json
@@ -362,6 +364,7 @@ from map_reduce import build_map_reduce_graph, load_bundle_config, load_output_s
 from map_reduce.schemas import Bundle
 
 # Step 1: Run declarative_fsm to generate bundles
+# Returns a list of dicts with: field_name, most_current_data, eval_type, metrics, format
 most_current_data_list = fsm_demo.main()
 
 # Step 2: Convert to Bundle objects and run map-reduce
