@@ -53,16 +53,15 @@ class FSMEngine:
         
         return config if config else {}
         
-    def execute(self, data: Any, output_pkl_path: str = None) -> Dict[str, Any]:
+    def execute(self, data: Any) -> Dict[str, Any]:
         """
         Execute FSMs on provided data.
         
         Args:
             data: JSON data (dict or JSON string)
-            output_pkl_path: Optional path to save most_current_data as pickle file
             
         Returns:
-            JSON report dictionary with execution results
+            JSON report dictionary with execution results, including 'most_current_data_list'
         """
         # Parse JSON if string
         if isinstance(data, str):
@@ -122,25 +121,8 @@ class FSMEngine:
             else:
                 report["execution_summary"]["fields_failed"] += 1
         
-        # Save most_current_data to pickle file if path provided
-        if output_pkl_path:
-            pkl_path = Path(output_pkl_path)
-            pkl_path.parent.mkdir(parents=True, exist_ok=True)
-            
-            # Print what's being saved to pickle file
-            print("\n" + "=" * 60)
-            print("Data being saved to pickle file:")
-            print("=" * 60)
-            for item in most_current_data_list:
-                print(f"\nField: {item['field_name']}")
-                print(f"  - most_current_data keys: {list(item.get('most_current_data', {}).keys())}")
-                print(f"  - eval_type: {item.get('eval_type')}")
-                print(f"  - metrics: {item.get('metrics')}")
-                print(f"  - format: {item.get('format')}")
-            print("=" * 60 + "\n")
-            
-            with open(pkl_path, 'wb') as f:
-                pickle.dump(most_current_data_list, f)
+        # Include most_current_data_list in the report
+        report["most_current_data_list"] = most_current_data_list
         
         return report
     

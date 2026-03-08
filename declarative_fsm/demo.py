@@ -4,12 +4,18 @@ Demo script for declarative FSM system.
 """
 
 import json
+import pickle
 from pathlib import Path
 from declarative_fsm import FSMEngine, load_config
 
 
 def main():
-    """Run demo of declarative FSM system."""
+    """
+    Run demo of declarative FSM system.
+    
+    Returns:
+        The most_current_data_list that is stored in the pickle file (list of dicts)
+    """
     print("=" * 60)
     print("Declarative FSM Demo")
     print("=" * 60)
@@ -52,13 +58,35 @@ def main():
     # Execute FSMs
     print("\n4. Executing FSMs...")
     print("   (Using strategy handlers for state validation)")
+    report = engine.execute(data)
     
     # Save most_current_data to pickle file in map_reduce folder (using relative path)
     map_reduce_dir = project_root / "map_reduce"
     map_reduce_dir.mkdir(exist_ok=True)  # Create directory if it doesn't exist
     output_pkl_path = map_reduce_dir / "most_current_data.pkl"
-    report = engine.execute(data, output_pkl_path=str(output_pkl_path))
-    print(f"   ✓ Saved most_current_data to {output_pkl_path}")
+    
+    # Get most_current_data_list from report
+    most_current_data_list = report.get("most_current_data_list", [])
+    
+    if most_current_data_list:
+        # Print what's being saved to pickle file
+        print("\n" + "=" * 60)
+        print("Data being saved to pickle file:")
+        print("=" * 60)
+        for item in most_current_data_list:
+            print(f"\nField: {item['field_name']}")
+            print(f"  - most_current_data keys: {list(item.get('most_current_data', {}).keys())}")
+            print(f"  - eval_type: {item.get('eval_type')}")
+            print(f"  - metrics: {item.get('metrics')}")
+            print(f"  - format: {item.get('format')}")
+        print("=" * 60 + "\n")
+        
+        # Write to pickle file
+        with open(output_pkl_path, 'wb') as f:
+            pickle.dump(most_current_data_list, f)
+        print(f"   ✓ Saved most_current_data to {output_pkl_path}")
+    else:
+        print("   ⚠ No most_current_data to save")
     
     # Display results
     print("\n5. Execution Report:")
@@ -169,6 +197,9 @@ def main():
             print(f"\n   {field_name}:")
             for original_key, canonical_key in mappings.items():
                 print(f"      '{original_key}' → '{canonical_key}'")
+    
+    # Return the most_current_data_list that was stored in the pickle file
+    return most_current_data_list
 
 
 if __name__ == "__main__":

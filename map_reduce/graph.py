@@ -37,12 +37,23 @@ def _flatten_sections(sections: List[OutputSectionSchema]) -> List[OutputSection
 def _aggregate_report(
     bundle_config: BundleConfig, 
     output_schema: OutputSchema, 
-    partials: List[Dict[str, str]]
+    partials: List[Dict[str, str]],
+    evaluation_scores: Dict[str, Any] = None
 ) -> str:
-    """Aggregate partial results into final report using bundle_config for ordering and section titles."""
+    """Aggregate partial results into final report using bundle_config for ordering and section titles.
+    
+    If evaluation_scores is provided, includes scores in the report.
+    """
     by_bundle: Dict[str, List[str]] = defaultdict(list)
     for p in partials:
         by_bundle[p["field_name"]].append(p["text"].strip())
+    
+    # Extract evaluation scores if available
+    summary_scores: Dict[str, Dict[str, float]] = {}
+    report_scores: Dict[str, float] = {}
+    if evaluation_scores:
+        summary_scores = evaluation_scores.get("summary_scores", {})
+        report_scores = evaluation_scores.get("report_scores", {})
 
     lines: List[str] = []
     if output_schema.title:
@@ -83,9 +94,30 @@ def _aggregate_report(
         bundle_list.sort(key=lambda x: x[0])  # Sort by order
 
         for _, field_name in bundle_list:
-            lines.append(f"### {field_name}")
+            # Use display_name if available, otherwise use field_name
+            display_name = field_name
+            if field_name in config_by_field_name:
+                bundle_config_item = config_by_field_name[field_name]
+                if bundle_config_item.display_name:
+                    display_name = bundle_config_item.display_name
+            
+            lines.append(f"### {display_name}")
             lines.append("")
             lines.append("\n\n".join(by_bundle[field_name]))
+            
+            # Add evaluation scores if available
+            if field_name in summary_scores:
+                scores = summary_scores[field_name]
+                if scores:
+                    lines.append("")
+                    # Calculate overall score (average)
+                    overall = sum(scores.values()) / len(scores)
+                    lines.append(f"**Evaluation Score: {overall:.1f}/10**")
+                    metric_scores = []
+                    for metric, score in scores.items():
+                        metric_scores.append(f"{metric}: {score:.1f}/10")
+                    lines.append(f"*Detailed: {', '.join(metric_scores)}*")
+            
             lines.append("")
 
     # Anything not in bundle_config goes to "Other"
@@ -94,10 +126,43 @@ def _aggregate_report(
         lines.append("## Other")
         lines.append("")
         for field_name in extras:
-            lines.append(f"### {field_name}")
+            # Use display_name if available, otherwise use field_name
+            display_name = field_name
+            if field_name in config_by_field_name:
+                bundle_config_item = config_by_field_name[field_name]
+                if bundle_config_item.display_name:
+                    display_name = bundle_config_item.display_name
+            
+            lines.append(f"### {display_name}")
             lines.append("")
             lines.append("\n\n".join(by_bundle[field_name]))
+            
+            # Add evaluation scores if available
+            if field_name in summary_scores:
+                scores = summary_scores[field_name]
+                if scores:
+                    lines.append("")
+                    overall = sum(scores.values()) / len(scores)
+                    lines.append(f"**Evaluation Score: {overall:.1f}/10**")
+                    metric_scores = []
+                    for metric, score in scores.items():
+                        metric_scores.append(f"{metric}: {score:.1f}/10")
+                    lines.append(f"*Detailed: {', '.join(metric_scores)}*")
+            
             lines.append("")
+    
+    # Add overall report evaluation scores at the end
+    if report_scores:
+        lines.append("")
+        lines.append("## Overall Report Evaluation")
+        lines.append("")
+        overall_report = sum(report_scores.values()) / len(report_scores)
+        lines.append(f"**Overall Report Score: {overall_report:.1f}/10**")
+        metric_scores = []
+        for metric, score in report_scores.items():
+            metric_scores.append(f"{metric}: {score:.1f}/10")
+        lines.append(f"*Detailed: {', '.join(metric_scores)}*")
+        lines.append("")
 
     return "\n".join(lines).rstrip() + "\n"
 
@@ -133,6 +198,7 @@ def _reduce_node(state: MapReduceState) -> Dict[str, str]:
     bundle_config = state.get("bundle_config", BundleConfig())
     output_schema = state.get("output_schema", OutputSchema())
     partials = state.get("partials", [])
+    # Initial report without evaluation scores
     return {"report": _aggregate_report(bundle_config=bundle_config, output_schema=output_schema, partials=partials)}
 
 
@@ -183,11 +249,24 @@ def _evaluate_node(state: MapReduceState) -> Dict[str, Dict[str, Any]]:
     if bundles and any(b.eval_type is not None and b.metrics is not None for b in bundles):
         report_scores = evaluate_report(report, bundles)
     
+    evaluation_scores = {
+        "summary_scores": summary_scores,
+        "report_scores": report_scores
+    }
+    
+    # Step 3: Regenerate report with evaluation scores included
+    bundle_config = state.get("bundle_config", BundleConfig())
+    output_schema = state.get("output_schema", OutputSchema())
+    updated_report = _aggregate_report(
+        bundle_config=bundle_config,
+        output_schema=output_schema,
+        partials=partials,
+        evaluation_scores=evaluation_scores
+    )
+    
     return {
-        "evaluation_scores": {
-            "summary_scores": summary_scores,
-            "report_scores": report_scores
-        }
+        "evaluation_scores": evaluation_scores,
+        "report": updated_report  # Update report with scores
     }
 
 

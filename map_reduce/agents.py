@@ -18,7 +18,6 @@ def summarize_template_fill(bundle: Bundle) -> str:
     Creates a structured text summary using a template format.
     """
     lines: List[str] = []
-    lines.append(f"Bundle: {bundle.field_name}")
 
     # Always use most_current_data
     if bundle.most_current_data:
@@ -105,13 +104,13 @@ def _summarize_table_deterministic(bundle: Bundle) -> str:
     if bundle.most_current_data:
         rows = [{"key": k, "value": v} for k, v in bundle.most_current_data.items()]
         table = _markdown_table(rows, columns=["key", "value"])
-        return f"Bundle: {bundle.field_name}\n\n{table}".strip()
+        return table.strip()
     
     # Fallback if most_current_data is empty
     d = bundle.model_dump()
     rows = [{"key": k, "value": v} for k, v in d.items()]
     table = _markdown_table(rows, columns=["key", "value"])
-    return f"Bundle: {bundle.field_name}\n\n{table}".strip()
+    return table.strip()
 
 
 def summarize_table(bundle: Bundle) -> str:
@@ -128,12 +127,20 @@ def summarize_table(bundle: Bundle) -> str:
         prompt = f"""Summarize the following bundle data as a well-formatted markdown table.
 The table should have clear column headers and organize the key information from the bundle.
 
-Bundle Name: {bundle.field_name}
 Bundle Data:
 {bundle_json}
 
 Create a markdown table that presents the important fields and their values in a structured, readable format.
-Use appropriate column headers based on the data structure."""
+Use appropriate column headers based on the data structure.
+
+Guidelines for table structure:
+1. Group related items together (e.g., all revenue items, all expense items)
+2. For nested objects with category/amount pairs, use columns like "Item", "Category", "Amount" instead of flattening
+3. Format numbers with appropriate currency symbols and commas (e.g., $1,500,000)
+4. If there are aggregations or totals, consider showing them in a separate summary section or at the top
+5. Use meaningful column headers that reflect the data structure (e.g., "Metric", "Value" or "Item", "Category", "Amount")
+
+IMPORTANT: Do NOT include "Bundle Name" or the bundle name as a row in the table. Only include the actual data fields from the bundle."""
 
         # Use deployment name for Azure, model name for OpenAI
         provider = get_provider()
@@ -154,9 +161,7 @@ Use appropriate column headers based on the data structure."""
         
         table = response.choices[0].message.content
         if table:
-            # Ensure we have a heading
-            result = f"Bundle: {bundle.field_name}\n\n{table}".strip()
-            return result
+            return table.strip()
         
         # Fallback if response is empty
         return _summarize_table_deterministic(bundle)

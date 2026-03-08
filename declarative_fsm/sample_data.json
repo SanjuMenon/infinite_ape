@@ -10,17 +10,30 @@
   "Financials": {
     "net_sales": "15000000",
     "ebitda": "3200000",
-    "item1": {
+    "year_1": {
       "category": "revenue",
       "amount": "5000000"
     },
-    "item2": {
+    "year_2": {
       "category": "revenue",
       "amount": "3000000"
     },
-    "item3": {
+    "year_3": {
       "category": "expense",
       "amount": "2000000"
     }
+  },
+  "financials_debt": {
+    "YEAR": 2024,
+    "ER12": 15000000,
+    "ER32": 3200000,
+    "P88": -500000,
+    "EM06": -200000,
+    "ER13": 1000000,
+    "ER41": 500000,
+    "P19": 2000000,
+    "P14": 5000000,
+    "P03": 3000000,
+    "P20": 1000000
   }
 }

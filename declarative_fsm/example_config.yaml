@@ -68,7 +68,41 @@ fields:
           - "score how complete the information is"
           - "score how accurate the data appears"
     calculation_strategy:
-      debt_capacity:
+      calculation:
         description: "aggregation"
         key: "category"
         value_key: "amount"
+  
+  financials_debt:
+    field_selection_strategy:
+      check_completeness:
+        description:
+          - "YEAR"
+          - "ER12"
+          - "ER32"
+          - "P88"
+          - "EM06"
+          - "ER13"
+          - "ER41"
+          - "P19"
+          - "P14"
+          - "P03"
+          - "P20"
+      convert_to_canon:
+        description: True
+    extraction_strategy:
+      validate_type:
+        description: "int"
+    generation_strategy:
+      # Nested FSM - only executes if extraction_strategy passes
+      format:
+        description: "table"
+    validation_strategy:
+      llm_eval:
+        description:
+          - "score how readable it is"
+          - "score how complete the information is"
+          - "score how accurate the data appears"
+    calculation_strategy:
+      calculation:
+        description: "debt_capacity"

@@ -61,6 +61,7 @@ class BundleTypeConfig(BaseModel):
     field_name: str = Field(..., min_length=1)
     section_title: str = Field(..., min_length=1)
     order: int = Field(..., ge=0)  # Order in the report (0 = first)
+    display_name: Optional[str] = None  # Optional display name for the report heading (defaults to field_name)
 
 
 class BundleConfig(BaseModel):

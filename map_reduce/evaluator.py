@@ -31,8 +31,11 @@ def evaluate_summary(bundle: Bundle, summary_text: str) -> Dict[str, float]:
             "Set OPENAI_API_KEY or AZURE_OPENAI_API_KEY/AZURE_OPENAI_ENDPOINT."
         )
     
-    # Build metrics list for prompt
+    # Build metrics list for prompt - use exact metric names as keys
     metrics_list = "\n".join([f"- {metric}" for metric in bundle.metrics])
+    # Create a mapping of normalized names to original names for matching
+    metric_keys = [f'"{metric}"' for metric in bundle.metrics]
+    example_dict = "{" + ", ".join([f'"{m}": 8' for m in bundle.metrics[:3]]) + "}"
     
     prompt = f"""Evaluate the following summary text and score it on a scale of 0-10 for each metric.
 
@@ -42,10 +45,10 @@ Metrics to evaluate:
 Summary Text:
 {summary_text}
 
-Provide scores as a JSON object with metric names as keys and scores (0-10) as values.
-Example format: {{"readability": 8, "completeness": 7, "accuracy": 9}}
+Provide scores as a JSON object. Use the EXACT metric names as keys (including the full phrase).
+Example format: {example_dict}
 
-Only return the JSON object, no additional text."""
+IMPORTANT: Use the exact metric names provided above as the JSON keys. Return only the JSON object, no additional text."""
 
     # Use deployment name for Azure, model name for OpenAI
     provider = get_provider()
@@ -82,25 +85,61 @@ Only return the JSON object, no additional text."""
         # Validate scores are in 0-10 range and match metrics
         validated_scores: Dict[str, float] = {}
         for metric in bundle.metrics:
-            # Try to find matching score (handle variations in metric names)
             score = None
-            metric_lower = metric.lower()
-            for key, value in scores.items():
-                if metric_lower in key.lower() or key.lower() in metric_lower:
-                    score = float(value)
-                    break
             
+            # Try exact match first
+            if metric in scores:
+                score = scores[metric]
+            else:
+                # Try case-insensitive exact match
+                metric_lower = metric.lower()
+                for key, value in scores.items():
+                    if key.lower() == metric_lower:
+                        score = value
+                        break
+                
+                # Try partial matching (metric phrase contains key or vice versa)
+                if score is None:
+                    for key, value in scores.items():
+                        key_lower = key.lower()
+                        # Check if key words appear in metric or metric words appear in key
+                        metric_words = set(metric_lower.split())
+                        key_words = set(key_lower.split())
+                        # If there's significant overlap (at least 2 words), consider it a match
+                        if len(metric_words & key_words) >= 2 or metric_lower in key_lower or key_lower in metric_lower:
+                            score = value
+                            break
+                
+                # Last resort: try to extract meaningful words from metric
+                if score is None:
+                    # Extract key words like "readable", "complete", "accurate"
+                    metric_keywords = {
+                        "readable": ["readable", "readability"],
+                        "complete": ["complete", "completeness", "comprehensive"],
+                        "accurate": ["accurate", "accuracy", "correct"]
+                    }
+                    for keyword, variants in metric_keywords.items():
+                        if any(v in metric_lower for v in variants):
+                            for key, value in scores.items():
+                                if keyword in key.lower() or any(v in key.lower() for v in variants):
+                                    score = value
+                                    break
+                            if score is not None:
+                                break
+            
+            # Default to 0.0 if no match found
             if score is None:
-                # Try exact match
-                score = scores.get(metric, 0.0)
+                score = 0.0
+            else:
+                score = float(score)
             
             # Clamp to 0-10 range
-            validated_scores[metric] = max(0.0, min(10.0, float(score)))
+            validated_scores[metric] = max(0.0, min(10.0, score))
         
         return validated_scores
         
     except (json.JSONDecodeError, KeyError, ValueError) as e:
-        raise RuntimeError(f"Failed to parse evaluation scores: {e}") from e
+        raise RuntimeError(f"Failed to parse evaluation scores: {e}. Response was: {result_text[:200]}") from e
 
 
 def evaluate_report(report: str, bundles: List[Bundle]) -> Dict[str, float]:
@@ -133,8 +172,9 @@ def evaluate_report(report: str, bundles: List[Bundle]) -> Dict[str, float]:
             "Set OPENAI_API_KEY or AZURE_OPENAI_API_KEY/AZURE_OPENAI_ENDPOINT."
         )
     
-    # Build metrics list for prompt
+    # Build metrics list for prompt - use exact metric names as keys
     metrics_list = "\n".join([f"- {metric}" for metric in metrics])
+    example_dict = "{" + ", ".join([f'"{m}": 8' for m in metrics[:3]]) + "}"
     
     prompt = f"""Evaluate the following report and score it on a scale of 0-10 for each metric.
 
@@ -144,10 +184,10 @@ Metrics to evaluate:
 Report:
 {report}
 
-Provide scores as a JSON object with metric names as keys and scores (0-10) as values.
-Example format: {{"readability": 8, "completeness": 7, "accuracy": 9}}
+Provide scores as a JSON object. Use the EXACT metric names as keys (including the full phrase).
+Example format: {example_dict}
 
-Only return the JSON object, no additional text."""
+IMPORTANT: Use the exact metric names provided above as the JSON keys. Return only the JSON object, no additional text."""
 
     # Use deployment name for Azure, model name for OpenAI
     provider = get_provider()
@@ -184,22 +224,58 @@ Only return the JSON object, no additional text."""
         # Validate scores are in 0-10 range and match metrics
         validated_scores: Dict[str, float] = {}
         for metric in metrics:
-            # Try to find matching score (handle variations in metric names)
             score = None
-            metric_lower = metric.lower()
-            for key, value in scores.items():
-                if metric_lower in key.lower() or key.lower() in metric_lower:
-                    score = float(value)
-                    break
             
+            # Try exact match first
+            if metric in scores:
+                score = scores[metric]
+            else:
+                # Try case-insensitive exact match
+                metric_lower = metric.lower()
+                for key, value in scores.items():
+                    if key.lower() == metric_lower:
+                        score = value
+                        break
+                
+                # Try partial matching (metric phrase contains key or vice versa)
+                if score is None:
+                    for key, value in scores.items():
+                        key_lower = key.lower()
+                        # Check if key words appear in metric or metric words appear in key
+                        metric_words = set(metric_lower.split())
+                        key_words = set(key_lower.split())
+                        # If there's significant overlap (at least 2 words), consider it a match
+                        if len(metric_words & key_words) >= 2 or metric_lower in key_lower or key_lower in metric_lower:
+                            score = value
+                            break
+                
+                # Last resort: try to extract meaningful words from metric
+                if score is None:
+                    # Extract key words like "readable", "complete", "accurate"
+                    metric_keywords = {
+                        "readable": ["readable", "readability"],
+                        "complete": ["complete", "completeness", "comprehensive"],
+                        "accurate": ["accurate", "accuracy", "correct"]
+                    }
+                    for keyword, variants in metric_keywords.items():
+                        if any(v in metric_lower for v in variants):
+                            for key, value in scores.items():
+                                if keyword in key.lower() or any(v in key.lower() for v in variants):
+                                    score = value
+                                    break
+                            if score is not None:
+                                break
+            
+            # Default to 0.0 if no match found
             if score is None:
-                # Try exact match
-                score = scores.get(metric, 0.0)
+                score = 0.0
+            else:
+                score = float(score)
             
             # Clamp to 0-10 range
-            validated_scores[metric] = max(0.0, min(10.0, float(score)))
+            validated_scores[metric] = max(0.0, min(10.0, score))
         
         return validated_scores
         
     except (json.JSONDecodeError, KeyError, ValueError) as e:
-        raise RuntimeError(f"Failed to parse evaluation scores: {e}") from e
+        raise RuntimeError(f"Failed to parse evaluation scores: {e}. Response was: {result_text[:200]}") from e

@@ -8,6 +8,8 @@ for that specific state within its strategy context.
 import random
 from typing import Dict, Any, Callable, Optional
 
+from .scripts.debt_capacity import debt_capacity
+
 
 # Handler function type
 # Handlers receive: data, state_config, field_name, context
@@ -530,16 +532,32 @@ def calculation_handler(data: Any, state_config: Dict[str, Any], field_name: str
         return True
     
     elif calculation_type == "debt_capacity":
-        # Placeholder for debt_capacity logic (details to be provided later)
-        context['calculation_type'] = 'debt_capacity'
-        context['calculation_complete'] = True
-        
-        # Update most_current_data with debt_capacity results (right before returning True)
-        # For now, just add placeholder - will be updated when debt_capacity logic is provided
-        most_current_data['debt_capacity'] = {}  # Placeholder
-        context['most_current_data'] = most_current_data
-        
-        return True
+        # Call the debt_capacity function with the financials data
+        try:
+            # The most_current_data should contain all the required fields for debt_capacity
+            # (YEAR, ER12, ER32, P88, EM06, ER13, ER41, P19, P14, P03, P20)
+            financials = most_current_data.copy()
+            
+            # Call debt_capacity function (exposure parameter is not used, pass None)
+            debt_capacity_results = debt_capacity(financials, exposure=None)
+            
+            # Replace most_current_data with only the calculated results
+            # This prevents duplicate fields (input fields vs calculated results) in the final output
+            # The debt_capacity function returns: year, ER12, ER32, P88, EM06, Re_CapEx, int_sub, int_hypo, FCF, DC, DCU
+            most_current_data = debt_capacity_results.copy()
+            
+            # Store the full results under 'debt_capacity' key for reference
+            most_current_data['debt_capacity'] = debt_capacity_results
+            
+            context['calculation_type'] = 'debt_capacity'
+            context['calculation_complete'] = True
+            context['most_current_data'] = most_current_data
+            
+            return True
+        except (ValueError, KeyError, TypeError) as e:
+            # If debt_capacity calculation fails (missing fields, wrong types, etc.), return False
+            context['calculation_error'] = str(e)
+            return False
     
     return False
 
@@ -566,7 +584,7 @@ HANDLERS: Dict[tuple, HandlerFunc] = {
     ("validation_strategy", "llm_eval"): validation_llm_eval_handler,
     
     # calculation_strategy handlers
-    ("calculation_strategy", "debt_capacity"): calculation_handler,
+    ("calculation_strategy", "calculation"): calculation_handler,
 }
 
 

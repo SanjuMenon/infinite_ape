@@ -25,7 +25,7 @@ ALLOWED_STATES: Dict[str, Set[str]] = {
         "llm_eval"
     },
     "calculation_strategy": {
-        "debt_capacity"
+        "calculation"
     }
 }
 
