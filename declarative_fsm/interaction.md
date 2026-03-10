@@ -40,7 +40,6 @@ sequenceDiagram
     Engine->>Engine: context["most_current_data"] = deepcopy(raw_field_data)
     Engine->>Engine: context["canonical_mapping"] = canonical_mappings.get(field_name, {})
 
-    %% field_selection_strategy
     Engine->>Strategy: field_selection_strategy / check_completeness
     Strategy->>H: check_completeness_handler
     alt completeness passes
@@ -53,14 +52,13 @@ sequenceDiagram
         Strategy-->>Engine: True
       else convert_to_canon fails
         Strategy-->>Engine: False
-        Engine->>Engine: revert most_current_data snapshot; stop branch
+        Engine->>Engine: revert most_current_data snapshot and stop branch
       end
     else completeness fails
       Strategy-->>Engine: False
-      Engine->>Engine: revert most_current_data snapshot; stop branch
+      Engine->>Engine: revert most_current_data snapshot and stop branch
     end
 
-    %% extraction_strategy
     Engine->>Strategy: extraction_strategy / validate_type
     Strategy->>H: extraction_validate_type_handler
     alt validate_type passes
@@ -68,10 +66,9 @@ sequenceDiagram
       Strategy-->>Engine: True
     else validate_type fails
       Strategy-->>Engine: False
-      Engine->>Engine: revert most_current_data snapshot; stop branch
+      Engine->>Engine: revert most_current_data snapshot and stop branch
     end
 
-    %% generation_strategy (format)
     Engine->>Strategy: generation_strategy / format
     Strategy->>H: generation_format_handler
     alt format valid (enum)
@@ -79,10 +76,9 @@ sequenceDiagram
       Strategy-->>Engine: True
     else format invalid
       Strategy-->>Engine: False
-      Engine->>Engine: revert most_current_data snapshot; stop branch
+      Engine->>Engine: revert most_current_data snapshot and stop branch
     end
 
-    %% validation_strategy (llm_eval)
     Engine->>Strategy: validation_strategy / llm_eval
     Strategy->>H: validation_llm_eval_handler
     alt llm_eval description is list
@@ -90,10 +86,9 @@ sequenceDiagram
       Strategy-->>Engine: True
     else invalid metrics
       Strategy-->>Engine: False
-      Engine->>Engine: revert most_current_data snapshot; stop branch
+      Engine->>Engine: revert most_current_data snapshot and stop branch
     end
 
-    %% calculation_strategy (only configured for some fields)
     opt if calculation_strategy is present
       Engine->>Strategy: calculation_strategy / calculation
       Strategy->>H: calculation_handler
