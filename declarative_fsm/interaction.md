@@ -19,84 +19,84 @@ This describes the **runtime interaction** between `demo.py`, the `FSMEngine`, a
 sequenceDiagram
   autonumber
   actor User
-  participant Demo as declarative_fsm/demo.py::main()
-  participant Loader as declarative_fsm/loader.py::load_config()
-  participant Engine as declarative_fsm/engine.py::FSMEngine.execute()
-  participant Strategy as declarative_fsm/strategy.py::execute_state()
-  participant H as strategy handlers (per state)
-  participant FS as filesystem (map_reduce/most_current_data.pkl)
+  participant Demo as demo.py main
+  participant Loader as loader.py load_config
+  participant Engine as engine.py FSMEngine.execute
+  participant Strategy as strategy.py execute_state
+  participant H as state handler
+  participant FS as filesystem most_current_data.pkl
 
-  User->>Demo: run demo main()
+  User->>Demo: run demo
 
-  Demo->>Loader: load_config("declarative_fsm/example_config.yaml")
+  Demo->>Loader: load_config(example_config.yaml)
   Loader-->>Demo: config (validated)
 
-  Demo->>Demo: load JSON data (declarative_fsm/sample_data.json)
+  Demo->>Demo: load JSON data (sample_data.json)
 
   Demo->>Engine: engine.execute(data)
 
-  loop for each field in config.fields (e.g., collateral, real estate assets, Financials, financials_debt)
+  loop for each field in config.fields
     Engine->>Engine: context = {}
     Engine->>Engine: context["most_current_data"] = deepcopy(raw_field_data)
     Engine->>Engine: context["canonical_mapping"] = canonical_mappings.get(field_name, {})
 
     %% field_selection_strategy
-    Engine->>Strategy: execute_state("field_selection_strategy","check_completeness",...,context)
-    Strategy->>H: check_completeness_handler(...)
+    Engine->>Strategy: field_selection_strategy / check_completeness
+    Strategy->>H: check_completeness_handler
     alt completeness passes
       H-->>Strategy: True (sets required_fields_found, field_data)
       Strategy-->>Engine: True
-      Engine->>Strategy: execute_state("field_selection_strategy","convert_to_canon",...,context)
-      Strategy->>H: convert_to_canon_handler(...)
+      Engine->>Strategy: field_selection_strategy / convert_to_canon
+      Strategy->>H: convert_to_canon_handler
       alt convert_to_canon passes
         H-->>Strategy: True (may rename keys in most_current_data)
         Strategy-->>Engine: True
       else convert_to_canon fails
         Strategy-->>Engine: False
-        Engine->>Engine: revert most_current_data snapshot; stop this strategy/field branch
+        Engine->>Engine: revert most_current_data snapshot; stop branch
       end
     else completeness fails
       Strategy-->>Engine: False
-      Engine->>Engine: revert most_current_data snapshot; stop this strategy/field branch
+      Engine->>Engine: revert most_current_data snapshot; stop branch
     end
 
     %% extraction_strategy
-    Engine->>Strategy: execute_state("extraction_strategy","validate_type",...,context)
-    Strategy->>H: extraction_validate_type_handler(...)
+    Engine->>Strategy: extraction_strategy / validate_type
+    Strategy->>H: extraction_validate_type_handler
     alt validate_type passes
       H-->>Strategy: True (may convert numeric strings; updates most_current_data on success)
       Strategy-->>Engine: True
     else validate_type fails
       Strategy-->>Engine: False
-      Engine->>Engine: revert most_current_data snapshot; stop this strategy/field branch
+      Engine->>Engine: revert most_current_data snapshot; stop branch
     end
 
     %% generation_strategy (format)
-    Engine->>Strategy: execute_state("generation_strategy","format",...,context)
-    Strategy->>H: generation_format_handler(...)
+    Engine->>Strategy: generation_strategy / format
+    Strategy->>H: generation_format_handler
     alt format valid (enum)
-      H-->>Strategy: True (sets context["format"] = "table"|"freeform"|"fill_template")
+      H-->>Strategy: True (sets context["format"] = table|freeform|fill_template)
       Strategy-->>Engine: True
     else format invalid
       Strategy-->>Engine: False
-      Engine->>Engine: revert most_current_data snapshot; stop this strategy/field branch
+      Engine->>Engine: revert most_current_data snapshot; stop branch
     end
 
     %% validation_strategy (llm_eval)
-    Engine->>Strategy: execute_state("validation_strategy","llm_eval",...,context)
-    Strategy->>H: validation_llm_eval_handler(...)
+    Engine->>Strategy: validation_strategy / llm_eval
+    Strategy->>H: validation_llm_eval_handler
     alt llm_eval description is list
-      H-->>Strategy: True (sets context["eval_type"]="llm"; context["metrics"]=list)
+      H-->>Strategy: True (sets context["eval_type"]=llm; context["metrics"]=list)
       Strategy-->>Engine: True
     else invalid metrics
       Strategy-->>Engine: False
-      Engine->>Engine: revert most_current_data snapshot; stop this strategy/field branch
+      Engine->>Engine: revert most_current_data snapshot; stop branch
     end
 
     %% calculation_strategy (only configured for some fields)
-    opt if calculation_strategy is present (Financials: aggregation; financials_debt: debt_capacity)
-      Engine->>Strategy: execute_state("calculation_strategy","calculation",...,context)
-      Strategy->>H: calculation_handler(...)
+    opt if calculation_strategy is present
+      Engine->>Strategy: calculation_strategy / calculation
+      Strategy->>H: calculation_handler
       alt description == "aggregation"
         H-->>Strategy: True (adds most_current_data["aggregation"] = grouped sums)
         Strategy-->>Engine: True
@@ -112,7 +112,7 @@ sequenceDiagram
 
   Engine-->>Demo: report (includes most_current_data_list)
 
-  Demo->>FS: pickle.dump(most_current_data_list, "map_reduce/most_current_data.pkl")
+  Demo->>FS: pickle.dump(most_current_data_list, map_reduce/most_current_data.pkl)
   FS-->>Demo: write OK
 
   Demo-->>User: console report + returns most_current_data_list
