@@ -43,12 +43,12 @@ sequenceDiagram
     Engine->>Strategy: field_selection_strategy / check_completeness
     Strategy->>H: check_completeness_handler
     alt completeness passes
-      H-->>Strategy: True (sets required_fields_found, field_data)
+      H-->>Strategy: True
       Strategy-->>Engine: True
       Engine->>Strategy: field_selection_strategy / convert_to_canon
       Strategy->>H: convert_to_canon_handler
       alt convert_to_canon passes
-        H-->>Strategy: True (may rename keys in most_current_data)
+        H-->>Strategy: True
         Strategy-->>Engine: True
       else convert_to_canon fails
         Strategy-->>Engine: False
@@ -62,7 +62,7 @@ sequenceDiagram
     Engine->>Strategy: extraction_strategy / validate_type
     Strategy->>H: extraction_validate_type_handler
     alt validate_type passes
-      H-->>Strategy: True (may convert numeric strings; updates most_current_data on success)
+      H-->>Strategy: True
       Strategy-->>Engine: True
     else validate_type fails
       Strategy-->>Engine: False
@@ -72,7 +72,7 @@ sequenceDiagram
     Engine->>Strategy: generation_strategy / format
     Strategy->>H: generation_format_handler
     alt format valid (enum)
-      H-->>Strategy: True (sets context["format"] = table|freeform|fill_template)
+      H-->>Strategy: True
       Strategy-->>Engine: True
     else format invalid
       Strategy-->>Engine: False
@@ -82,7 +82,7 @@ sequenceDiagram
     Engine->>Strategy: validation_strategy / llm_eval
     Strategy->>H: validation_llm_eval_handler
     alt llm_eval description is list
-      H-->>Strategy: True (sets context["eval_type"]=llm; context["metrics"]=list)
+      H-->>Strategy: True
       Strategy-->>Engine: True
     else invalid metrics
       Strategy-->>Engine: False
@@ -93,10 +93,10 @@ sequenceDiagram
       Engine->>Strategy: calculation_strategy / calculation
       Strategy->>H: calculation_handler
       alt description == "aggregation"
-        H-->>Strategy: True (adds most_current_data["aggregation"] = grouped sums)
+        H-->>Strategy: True
         Strategy-->>Engine: True
       else description == "debt_capacity"
-        H-->>Strategy: True/False (calls debt_capacity(); updates most_current_data on success)
+        H-->>Strategy: True or False
         Strategy-->>Engine: result
       end
     end
