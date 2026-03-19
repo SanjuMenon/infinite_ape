@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 
-from declarative_fsm import demo as fsm_demo
+from declarative_fsm import wrapper_sample_data2 as fsm_demo
 
 from map_reduce.config import load_bundle_config, load_output_schema
 from map_reduce.graph import build_map_reduce_graph
@@ -14,11 +15,27 @@ HERE = Path(__file__).resolve().parent
 
 
 def main() -> None:
-    # Run declarative_fsm to get bundles
+    # Run declarative_fsm to get bundles and metadata
     print("=" * 60)
     print("Step 1: Running Declarative FSM")
     print("=" * 60)
-    most_current_data_list = fsm_demo.main()
+    fsm_result = fsm_demo.main()
+    
+    # Handle both old format (list) and new formats (dict)
+    if isinstance(fsm_result, dict):
+        # Contract A (declarative_fsm.demo): {"bundles": [...], "metadata": {...}}
+        most_current_data_list = fsm_result.get("bundles")
+        metadata = fsm_result.get("metadata")
+
+        # Contract B (wrapper_sample_data2): {"most_current_data_list": [...], "meta": {...}}
+        if most_current_data_list is None:
+            most_current_data_list = fsm_result.get("most_current_data_list", [])
+        if metadata is None:
+            metadata = fsm_result.get("meta")
+    else:
+        # Backward compatibility: old format returns list directly
+        most_current_data_list = fsm_result
+        metadata = None
     
     if not most_current_data_list:
         print("⚠ No bundles generated from declarative_fsm. Exiting.")
@@ -52,9 +69,24 @@ def main() -> None:
     final_state = graph.invoke({
         "bundles": bundles,
         "bundle_config": bundle_config,
-        "output_schema": output_schema
+        "output_schema": output_schema,
+        "metadata": metadata
     })
-    print(final_state["report"])
+    
+    # Print report as markdown (using renderer)
+    from map_reduce.graph import render_to_markdown
+    report = final_state["report"]
+
+    # Persist report as JSON in Pydantic (aliased) form
+    output_path = HERE / "pydantic_output.json"
+    output_path.write_text(
+        json.dumps(report.model_dump(by_alias=True), ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    print(f"\n✓ Saved Pydantic report JSON to: {output_path}")
+
+    markdown_output = render_to_markdown(report)
+    print(markdown_output)
 
 
 if __name__ == "__main__":

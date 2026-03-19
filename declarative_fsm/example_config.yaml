@@ -3,8 +3,8 @@ fields:
     field_selection_strategy:
       check_completeness:
         description:
-          - "value_type"
-          - "amount"
+          - "nominalValueAmount"
+          - "lendingValueAmount"
       convert_to_canon:
         description: True
     extraction_strategy:
@@ -27,12 +27,12 @@ fields:
       check_completeness:
         description:
           - "address"
-          - "real_estate_type"
+          - "realEstateType"
       convert_to_canon:
         description: True
     extraction_strategy:
       validate_type:
-        description: "int"
+        description: "str"
       
     generation_strategy:
       # Nested FSM - only executes if extraction_strategy passes

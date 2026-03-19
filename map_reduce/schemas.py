@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Literal, Optional
 from pydantic import BaseModel, Field
 
 
-BundleValue = Literal["freeform", "table"]
+BundleValue = Literal["freeform", "table", "fill_template"]
 
 
 class Bundle(BaseModel):
@@ -13,12 +13,12 @@ class Bundle(BaseModel):
 
     Notes:
     - `field_name` is used for aggregation headings (e.g. "collateral").
-    - `format` selects the summarizer behavior ("freeform" vs "table").
+    - `format` selects the summarizer behavior ("freeform", "table", or "fill_template").
     - The rest of the payload is intentionally flexible for now.
     """
 
     field_name: str = Field(..., min_length=1)
-    format: BundleValue = Field(...)  # Required: "freeform" or "table"
+    format: BundleValue = Field(...)  # Required: "freeform", "table", or "fill_template"
     most_current_data: Dict[str, Any] = Field(...)  # Required field - always used for LLM summarization
     
     # Evaluation fields

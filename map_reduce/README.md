@@ -59,7 +59,7 @@ OPENAI_API_KEY=your_key_here
 ### 2. Run the demo
 
 ```bash
-python map_reduce/demo.py
+python map_reduce/run_summarizer.py
 ```
 
 **Note:** The demo automatically runs `declarative_fsm.demo.main()` to generate bundles, then processes them through the map-reduce pipeline.
@@ -121,7 +121,7 @@ Output Report (with evaluation scores if applicable)
 #### 2. **Agents** (`agents.py`)
 - `summarize_freeform()`: Freeform text summarization
 - `summarize_table()`: Table-based summarization (markdown)
-- Auto-selects based on `bundle.format` field (`"freeform"` → freeform, `"table"` → table, `"fill_template"` → freeform)
+- Auto-selects based on `bundle.format` field (`"freeform"` → freeform, `"table"` → table, `"fill_template"` → template fill)
 - LLM-powered with deterministic fallback
 
 #### 3. **LLM Client** (`llm_client.py`)

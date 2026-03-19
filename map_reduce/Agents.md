@@ -4,40 +4,49 @@ This document records the implementation details of the summarization agents use
 
 ## Overview
 
-The map-reduce module uses two types of summarization agents:
-1. **Freeform Agent** - Produces narrative text summaries
-2. **Table Agent** - Produces markdown table summaries
+The map-reduce module uses three types of summarization agents:
+1. **Freeform Agent** - Produces narrative text summaries (LLM-powered)
+2. **Table Agent** - Produces markdown table summaries (LLM-powered with deterministic fallback)
+3. **Template Fill Agent** - Produces structured text summaries (deterministic, no LLM required)
 
-Both agents support:
+Freeform and Table agents support:
 - LLM-powered summarization (OpenAI or Azure OpenAI)
 - Deterministic fallback when LLM is unavailable
 - Automatic provider detection (Azure OpenAI or OpenAI)
+
+Template Fill agent:
+- Deterministic template-based formatting (no LLM required)
+- Always available regardless of LLM configuration
 
 ## Agent Selection
 
 Agent selection is determined by the `format` field in each bundle:
 - `format: "freeform"` → Uses `summarize_freeform()`
 - `format: "table"` → Uses `summarize_table()`
+- `format: "fill_template"` → Uses `summarize_template_fill()`
 - Default: `"freeform"` if `format` is not specified
 
-**Location:** `graph.py` line 93-96
+**Location:** `graph.py` lines 188-194
 
 ```python
 if bundle.format == "table":
     text = summarize_table(bundle)
+elif bundle.format == "fill_template":
+    text = summarize_template_fill(bundle)
 else:
     text = summarize_freeform(bundle)
 ```
 
 ## Data Source
 
-**All agents always use `most_current_data` for LLM summarization.**
+**All agents always use `most_current_data` for summarization.**
 
 - `most_current_data` is a **required field** in the Bundle schema
 - When LLM is available, only `bundle.most_current_data` is sent to the LLM
+- Template Fill agent also uses `bundle.most_current_data` for consistency
 - This ensures metadata fields (like `format_validated`, `length_validated`) are excluded from summarization
 
-**Location:** `agents.py` lines 57 and 145
+**Location:** `agents.py` lines 47, 157, and 23
 
 ```python
 # Freeform agent
@@ -45,6 +54,10 @@ bundle_json = _as_compact_json(bundle.most_current_data)
 
 # Table agent  
 bundle_json = _as_compact_json(bundle.most_current_data)
+
+# Template Fill agent
+if bundle.most_current_data:
+    # Uses most_current_data directly
 ```
 
 ## Freeform Agent (`summarize_freeform`)
@@ -157,6 +170,57 @@ Bundle: {field_name}
 
 **Location:** `agents.py` lines 117-135
 
+## Template Fill Agent (`summarize_template_fill`)
+
+The Template Fill agent provides deterministic, template-based summarization without requiring an LLM.
+
+**Function:** `summarize_template_fill(bundle: Bundle) -> str`
+
+**Behavior:**
+1. Always uses `most_current_data` for consistency with other agents
+2. Formats data as a structured list with indentation
+3. No LLM required - always deterministic
+4. Fallback to entire bundle if `most_current_data` is empty
+
+**Output Format:**
+```
+- data:
+  - field1: value1
+  - field2: value2
+  - field3: value3
+```
+
+**Use Cases:**
+- When LLM is unavailable or not desired
+- When structured, deterministic output is preferred
+- For debugging or testing scenarios
+- When cost or latency is a concern
+
+**Advantages:**
+- Always available (no API dependencies)
+- Fast and predictable
+- No API costs
+- Consistent formatting
+
+**Limitations:**
+- Less flexible than LLM-powered agents
+- No natural language generation
+- Simple key-value formatting only
+
+**Location:** `agents.py` lines 15-32
+
+**Example:**
+```python
+bundle = Bundle(
+    field_name="example",
+    format="fill_template",
+    most_current_data={"key1": "value1", "key2": "value2"}
+)
+summary = summarize_template_fill(bundle)
+# Returns:
+# "- data:\n  - key1: value1\n  - key2: value2"
+```
+
 ## Helper Functions
 
 ### `_markdown_table(rows, columns)`
@@ -245,7 +309,27 @@ Each agent returns:
 
 The `partials` list is automatically merged across parallel executions using `operator.add` in the graph state.
 
-**Location:** `graph.py` lines 87-97
+**Location:** `graph.py` lines 188-196
+
+### Final Report State
+
+The final report in `MapReduceState` is a `CreditSummaryGenAIResponse` Pydantic model:
+
+```python
+class MapReduceState(TypedDict, total=False):
+    bundles: List[Bundle]
+    bundle_config: BundleConfig
+    output_schema: OutputSchema
+    metadata: Optional[Dict[str, Any]]  # From sample_data.json
+    
+    # populated during execution
+    subtasks: List[Bundle]
+    partials: Annotated[List[Dict[str, str]], operator.add]
+    report: CreditSummaryGenAIResponse  # Pydantic model (not string)
+    evaluation_scores: Dict[str, Any]
+```
+
+**Location:** `graph.py` lines 16-35
 
 ## Parallel Execution
 
@@ -257,6 +341,137 @@ Agents are executed in parallel via LangGraph's `Send` API:
 4. Results are automatically merged into the `partials` list
 
 **Location:** `graph.py` lines 80-84 and 121
+
+## Report Structure (Pydantic Model)
+
+The final report is now structured as a Pydantic model (`CreditSummaryGenAIResponse`) instead of a plain markdown string. This provides:
+
+- **Structured, validated output** - Type-safe report structure
+- **Easy JSON serialization** - Can export to JSON via `model_dump(by_alias=True)`
+- **Flexible rendering** - Can render to markdown, HTML, or other formats
+- **Metadata integration** - Includes request metadata, evaluation scores, and debug information
+
+### Report Aggregation Strategy (Option B)
+
+Bundles are grouped by `section_title` from `bundle_config.yaml`:
+
+- **One `SummarySection` per `section_title`** - Groups bundles that share the same section title
+- **Each bundle becomes a `SummarySubSection`** - Individual bundles appear as subsections within their section
+- **Ordering preserved** - Bundles maintain their order within each section based on `bundle_config.yaml`
+
+**Example Structure:**
+```
+SummarySection (heading: "Financials")
+  ├─ SummarySubSection (identifier: "Financials", heading: "Financials")
+  └─ SummarySubSection (identifier: "financials_debt", heading: "Financials_Debt")
+```
+
+**Location:** `graph.py` lines 54-220 (`_aggregate_report_pydantic`)
+
+### Content Format Mapping
+
+Bundle formats are mapped to content format strings:
+
+- `format: "table"` → `content_format: "MD"` (Markdown)
+- `format: "freeform"` → `content_format: "TEXT"` (Plain text)
+- `format: "fill_template"` → `content_format: "TEXT"` (Plain text)
+
+**Location:** `graph.py` lines 47-51 (`_determine_content_format`)
+
+### Metadata Flow
+
+Metadata flows from `sample_data.json` (top-level fields) through the pipeline:
+
+1. **Source:** Top-level fields in `declarative_fsm/sample_data.json`:
+   - `requestId` - Request identifier
+   - `language` - Report language (default: "en")
+   - `generatedBy` - System/user that generated the report (default: "map_reduce")
+   - `generatedAt` - Timestamp (auto-generated if not provided)
+
+2. **Extraction:** `declarative_fsm/demo.py` extracts metadata from parsed `SampleData` model
+
+3. **Flow:** Metadata passed to `MapReduceState` and used in `_aggregate_report_pydantic()`
+
+4. **Usage:** Included in `CreditSummaryGenAIResponse.summary_meta_data` and top-level fields
+
+**Location:** 
+- `declarative_fsm/models.py` - `SampleData` model with metadata fields
+- `declarative_fsm/demo.py` - Metadata extraction
+- `map_reduce/graph.py` - Metadata usage in report generation
+
+### Report Renderer
+
+A renderer function (`render_to_markdown()`) converts the Pydantic model to markdown for backward compatibility:
+
+**Function:** `render_to_markdown(response: CreditSummaryGenAIResponse) -> str`
+
+**Behavior:**
+- Converts `CreditSummaryGenAIResponse` to markdown string
+- Preserves section hierarchy and formatting
+- Includes evaluation scores and metadata
+- Used by `run_summarizer.py` for console output
+
+**Usage:**
+```python
+from map_reduce import build_map_reduce_graph, render_to_markdown
+
+graph = build_map_reduce_graph()
+result = graph.invoke({...})
+report = result["report"]  # CreditSummaryGenAIResponse
+
+# Render to markdown
+markdown = render_to_markdown(report)
+print(markdown)
+
+# Or serialize to JSON
+json_output = report.model_dump(by_alias=True)
+```
+
+**Location:** `graph.py` lines 222-250
+
+### Report Schema
+
+The report structure follows the `CreditSummaryGenAIResponse` schema:
+
+```python
+CreditSummaryGenAIResponse
+├─ schema_ ($schema) - JSON schema reference
+├─ id_ ($id) - Schema identifier
+├─ request_id (requestId) - From metadata
+├─ language - From metadata
+├─ generated_by (generatedBy) - From metadata
+├─ generated_at (generatedAt) - From metadata
+├─ summary_sections - List[SummarySection]
+│   └─ SummarySection
+│       ├─ identifier - Section identifier (from section_title)
+│       ├─ heading - Section title
+│       ├─ sub_heading - Optional subsection heading
+│       ├─ content - Section-level content (usually empty)
+│       ├─ content_format - "TEXT" or "MD"
+│       └─ summary_sub_sections - List[SummarySubSection]
+│           └─ SummarySubSection
+│               ├─ identifier - Bundle field_name
+│               ├─ heading - Display name or field_name
+│               ├─ content_format - "TEXT" or "MD"
+│               └─ content - Summary text (with evaluation scores if available)
+└─ summary_meta_data
+    ├─ overall_evaluation_report
+    │   ├─ content - Overall evaluation text
+    │   └─ content_format - "TEXT"
+    └─ debug_log - LLM availability and other debug information
+```
+
+**Location:** `report_schemas.py`
+
+### Evaluation Scores Integration
+
+Evaluation scores are integrated into the report structure:
+
+- **Individual summary scores:** Added to each `SummarySubSection.content` as markdown text
+- **Overall report scores:** Included in `summary_meta_data.overall_evaluation_report.content`
+- **Format:** Scores displayed as "Evaluation Score: X.X/10" with detailed breakdown
+
+**Location:** `graph.py` lines 129-137, 178-185
 
 ## Configuration
 
@@ -279,7 +494,7 @@ Agents are executed in parallel via LangGraph's `Send` API:
 - `most_current_data: Dict[str, Any]` - Always used for LLM summarization
 
 **Optional fields:**
-- `format: Literal["freeform", "table"]` - Defaults to "freeform"
+- `format: Literal["freeform", "table", "fill_template"]` - Defaults to "freeform"
 - `field_data: Dict[str, Any]` - Used by deterministic table fallback
 - `canonical_data: Dict[str, Any]` - Used by deterministic table fallback
 - Other metadata fields (format_validated, length_validated, etc.)

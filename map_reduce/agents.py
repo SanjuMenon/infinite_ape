@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 import json
-import os
 from typing import Any, Dict, List, Optional
 
-from .llm_client import get_deployment_name, get_openai_client, get_provider, is_llm_available
+from .llm_client import get_client_and_model, get_openai_client
 from .schemas import Bundle
 
 
@@ -34,9 +33,8 @@ def summarize_template_fill(bundle: Bundle) -> str:
 
 def summarize_freeform(bundle: Bundle) -> str:
     """Summarize bundle in freeform text using LLM (requires LLM to be available)."""
-    client = get_openai_client()
-    
-    if client is None:
+    client, model_or_deployment = get_client_and_model()
+    if client is None or model_or_deployment is None:
         raise RuntimeError(
             "LLM is required for summarize_freeform. "
             "Set OPENAI_API_KEY or AZURE_OPENAI_API_KEY/AZURE_OPENAI_ENDPOINT, "
@@ -46,22 +44,21 @@ def summarize_freeform(bundle: Bundle) -> str:
     # Always use most_current_data for LLM summarization
     bundle_json = _as_compact_json(bundle.most_current_data)
     
-    prompt = f"""Summarize the following bundle data in a clear, freeform narrative format.
-Focus on the key information and provide context about what this bundle represents.
+    prompt = f"""Summarize the following data in a clear, freeform narrative format.
+Focus on the key information present in the data.
 
-Bundle Name: {bundle.field_name}
-Bundle Data:
+Data:
 {bundle_json}
 
-Provide a concise, readable summary that highlights the important fields and their values."""
+Provide a concise, readable summary that highlights the important fields and their values.
 
-    # Use deployment name for Azure, model name for OpenAI
-    provider = get_provider()
-    if provider == "azure":
-        model_or_deployment = get_deployment_name() or os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME", "gpt-4o-mini")
-    else:
-        model_or_deployment = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
-    
+IMPORTANT:
+- Do NOT add any facts, numbers, totals, categories, or interpretations that are not explicitly present in the data.
+- Do NOT rename fields or imply relationships that are not explicitly present.
+- Do NOT mention the bundle name / field name.
+- Do NOT add headings like "Bundle:", "Field:", or similar.
+- Return only the summary text."""
+
     response = client.chat.completions.create(
         model=model_or_deployment,
         messages=[
@@ -147,43 +144,30 @@ def _summarize_table_deterministic(bundle: Bundle) -> str:
 
 def summarize_table(bundle: Bundle) -> str:
     """Summarize bundle as a markdown table using LLM if available, else deterministic fallback."""
-    client = get_openai_client()
-    
-    if client is None:
+    client, model_or_deployment = get_client_and_model()
+    if client is None or model_or_deployment is None:
         return _summarize_table_deterministic(bundle)
     
     try:
         # Always use most_current_data for LLM summarization
         bundle_json = _as_compact_json(bundle.most_current_data)
         
-        prompt = f"""Summarize the following bundle data as a well-formatted markdown table.
-The table should have clear column headers and organize the key information from the bundle.
+        prompt = f"""Format the following data as a STRICT markdown table.
 
-Bundle Data:
+Data:
 {bundle_json}
 
-Create a markdown table that presents the important fields and their values in a structured, readable format.
-Use appropriate column headers based on the data structure.
-
-Guidelines for table structure:
-1. Group related items together (e.g., all revenue items, all expense items)
-2. For nested objects with category/amount pairs, use columns like "Item", "Category", "Amount" instead of flattening
-3. Format numbers with appropriate currency symbols and commas (e.g., $1,500,000)
-4. If there are aggregations or totals, consider showing them in a separate summary section or at the top
-5. Use meaningful column headers that reflect the data structure (e.g., "Metric", "Value" or "Item", "Category", "Amount")
+Create a markdown table that lists ONLY fields that appear in the provided JSON data.
+Use a simple two-column schema: | key | value |.
+If a value is an object/array, render the value as compact JSON on a single line (do not expand into invented rows).
 
 IMPORTANT: 
-- Do NOT include "Bundle Name" or the bundle name as a row in the table. Only include the actual data fields from the bundle.
+- Do NOT add, infer, compute, group, rename, or normalize anything. No totals. No categories. No derived fields.
+- Do NOT include "Bundle Name" or the bundle name as a row in the table.
+- Do NOT mention the bundle name / field name anywhere in the response.
 - Return ONLY the markdown table. Do not include any explanatory text, headings, or additional content before or after the table.
 - Start your response directly with the table (e.g., "| Column1 | Column2 |")"""
 
-        # Use deployment name for Azure, model name for OpenAI
-        provider = get_provider()
-        if provider == "azure":
-            model_or_deployment = get_deployment_name() or os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME", "gpt-4o-mini")
-        else:
-            model_or_deployment = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
-        
         response = client.chat.completions.create(
             model=model_or_deployment,
             messages=[

@@ -1,11 +1,21 @@
 from __future__ import annotations
 
 import json
-import os
 from typing import Any, Dict, List
 
-from .llm_client import get_deployment_name, get_openai_client, get_provider
+from .llm_client import get_client_and_model
 from .schemas import Bundle
+
+
+def _safe_text(s: Any) -> str:
+    """Ensure text is JSON-serializable and free of problematic characters for HTTP JSON bodies."""
+    if s is None:
+        return ""
+    if not isinstance(s, str):
+        s = str(s)
+    # remove NULs and normalize to valid UTF-8 (replace invalid sequences)
+    s = s.replace("\x00", "")
+    return s.encode("utf-8", errors="replace").decode("utf-8", errors="replace")
 
 
 def evaluate_summary(bundle: Bundle, summary_text: str) -> Dict[str, float]:
@@ -24,8 +34,8 @@ def evaluate_summary(bundle: Bundle, summary_text: str) -> Dict[str, float]:
     if not bundle.metrics:
         return {}
     
-    client = get_openai_client()
-    if client is None:
+    client, model_or_deployment = get_client_and_model()
+    if client is None or model_or_deployment is None:
         raise RuntimeError(
             "LLM is required for evaluation. "
             "Set OPENAI_API_KEY or AZURE_OPENAI_API_KEY/AZURE_OPENAI_ENDPOINT."
@@ -37,31 +47,26 @@ def evaluate_summary(bundle: Bundle, summary_text: str) -> Dict[str, float]:
     metric_keys = [f'"{metric}"' for metric in bundle.metrics]
     example_dict = "{" + ", ".join([f'"{m}": 8' for m in bundle.metrics[:3]]) + "}"
     
+    safe_summary_text = _safe_text(summary_text)
+
     prompt = f"""Evaluate the following summary text and score it on a scale of 0-10 for each metric.
 
 Metrics to evaluate:
 {metrics_list}
 
 Summary Text:
-{summary_text}
+{safe_summary_text}
 
 Provide scores as a JSON object. Use the EXACT metric names as keys (including the full phrase).
 Example format: {example_dict}
 
 IMPORTANT: Use the exact metric names provided above as the JSON keys. Return only the JSON object, no additional text."""
 
-    # Use deployment name for Azure, model name for OpenAI
-    provider = get_provider()
-    if provider == "azure":
-        model_or_deployment = get_deployment_name() or os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME", "gpt-4o-mini")
-    else:
-        model_or_deployment = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
-    
     response = client.chat.completions.create(
         model=model_or_deployment,
         messages=[
             {"role": "system", "content": "You are an evaluation assistant that scores text quality. Always return valid JSON with scores from 0-10."},
-            {"role": "user", "content": prompt}
+            {"role": "user", "content": _safe_text(prompt)}
         ],
         temperature=0.2,  # Low temperature for consistent scoring
         max_tokens=200
@@ -165,8 +170,8 @@ def evaluate_report(report: str, bundles: List[Bundle]) -> Dict[str, float]:
     if not metrics:
         return {}
     
-    client = get_openai_client()
-    if client is None:
+    client, model_or_deployment = get_client_and_model()
+    if client is None or model_or_deployment is None:
         raise RuntimeError(
             "LLM is required for evaluation. "
             "Set OPENAI_API_KEY or AZURE_OPENAI_API_KEY/AZURE_OPENAI_ENDPOINT."
@@ -176,31 +181,26 @@ def evaluate_report(report: str, bundles: List[Bundle]) -> Dict[str, float]:
     metrics_list = "\n".join([f"- {metric}" for metric in metrics])
     example_dict = "{" + ", ".join([f'"{m}": 8' for m in metrics[:3]]) + "}"
     
+    safe_report = _safe_text(report)
+
     prompt = f"""Evaluate the following report and score it on a scale of 0-10 for each metric.
 
 Metrics to evaluate:
 {metrics_list}
 
 Report:
-{report}
+{safe_report}
 
 Provide scores as a JSON object. Use the EXACT metric names as keys (including the full phrase).
 Example format: {example_dict}
 
 IMPORTANT: Use the exact metric names provided above as the JSON keys. Return only the JSON object, no additional text."""
 
-    # Use deployment name for Azure, model name for OpenAI
-    provider = get_provider()
-    if provider == "azure":
-        model_or_deployment = get_deployment_name() or os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME", "gpt-4o-mini")
-    else:
-        model_or_deployment = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
-    
     response = client.chat.completions.create(
         model=model_or_deployment,
         messages=[
             {"role": "system", "content": "You are an evaluation assistant that scores text quality. Always return valid JSON with scores from 0-10."},
-            {"role": "user", "content": prompt}
+            {"role": "user", "content": _safe_text(prompt)}
         ],
         temperature=0.2,  # Low temperature for consistent scoring
         max_tokens=200

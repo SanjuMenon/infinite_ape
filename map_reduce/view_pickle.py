@@ -5,7 +5,7 @@ from pathlib import Path
 def main():
     # Get the path to the pickle file (in the same directory as this script)
     script_dir = Path(__file__).parent
-    pickle_path = script_dir / "most_current_data.pkl"
+    pickle_path = script_dir / "most_current_data_sample_data2.pkl"
     
     # Read the pickle file
     with open(pickle_path, 'rb') as f:

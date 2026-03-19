@@ -1,0 +1,434 @@
+{
+    "requestId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "client": {
+      "id": "string",
+      "partnerType": "GROUP"
+    },
+    "requester": {
+      "tNumber": "string"
+    },
+    "data": {
+      "data": {
+        "id": "string",
+        "legalEntities": [
+          {
+            "entityType": "GROUP",
+            "legalEntityIdGPID": "string",
+            "legalEntityIdGpidStid": "string",
+            "groupEntityId": "string",
+            "groupEntityIdStid": "string",
+            "parentLegalEntityId": "string",
+            "organizationName": "string",
+            "groupIndustryCode": "string",
+            "foundationDate": "2026-03-18",
+            "legalFormCode": "string",
+            "legalSubformCode": "string",
+            "financeInstituteTypeCode": "string",
+            "financeInstituteSubtypeCode": "string",
+            "bankEntityClassCode": "string",
+            "bankEntityTypeCode": "string",
+            "trustFoundationClassCode": "string",
+            "trustFoundationTypeCode": "string",
+            "vatNumber": "string",
+            "industryTypeCode": "string",
+            "liquidationDate": "2026-03-18",
+            "employeeQuantityCode": "string",
+            "domiciliaryCompanyFlag": true,
+            "internationalOrganizationFlag": true,
+            "bankingRelations": [
+              {
+                "isMainBR": true,
+                "bankingRelationNumber": "string",
+                "bankClearingNumberPart1": "string",
+                "bankClearingNumberPart2": "string",
+                "bankingRelationNumberExternalId": {
+                  "domain": "string",
+                  "id": "string"
+                },
+                "bankingRelationNumberStid": {
+                  "domain": "string",
+                  "ipid": "string"
+                },
+                "partnerStid": {
+                  "domain": "string",
+                  "ipid": "string"
+                },
+                "legacyPartnerId": "string",
+                "alternativeId": "string",
+                "alternativeIdType": "string",
+                "bankingRelationTypeCd": "string",
+                "clientSegmentCd": "string",
+                "clientSegmentDescription": "string",
+                "partnerSensitivityCode": "string",
+                "structureId": "string",
+                "address": {
+                  "city": "string",
+                  "country": "string",
+                  "street": "string",
+                  "postalCode": "string"
+                },
+                "name": "string",
+                "leadClientAdvisor": {
+                  "firstName": "string",
+                  "lastName": "string"
+                },
+                "crifData": {
+                  "crifScoreValue": "string",
+                  "matchType": "string",
+                  "crifId": "string",
+                  "crifScoreType": "P",
+                  "crifScoreDate": "string",
+                  "bankingRelationNumber": "string"
+                },
+                "risk": {
+                  "clientRatingDate": "2026-03-18",
+                  "clientRatingCode": "string",
+                  "clientPricingGradeCode": "string",
+                  "partnerRiskSegmentCode": "string",
+                  "partnerRiskSegmentDate": "2026-03-18",
+                  "creditRiskSegmentCode": "string",
+                  "creditRiskMonitoringCode": "string",
+                  "probabilityOfDefaultGradeCode": "string",
+                  "impairmentFlag": true,
+                  "riskDomicileCode": "string"
+                },
+                "collaterals": [
+                  {
+                    "collateralId": "string",
+                    "collateralType": "string",
+                    "collateralStatus": "string",
+                    "lendingValueAmount": 0,
+                    "nominalValueAmount": 0,
+                    "currency": "string",
+                    "availableCoverageAmount": 0,
+                    "lendingValueDate": "2026-03-18T06:26:51.572Z",
+                    "expirationDate": "2026-03-18T06:26:51.572Z",
+                    "riskDomicileCountry": "string",
+                    "collateralGiverIdBr": "string",
+                    "collateralGiverIdStid": "string",
+                    "mortgageDeed": {
+                      "mortgageDeedType": "string",
+                      "mortgageDeedSecuringType": "string",
+                      "mortgageDeedRegistrationDate": "2026-03-18T06:26:51.572Z",
+                      "realestates": [
+                        {
+                          "realEstateId": "string",
+                          "realEstateType": "string",
+                          "marketValue": 0,
+                          "marketValueDate": "2026-03-18T06:26:51.572Z",
+                          "selfUtilizationPercentage": 0,
+                          "indexedValue": 0,
+                          "indexedValueDate": "2026-03-18T06:26:51.572Z",
+                          "constructionDate": "2026-03-18T06:26:51.572Z",
+                          "condominiumFlag": true,
+                          "landLease": true,
+                          "endOfLandLeaseDate": "2026-03-18T06:26:51.572Z",
+                          "rentAssignmentFlag": true,
+                          "rentalIncome": 0,
+                          "mortgageDeedRank": 0,
+                          "address": {
+                            "street": "string",
+                            "country": "string",
+                            "postalCode": "string",
+                            "houseNumber": "string",
+                            "city": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "guarantee": {
+                      "guarantorBr": "string",
+                      "bankGuaranteeFlag": true,
+                      "letterOfUndertaking": "string",
+                      "noteType": 0,
+                      "guaranteeStartDate": "2026-03-18T06:26:51.572Z"
+                    },
+                    "accountsAndSecThirdPillar": {
+                      "accCustodyAccountFlag": true,
+                      "secThirdPillarFlag": true,
+                      "accountNumber": "string"
+                    },
+                    "passiveLoan": {
+                      "passiveLoanProvider": "string",
+                      "dateOfDeed": "2026-03-18T06:26:51.572Z"
+                    }
+                  },
+                  {
+                    "collateralId": "string-2",
+                    "collateralType": "string",
+                    "collateralStatus": "string",
+                    "lendingValueAmount": 250000,
+                    "nominalValueAmount": 500000,
+                    "currency": "string",
+                    "availableCoverageAmount": 0,
+                    "lendingValueDate": "2026-03-18T06:26:51.572Z",
+                    "expirationDate": "2026-03-18T06:26:51.572Z",
+                    "riskDomicileCountry": "string",
+                    "collateralGiverIdBr": "string",
+                    "collateralGiverIdStid": "string",
+                    "mortgageDeed": {
+                      "mortgageDeedType": "string",
+                      "mortgageDeedSecuringType": "string",
+                      "mortgageDeedRegistrationDate": "2026-03-18T06:26:51.572Z",
+                      "realestates": [
+                        {
+                          "realEstateId": "string-2",
+                          "realEstateType": "string",
+                          "marketValue": 0,
+                          "marketValueDate": "2026-03-18T06:26:51.572Z",
+                          "selfUtilizationPercentage": 0,
+                          "indexedValue": 0,
+                          "indexedValueDate": "2026-03-18T06:26:51.572Z",
+                          "constructionDate": "2026-03-18T06:26:51.572Z",
+                          "condominiumFlag": true,
+                          "landLease": true,
+                          "endOfLandLeaseDate": "2026-03-18T06:26:51.572Z",
+                          "rentAssignmentFlag": true,
+                          "rentalIncome": 0,
+                          "mortgageDeedRank": 0,
+                          "address": {
+                            "street": "string",
+                            "country": "string",
+                            "postalCode": "string",
+                            "houseNumber": "string",
+                            "city": "string"
+                          }
+                        }
+                      ]
+                    },
+                    "guarantee": {
+                      "guarantorBr": "string",
+                      "bankGuaranteeFlag": true,
+                      "letterOfUndertaking": "string",
+                      "noteType": 0,
+                      "guaranteeStartDate": "2026-03-18T06:26:51.572Z"
+                    },
+                    "accountsAndSecThirdPillar": {
+                      "accCustodyAccountFlag": true,
+                      "secThirdPillarFlag": true,
+                      "accountNumber": "string"
+                    },
+                    "passiveLoan": {
+                      "passiveLoanProvider": "string",
+                      "dateOfDeed": "2026-03-18T06:26:51.572Z"
+                    }
+                  }
+                ],
+                "contracts": [
+                  {
+                    "contractId": 0,
+                    "requestedCreditLimitAmount": 0,
+                    "creditLimitExternalIdentifier": "string",
+                    "limitCurrency": "string",
+                    "creditProduct": "string"
+                  }
+                ],
+                "businessModel": [
+                  {
+                    "overview": {
+                      "activities": [
+                        "string"
+                      ],
+                      "competencies": [
+                        "string"
+                      ],
+                      "challenges": [
+                        "string"
+                      ],
+                      "objectives": [
+                        "string"
+                      ],
+                      "organisationMembers": [
+                        {
+                          "name": "string",
+                          "details": "string",
+                          "function": "string",
+                          "startingYear": "string"
+                        }
+                      ],
+                      "markets": [
+                        {
+                          "code": "string",
+                          "type": "string",
+                          "countries": [
+                            "string"
+                          ]
+                        }
+                      ]
+                    },
+                    "procurement": {
+                      "purchasingVolumes": [
+                        {
+                          "details": "string",
+                          "ratio": "string",
+                          "productsOrServices": "string"
+                        }
+                      ],
+                      "currenciesWithRatios": [
+                        {
+                          "currency": "string",
+                          "ratio": "string"
+                        }
+                      ],
+                      "dependencies": "string",
+                      "suppliers": [
+                        {
+                          "name": "string",
+                          "country": "string",
+                          "purchasingVolumeInCHF": "string",
+                          "purchasingVolume": {
+                            "amount": "string",
+                            "currency": "string"
+                          },
+                          "keyClient": true
+                        }
+                      ]
+                    },
+                    "transformation": {
+                      "operationalCosts": {
+                        "value": {
+                          "amount": "string",
+                          "currency": "string"
+                        },
+                        "changeFromLastYear": "string"
+                      },
+                      "replacementInvestments": {
+                        "volume": {
+                          "amount": "string",
+                          "currency": "string"
+                        },
+                        "investments": [
+                          {
+                            "investmentType": "string",
+                            "ratio": "string",
+                            "details": "string"
+                          }
+                        ]
+                      },
+                      "capacityLimit": {
+                        "amount": "string",
+                        "currency": "string"
+                      },
+                      "investmentProjects": {
+                        "volume": {
+                          "amount": "string",
+                          "currency": "string"
+                        }
+                      },
+                      "processesAndManufacturings": [
+                        "string"
+                      ],
+                      "digitalization": [
+                        "string"
+                      ]
+                    },
+                    "sales": {
+                      "products": [
+                        {
+                          "ratio": "string",
+                          "type": "string"
+                        }
+                      ],
+                      "currenciesWithRatios": [
+                        {
+                          "currency": "string",
+                          "ratio": "string"
+                        }
+                      ],
+                      "clients": [
+                        {
+                          "name": "string",
+                          "country": "string",
+                          "salesInCHF": "string",
+                          "sales": {
+                            "amount": "string",
+                            "currency": "string"
+                          },
+                          "keyClient": true
+                        }
+                      ],
+                      "competitors": [
+                        "string"
+                      ],
+                      "revenue": {
+                        "year": "string",
+                        "seasonalSalesDifferences": "string",
+                        "value": {
+                          "amount": "string",
+                          "currency": "string"
+                        },
+                        "sales": [
+                          {
+                            "category": "string",
+                            "percentage": "string",
+                            "details": "string"
+                          }
+                        ]
+                      }
+                    },
+                    "esg": {
+                      "sustainabilityGoals": [
+                        {
+                          "code": "string",
+                          "name": "string",
+                          "remark": "string"
+                        }
+                      ],
+                      "ratingsAndCertifications": {
+                        "remark": "string",
+                        "innerOptions": [
+                          {
+                            "code": "string",
+                            "name": "string"
+                          }
+                        ]
+                      },
+                      "stakeholderExpectations": [
+                        {
+                          "code": "string",
+                          "name": "string",
+                          "remark": "string"
+                        }
+                      ],
+                      "investmentProjects": {
+                        "volume": {
+                          "amount": "string",
+                          "currency": "string"
+                        }
+                      },
+                      "desiredSupport": {
+                        "innerOptions": [
+                          {
+                            "code": "string",
+                            "name": "string"
+                          }
+                        ],
+                        "remarks": "string"
+                      },
+                      "productionServiceLocations": [
+                        {
+                          "country": "string",
+                          "numberOfEmployees": "string",
+                          "operationCost": {
+                            "amount": "string",
+                            "currency": "string"
+                          },
+                          "operationCostInCHF": "string"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "dataStatus": "COMPLETE"
+      },
+      "preferenceData": {
+        "language": "string",
+        "currency": "string",
+        "dateFormat": "string"
+      }
+    }
+  }

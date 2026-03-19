@@ -22,12 +22,11 @@ def test_check_completeness():
     print("\nTest 1: All required fields present")
     data1 = {
         "collateral": {
-            "value_type": "Real Estate",
-            "amount": "100000"
+            "nominalValueAmount": "100000"
         }
     }
     state_config1 = {
-        "description": ["value_type", "amount"]
+        "description": ["nominalValueAmount"]
     }
     result1 = strategy.check_completeness_handler(
         data1, state_config1, "collateral", {}
@@ -41,12 +40,11 @@ def test_check_completeness():
     print("\nTest 2: Missing required field")
     data2 = {
         "collateral": {
-            "value_type": "Real Estate"
-            # Missing "amount"
+            # Missing "nominalValueAmount"
         }
     }
     state_config2 = {
-        "description": ["value_type", "amount"]
+        "description": ["nominalValueAmount"]
     }
     result2 = strategy.check_completeness_handler(
         data2, state_config2, "collateral", {}
@@ -130,12 +128,11 @@ def test_full_execution():
     print("\nTest 1: Valid data with all required fields")
     data1 = {
         "collateral": {
-            "value_type": "Real Estate",
-            "amount": "100000"
+            "nominalValueAmount": "100000"
         },
         "real estate assets": {
             "address": "123 Main St",
-            "real_estate_type": "Commercial"
+            "realEstateType": "Commercial"
         },
         "Financials": {
             "net_sales": "500000",
@@ -160,8 +157,7 @@ def test_full_execution():
     print("\nTest 2: Missing required field")
     data2 = {
         "collateral": {
-            "value_type": "Real Estate"
-            # Missing "amount"
+            # Missing "nominalValueAmount"
         }
     }
     print(f"   Data: {json.dumps(data2, indent=2)}")
@@ -173,7 +169,7 @@ def test_full_execution():
         status = field_selection["status"]
         print(f"   collateral.field_selection_strategy: {status}")
         if status == "not_passed":
-            print(f"      ✗ check_completeness failed (missing 'amount' field)")
+            print(f"      ✗ check_completeness failed (missing 'nominalValueAmount' field)")
         else:
             print(f"      ✓ Unexpected: check_completeness passed")
     

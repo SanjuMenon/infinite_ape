@@ -2,7 +2,8 @@
 
 from .agents import summarize_freeform, summarize_table, summarize_template_fill
 from .config import load_bundle_config, load_output_schema
-from .graph import build_map_reduce_graph
+from .graph import build_map_reduce_graph, render_to_markdown
+from .report_schemas import CreditSummaryGenAIResponse
 from .llm_client import (
     get_deployment_name,
     get_openai_client,
@@ -15,6 +16,7 @@ __all__ = [
     "Bundle",
     "BundleConfig",
     "OutputSchema",
+    "CreditSummaryGenAIResponse",
     "build_map_reduce_graph",
     "get_deployment_name",
     "get_openai_client",
@@ -22,6 +24,7 @@ __all__ = [
     "is_llm_available",
     "load_bundle_config",
     "load_output_schema",
+    "render_to_markdown",
     "summarize_freeform",
     "summarize_table",
     "summarize_template_fill",

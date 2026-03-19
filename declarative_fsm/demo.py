@@ -7,6 +7,7 @@ import json
 import pickle
 from pathlib import Path
 from declarative_fsm import FSMEngine, load_config
+from declarative_fsm.models import SampleData
 
 
 def main():
@@ -54,15 +55,22 @@ def main():
     
     # Load sample data
     print(f"\n3. Loading sample data from {data_path_rel}...")
+    parsed = None
     try:
         with open(data_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
-        print(f"   ✓ Data: {json.dumps(data, indent=2)}")
+        # Validate/parse via Pydantic (kept in separate module `models.py`)
+        parsed = SampleData.model_validate(data)
+        data = parsed.to_engine_dict()
+        print(f"   ✓ Data (validated by Pydantic): {json.dumps(data, indent=2)}")
     except FileNotFoundError:
         print(f"   ✗ Error: Sample data file not found: {data_path_rel}")
         return
     except json.JSONDecodeError as e:
         print(f"   ✗ Error: Invalid JSON in sample data file: {e}")
+        return
+    except Exception as e:
+        print(f"   ✗ Error: Sample data failed validation: {e}")
         return
     
     # Execute FSMs
@@ -214,8 +222,32 @@ def main():
             for original_key, canonical_key in mappings.items():
                 print(f"      '{original_key}' → '{canonical_key}'")
     
-    # Return the most_current_data_list that was stored in the pickle file
-    return most_current_data_list
+    # Extract metadata from parsed data (top-level fields)
+    metadata = None
+    if parsed:
+        metadata_dict = {}
+        if parsed.request_id is not None:
+            metadata_dict["requestId"] = parsed.request_id
+        if parsed.language is not None:
+            metadata_dict["language"] = parsed.language
+        if parsed.generated_by is not None:
+            metadata_dict["generatedBy"] = parsed.generated_by
+        if parsed.generated_at is not None:
+            metadata_dict["generatedAt"] = parsed.generated_at
+        
+        # Set generatedAt to current timestamp if not provided
+        if not metadata_dict.get("generatedAt"):
+            from datetime import datetime
+            metadata_dict["generatedAt"] = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+        
+        if metadata_dict:
+            metadata = metadata_dict
+    
+    # Return both bundles and metadata
+    return {
+        "bundles": most_current_data_list,
+        "metadata": metadata
+    }
 
 
 if __name__ == "__main__":

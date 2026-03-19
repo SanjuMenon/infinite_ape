@@ -1,11 +1,14 @@
 {
+  "requestId": "REQ-20240312-003",
+  "language": "en",
+  "generatedBy": "map_reduce",
+  "generatedAt": "",
   "collateral": {
-    "value_type": "Real Estate Property",
-    "amount": "2500000"
+    "nominalValueAmount": 2500000
   },
   "real estate assets": {
     "address": "123 Main Street, Suite 450, New York, NY 10001",
-    "real_estate_type": "Commercial Office Building"
+    "realEstateType": "Commercial Office Building"
   },
   "Financials": {
     "net_sales": "15000000",

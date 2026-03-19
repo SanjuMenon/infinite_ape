@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import os
-from typing import Optional, Union
+from typing import Optional, Tuple, Union
 
 from dotenv import load_dotenv
 
@@ -74,6 +74,34 @@ def get_deployment_name() -> Optional[str]:
     if _provider == "azure":
         return _deployment_name
     return None
+
+
+def get_client_and_model(
+    *,
+    openai_model_env: str = "OPENAI_MODEL",
+    openai_default_model: str = "gpt-4o-mini",
+    azure_deployment_env: str = "AZURE_OPENAI_DEPLOYMENT_NAME",
+    azure_default_deployment: str = "gpt-4o-mini",
+) -> tuple[Optional[Union[OpenAI, AzureOpenAI]], Optional[str]]:
+    """Return (client, model_or_deployment) based on detected provider.
+
+    - If Azure is detected, returns AzureOpenAI client and deployment name
+    - If OpenAI is detected, returns OpenAI client and model name
+    - If no credentials are available, returns (None, None)
+    """
+    client = get_openai_client()
+    if client is None:
+        return None, None
+
+    provider = get_provider()
+    if provider == "azure":
+        model_or_deployment = get_deployment_name() or os.getenv(
+            azure_deployment_env, azure_default_deployment
+        )
+    else:
+        model_or_deployment = os.getenv(openai_model_env, openai_default_model)
+
+    return client, model_or_deployment
 
 
 def is_llm_available() -> bool:
