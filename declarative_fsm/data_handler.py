@@ -1,5 +1,5 @@
 """
-Wrapper to run the declarative FSM over all collaterals in `sample_data2.json`.
+Wrapper to run the declarative FSM over all collaterals in `raw.json`.
 
 Flow:
 1. Validate input payload via InputPayload (Pydantic) in `filter_models.py`
@@ -159,14 +159,14 @@ def _as_number(x: Any) -> float:
 
 
 def main() -> Dict[str, Any]:
-    parser = argparse.ArgumentParser(description="Run declarative FSM over sample_data2.json collaterals.")
+    parser = argparse.ArgumentParser(description="Run declarative FSM over raw.json collaterals.")
     script_dir = Path(__file__).parent
     project_root = script_dir.parent
 
     parser.add_argument(
         "--input",
-        default=script_dir / "sample_data2.json",
-        help="Path to sample_data2.json (default: declarative_fsm/sample_data2.json)",
+        default=script_dir / "raw.json",
+        help="Path to raw.json (default: declarative_fsm/raw.json)",
     )
     parser.add_argument(
         "--output",

@@ -1,6 +1,6 @@
 """
 Pydantic models + filtering helpers for the large enterprise payload in
-`declarative_fsm/sample_data2.json`.
+`declarative_fsm/raw.json`.
 
 Purpose:
 - Validate the payload shape (permissively: extra fields allowed).
@@ -99,7 +99,7 @@ class OuterData(_ExtraAllowedModel):
 
 class InputPayload(_ExtraAllowedModel):
     """
-    Root model for `sample_data2.json`.
+    Root model for `raw.json`.
     """
 
     # Required top-level envelope fields
@@ -158,7 +158,7 @@ class InputPayload(_ExtraAllowedModel):
         if collaterals:
             first = collaterals[0]
             collateral_field = {
-                # FSM expects camelCase key from sample_data2.json
+                # FSM expects camelCase key from raw.json
                 "nominalValueAmount": first.get("nominalValueAmount", first.get("lendingValueAmount")),
             }
 
@@ -180,7 +180,7 @@ class InputPayload(_ExtraAllowedModel):
                     )
                 real_estate_assets_field = {
                     "address": address_str or None,
-                    # FSM expects camelCase key from sample_data2.json
+                    # FSM expects camelCase key from raw.json
                     "realEstateType": re0.get("realEstateType"),
                 }
 
@@ -194,11 +194,11 @@ class InputPayload(_ExtraAllowedModel):
 
 
 def _main() -> int:
-    parser = argparse.ArgumentParser(description="Validate and filter sample_data2.json using InputPayload.")
+    parser = argparse.ArgumentParser(description="Validate and filter raw.json using InputPayload.")
     parser.add_argument(
         "--input",
-        default="declarative_fsm/sample_data2.json",
-        help="Path to input JSON (default: declarative_fsm/sample_data2.json)",
+        default="declarative_fsm/raw.json",
+        help="Path to input JSON (default: declarative_fsm/raw.json)",
     )
     parser.add_argument(
         "--mode",

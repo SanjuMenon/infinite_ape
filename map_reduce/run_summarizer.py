@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 import json
 
-from declarative_fsm import wrapper_sample_data2 as fsm_demo
+from declarative_fsm import data_handler as fsm_demo
 
 from map_reduce.config import load_bundle_config, load_output_schema
 from map_reduce.graph import build_map_reduce_graph
@@ -27,7 +27,7 @@ def main() -> None:
         most_current_data_list = fsm_result.get("bundles")
         metadata = fsm_result.get("metadata")
 
-        # Contract B (wrapper_sample_data2): {"most_current_data_list": [...], "meta": {...}}
+        # Contract B (data_handler): {"most_current_data_list": [...], "meta": {...}}
         if most_current_data_list is None:
             most_current_data_list = fsm_result.get("most_current_data_list", [])
         if metadata is None:

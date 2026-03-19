@@ -1,8 +1,8 @@
 """
-Tests for wrapper_sample_data2.py.
+Tests for data_handler.py.
 
 We validate that:
-- The wrapper builds an FSM-friendly payload from collaterals
+- The handler builds an FSM-friendly payload from collaterals
 - It runs FSMEngine for each collateral
 - It flattens results and attaches `source_collateral_id`
 """
@@ -11,7 +11,7 @@ import pytest
 
 from declarative_fsm import FSMEngine, load_config
 from declarative_fsm.filter_models import InputPayload
-from declarative_fsm.wrapper_sample_data2 import run_over_all_collaterals
+from declarative_fsm.data_handler import run_over_all_collaterals
 
 
 def test_wrapper_flattens_results_with_source_collateral_id(tmp_path):
