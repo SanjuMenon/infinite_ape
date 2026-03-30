@@ -39,22 +39,43 @@ def _parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
-def main() -> dict[str, Any]:
-    args = _parse_args()
+def run(
+    *,
+    raw_obj: dict[str, Any] | None = None,
+    raw_path: str | Path | None = None,
+    no_downstream: bool = False,
+) -> dict[str, Any]:
+    """
+    Programmatic entrypoint.
 
-    raw_obj = read_json(args.raw)
+    - Provide `raw_obj` to run purely in-memory
+    - Or provide `raw_path` to load JSON from disk
+    """
+    if raw_obj is None:
+        raw_path = raw_path or (Path(__file__).resolve().parent / "raw.json")
+        raw_obj = read_json(raw_path)
+
     enriched_payload = build_enriched_payload(raw_obj)
 
-    if not args.no_downstream:
+    if not no_downstream:
         downstream = run_downstream_actions(enriched_payload)
     else:
         downstream = {}
 
-    result = {"enriched": enriched_payload, "downstream": downstream}
+    return {"enriched": enriched_payload, "downstream": downstream}
+
+
+def main() -> dict[str, Any]:
+    """
+    CLI entrypoint (parses args, optionally persists outputs).
+    """
+    args = _parse_args()
+
+    result = run(raw_path=args.raw, no_downstream=args.no_downstream)
 
     # Optional persistence (explicit only)
     if args.write_enriched_json:
-        write_json(args.write_enriched_json, enriched_payload)
+        write_json(args.write_enriched_json, result["enriched"])
 
     if args.write_result_json:
         write_json(args.write_result_json, result)
@@ -62,7 +83,7 @@ def main() -> dict[str, Any]:
     if args.write_downstream_dir:
         out_dir = Path(args.write_downstream_dir)
         out_dir.mkdir(parents=True, exist_ok=True)
-        for section_name, artifacts in downstream.items():
+        for section_name, artifacts in result["downstream"].items():
             (out_dir / f"{section_name}.table.md").write_text(artifacts.get("table_md", ""), encoding="utf-8")
             write_json(out_dir / f"{section_name}.summary.json", artifacts.get("summary", {}))
             (out_dir / f"{section_name}.summary.md").write_text(artifacts.get("summary_md", ""), encoding="utf-8")

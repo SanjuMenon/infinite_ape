@@ -24,13 +24,13 @@ def run_downstream_actions(
         if section_payload is None:
             continue
 
-        json_view = json.dumps(section_payload, ensure_ascii=True, indent=2)
+        json_str = json.dumps(section_payload, ensure_ascii=True, indent=2)
         table_md = table_action.run(section_name, section_payload)
         summary_obj = summary_action.run(section_name, section_payload)
         summary_md = summary_dict_to_markdown(summary_obj)
 
         out[section_name] = {
-            "json_view": json_view,
+            "json_str": json_str,
             "table_md": table_md,
             "summary": summary_obj,
             "summary_md": summary_md,
