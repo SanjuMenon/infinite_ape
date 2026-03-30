@@ -1,0 +1,108 @@
+{
+  "enriched": {
+    "collateral": {
+      "aggregate": [
+        {
+          "collateralId": "string",
+          "collateralType": "string",
+          "latest_lendingValueDate": "2026-03-18T06:26:51.572000Z",
+          "total_nominal_value": 0.0,
+          "total_lending_value": 0.0,
+          "currency": "CHF"
+        },
+        {
+          "collateralId": "string-2",
+          "collateralType": "string",
+          "latest_lendingValueDate": "2026-03-18T06:26:51.572000Z",
+          "total_nominal_value": 500000.0,
+          "total_lending_value": 250000.0,
+          "currency": "CHF"
+        }
+      ],
+      "grand_total": {
+        "total_nominal_value": 500000.0,
+        "total_lending_value": 250000.0,
+        "unique_collateral_count": 2,
+        "latest_lendingValueDate": "2026-03-18T06:26:51.572000Z",
+        "currency": "CHF"
+      }
+    },
+    "business_model": [
+      {
+        "legalEntityId": "string",
+        "relationId": "string",
+        "isMainBR": true,
+        "overview": "{\"activities\": [\"string\"], \"competencies\": [\"string\"], \"challenges\": [\"string\"], \"objectives\": [\"string\"], \"organisationMembers\": [{\"name\": \"string\", \"details\": \"string\", \"function\": \"string\", \"startingYear\": \"string\"}], \"markets\": [{\"code\": \"string\", \"type\": \"string\", \"countries\": [\"string\"]}]}",
+        "procurement": "{\"purchasingVolumes\": [{\"details\": \"string\", \"ratio\": \"string\", \"productsOrServices\": \"string\"}], \"currenciesWithRatios\": [{\"currency\": \"string\", \"ratio\": \"string\"}], \"dependencies\": \"string\", \"suppliers\": [{\"name\": \"string\", \"country\": \"string\", \"purchasingVolumeInCHF\": \"string\", \"purchasingVolume\": {\"amount\": \"string\", \"currency\": \"string\"}, \"keyClient\": true}]}",
+        "transformation": "{\"operationalCosts\": {\"value\": {\"amount\": \"string\", \"currency\": \"string\"}, \"changeFromLastYear\": \"string\"}, \"replacementInvestments\": {\"volume\": {\"amount\": \"string\", \"currency\": \"string\"}, \"investments\": [{\"investmentType\": \"string\", \"ratio\": \"string\", \"details\": \"string\"}]}, \"capacityLimit\": {\"amount\": \"string\", \"currency\": \"string\"}, \"investmentProjects\": {\"volume\": {\"amount\": \"string\", \"currency\": \"string\"}}, \"processesAndManufacturings\": [\"string\"], \"digitalization\": [\"string\"]}",
+        "sales": "{\"products\": [{\"ratio\": \"string\", \"type\": \"string\"}], \"currenciesWithRatios\": [{\"currency\": \"string\", \"ratio\": \"string\"}], \"clients\": [{\"name\": \"string\", \"country\": \"string\", \"salesInCHF\": \"string\", \"sales\": {\"amount\": \"string\", \"currency\": \"string\"}, \"keyClient\": true}], \"competitors\": [\"string\"], \"revenue\": {\"year\": \"string\", \"seasonalSalesDifferences\": \"string\", \"value\": {\"amount\": \"string\", \"currency\": \"string\"}, \"sales\": [{\"category\": \"string\", \"percentage\": \"string\", \"details\": \"string\"}]}}",
+        "esg": "{\"sustainabilityGoals\": [{\"code\": \"string\", \"name\": \"string\", \"remark\": \"string\"}], \"ratingsAndCertifications\": {\"remark\": \"string\", \"innerOptions\": [{\"code\": \"string\", \"name\": \"string\"}]}, \"stakeholderExpectations\": [{\"code\": \"string\", \"name\": \"string\", \"remark\": \"string\"}], \"investmentProjects\": {\"volume\": {\"amount\": \"string\", \"currency\": \"string\"}}, \"desiredSupport\": {\"innerOptions\": [{\"code\": \"string\", \"name\": \"string\"}], \"remarks\": \"string\"}, \"productionServiceLocations\": [{\"country\": \"string\", \"numberOfEmployees\": \"string\", \"operationCost\": {\"amount\": \"string\", \"currency\": \"string\"}, \"operationCostInCHF\": \"string\"}]}"
+      }
+    ]
+  },
+  "downstream": {
+    "collateral": {
+      "json_view": "{\n  \"aggregate\": [\n    {\n      \"collateralId\": \"string\",\n      \"collateralType\": \"string\",\n      \"latest_lendingValueDate\": \"2026-03-18T06:26:51.572000Z\",\n      \"total_nominal_value\": 0.0,\n      \"total_lending_value\": 0.0,\n      \"currency\": \"CHF\"\n    },\n    {\n      \"collateralId\": \"string-2\",\n      \"collateralType\": \"string\",\n      \"latest_lendingValueDate\": \"2026-03-18T06:26:51.572000Z\",\n      \"total_nominal_value\": 500000.0,\n      \"total_lending_value\": 250000.0,\n      \"currency\": \"CHF\"\n    }\n  ],\n  \"grand_total\": {\n    \"total_nominal_value\": 500000.0,\n    \"total_lending_value\": 250000.0,\n    \"unique_collateral_count\": 2,\n    \"latest_lendingValueDate\": \"2026-03-18T06:26:51.572000Z\",\n    \"currency\": \"CHF\"\n  }\n}",
+      "table_md": "## collateral\n\n### collateral.aggregate\n\n| collateralId | collateralType | latest_lendingValueDate | total_nominal_value | total_lending_value | currency |\n| --- | --- | --- | --- | --- | --- |\n| string | string | 2026-03-18T06:26:51.572000Z | 0.0 | 0.0 | CHF |\n| string-2 | string | 2026-03-18T06:26:51.572000Z | 500000.0 | 250000.0 | CHF |\n\n\n### collateral.grand_total\n\n| key | value |\n| --- | --- |\n| total_nominal_value | 500000.0 |\n| total_lending_value | 250000.0 |\n| unique_collateral_count | 2 |\n| latest_lendingValueDate | 2026-03-18T06:26:51.572000Z |\n| currency | CHF |",
+      "summary": {
+        "section": "collateral",
+        "unique_collateral_count": 2,
+        "total_nominal_value": 500000.0,
+        "total_lending_value": 250000.0,
+        "latest_lendingValueDate": "2026-03-18T06:26:51.572000Z",
+        "grand_total": {
+          "total_nominal_value": 500000.0,
+          "total_lending_value": 250000.0,
+          "unique_collateral_count": 2,
+          "latest_lendingValueDate": "2026-03-18T06:26:51.572000Z",
+          "currency": "CHF"
+        },
+        "top_collaterals_by_lending_value": [
+          {
+            "collateralId": "string-2",
+            "total_lending_value": 250000.0
+          },
+          {
+            "collateralId": "string",
+            "total_lending_value": 0.0
+          }
+        ]
+      },
+      "summary_md": "# collateral summary\n- unique_collateral_count: 2\n- total_nominal_value: 500000.0\n- total_lending_value: 250000.0\n- latest_lendingValueDate: 2026-03-18T06:26:51.572000Z\n- top_collaterals_by_lending_value: `[{\"collateralId\": \"string-2\", \"total_lending_value\": 250000.0}, {\"collateralId\": \"string\", \"total_lending_value\": 0.0}]`"
+    },
+    "business_model": {
+      "json_view": "[\n  {\n    \"legalEntityId\": \"string\",\n    \"relationId\": \"string\",\n    \"isMainBR\": true,\n    \"overview\": \"{\\\"activities\\\": [\\\"string\\\"], \\\"competencies\\\": [\\\"string\\\"], \\\"challenges\\\": [\\\"string\\\"], \\\"objectives\\\": [\\\"string\\\"], \\\"organisationMembers\\\": [{\\\"name\\\": \\\"string\\\", \\\"details\\\": \\\"string\\\", \\\"function\\\": \\\"string\\\", \\\"startingYear\\\": \\\"string\\\"}], \\\"markets\\\": [{\\\"code\\\": \\\"string\\\", \\\"type\\\": \\\"string\\\", \\\"countries\\\": [\\\"string\\\"]}]}\",\n    \"procurement\": \"{\\\"purchasingVolumes\\\": [{\\\"details\\\": \\\"string\\\", \\\"ratio\\\": \\\"string\\\", \\\"productsOrServices\\\": \\\"string\\\"}], \\\"currenciesWithRatios\\\": [{\\\"currency\\\": \\\"string\\\", \\\"ratio\\\": \\\"string\\\"}], \\\"dependencies\\\": \\\"string\\\", \\\"suppliers\\\": [{\\\"name\\\": \\\"string\\\", \\\"country\\\": \\\"string\\\", \\\"purchasingVolumeInCHF\\\": \\\"string\\\", \\\"purchasingVolume\\\": {\\\"amount\\\": \\\"string\\\", \\\"currency\\\": \\\"string\\\"}, \\\"keyClient\\\": true}]}\",\n    \"transformation\": \"{\\\"operationalCosts\\\": {\\\"value\\\": {\\\"amount\\\": \\\"string\\\", \\\"currency\\\": \\\"string\\\"}, \\\"changeFromLastYear\\\": \\\"string\\\"}, \\\"replacementInvestments\\\": {\\\"volume\\\": {\\\"amount\\\": \\\"string\\\", \\\"currency\\\": \\\"string\\\"}, \\\"investments\\\": [{\\\"investmentType\\\": \\\"string\\\", \\\"ratio\\\": \\\"string\\\", \\\"details\\\": \\\"string\\\"}]}, \\\"capacityLimit\\\": {\\\"amount\\\": \\\"string\\\", \\\"currency\\\": \\\"string\\\"}, \\\"investmentProjects\\\": {\\\"volume\\\": {\\\"amount\\\": \\\"string\\\", \\\"currency\\\": \\\"string\\\"}}, \\\"processesAndManufacturings\\\": [\\\"string\\\"], \\\"digitalization\\\": [\\\"string\\\"]}\",\n    \"sales\": \"{\\\"products\\\": [{\\\"ratio\\\": \\\"string\\\", \\\"type\\\": \\\"string\\\"}], \\\"currenciesWithRatios\\\": [{\\\"currency\\\": \\\"string\\\", \\\"ratio\\\": \\\"string\\\"}], \\\"clients\\\": [{\\\"name\\\": \\\"string\\\", \\\"country\\\": \\\"string\\\", \\\"salesInCHF\\\": \\\"string\\\", \\\"sales\\\": {\\\"amount\\\": \\\"string\\\", \\\"currency\\\": \\\"string\\\"}, \\\"keyClient\\\": true}], \\\"competitors\\\": [\\\"string\\\"], \\\"revenue\\\": {\\\"year\\\": \\\"string\\\", \\\"seasonalSalesDifferences\\\": \\\"string\\\", \\\"value\\\": {\\\"amount\\\": \\\"string\\\", \\\"currency\\\": \\\"string\\\"}, \\\"sales\\\": [{\\\"category\\\": \\\"string\\\", \\\"percentage\\\": \\\"string\\\", \\\"details\\\": \\\"string\\\"}]}}\",\n    \"esg\": \"{\\\"sustainabilityGoals\\\": [{\\\"code\\\": \\\"string\\\", \\\"name\\\": \\\"string\\\", \\\"remark\\\": \\\"string\\\"}], \\\"ratingsAndCertifications\\\": {\\\"remark\\\": \\\"string\\\", \\\"innerOptions\\\": [{\\\"code\\\": \\\"string\\\", \\\"name\\\": \\\"string\\\"}]}, \\\"stakeholderExpectations\\\": [{\\\"code\\\": \\\"string\\\", \\\"name\\\": \\\"string\\\", \\\"remark\\\": \\\"string\\\"}], \\\"investmentProjects\\\": {\\\"volume\\\": {\\\"amount\\\": \\\"string\\\", \\\"currency\\\": \\\"string\\\"}}, \\\"desiredSupport\\\": {\\\"innerOptions\\\": [{\\\"code\\\": \\\"string\\\", \\\"name\\\": \\\"string\\\"}], \\\"remarks\\\": \\\"string\\\"}, \\\"productionServiceLocations\\\": [{\\\"country\\\": \\\"string\\\", \\\"numberOfEmployees\\\": \\\"string\\\", \\\"operationCost\\\": {\\\"amount\\\": \\\"string\\\", \\\"currency\\\": \\\"string\\\"}, \\\"operationCostInCHF\\\": \\\"string\\\"}]}\"\n  }\n]",
+      "table_md": "## business_model\n\n| legalEntityId | relationId | isMainBR | overview | procurement | transformation | sales | esg |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n| string | string | True | {\"activities\": [\"string\"], \"competencies\": [\"string\"], \"challenges\": [\"string\"], \"objectives\": [\"string\"], \"organisationMembers\": [{\"name\": \"string\", \"details\": \"string\", \"function\": \"string\", \"startingYear\": \"string\"}], \"markets\": [{\"code\": \"string\", \"type\": \"string\", \"countries\": [\"string\"]}]} | {\"purchasingVolumes\": [{\"details\": \"string\", \"ratio\": \"string\", \"productsOrServices\": \"string\"}], \"currenciesWithRatios\": [{\"currency\": \"string\", \"ratio\": \"string\"}], \"dependencies\": \"string\", \"suppliers\": [{\"name\": \"string\", \"country\": \"string\", \"purchasingVolumeInCHF\": \"string\", \"purchasingVolume\": {\"amount\": \"string\", \"currency\": \"string\"}, \"keyClient\": true}]} | {\"operationalCosts\": {\"value\": {\"amount\": \"string\", \"currency\": \"string\"}, \"changeFromLastYear\": \"string\"}, \"replacementInvestments\": {\"volume\": {\"amount\": \"string\", \"currency\": \"string\"}, \"investments\": [{\"investmentType\": \"string\", \"ratio\": \"string\", \"details\": \"string\"}]}, \"capacityLimit\": {\"amount\": \"string\", \"currency\": \"string\"}, \"investmentProjects\": {\"volume\": {\"amount\": \"string\", \"currency\": \"string\"}}, \"processesAndManufacturings\": [\"string\"], \"digitalization\": [\"string\"]} | {\"products\": [{\"ratio\": \"string\", \"type\": \"string\"}], \"currenciesWithRatios\": [{\"currency\": \"string\", \"ratio\": \"string\"}], \"clients\": [{\"name\": \"string\", \"country\": \"string\", \"salesInCHF\": \"string\", \"sales\": {\"amount\": \"string\", \"currency\": \"string\"}, \"keyClient\": true}], \"competitors\": [\"string\"], \"revenue\": {\"year\": \"string\", \"seasonalSalesDifferences\": \"string\", \"value\": {\"amount\": \"string\", \"currency\": \"string\"}, \"sales\": [{\"category\": \"string\", \"percentage\": \"string\", \"details\": \"string\"}]}} | {\"sustainabilityGoals\": [{\"code\": \"string\", \"name\": \"string\", \"remark\": \"string\"}], \"ratingsAndCertifications\": {\"remark\": \"string\", \"innerOptions\": [{\"code\": \"string\", \"name\": \"string\"}]}, \"stakeholderExpectations\": [{\"code\": \"string\", \"name\": \"string\", \"remark\": \"string\"}], \"investmentProjects\": {\"volume\": {\"amount\": \"string\", \"currency\": \"string\"}}, \"desiredSupport\": {\"innerOptions\": [{\"code\": \"string\", \"name\": \"string\"}], \"remarks\": \"string\"}, \"productionServiceLocations\": [{\"country\": \"string\", \"numberOfEmployees\": \"string\", \"operationCost\": {\"amount\": \"string\", \"currency\": \"string\"}, \"operationCostInCHF\": \"string\"}]} |",
+      "summary": {
+        "section": "business_model",
+        "row_count": 1,
+        "isMainBR_counts": {
+          "true": 1,
+          "false": 0
+        },
+        "unique_relationId_count": 1,
+        "unique_legalEntityId_count": 1,
+        "sample_rows_first_5": [
+          {
+            "legalEntityId": "string",
+            "relationId": "string",
+            "isMainBR": true
+          }
+        ],
+        "debug": {
+          "columns_present_first_10_rows": [
+            "esg",
+            "isMainBR",
+            "legalEntityId",
+            "overview",
+            "procurement",
+            "relationId",
+            "sales",
+            "transformation"
+          ]
+        }
+      },
+      "summary_md": "# business_model summary\n- row_count: 1\n- isMainBR_counts: `{\"true\": 1, \"false\": 0}`\n- unique_relationId_count: 1\n- unique_legalEntityId_count: 1\n- sample_rows_first_5: `[{\"legalEntityId\": \"string\", \"relationId\": \"string\", \"isMainBR\": true}]`"
+    }
+  }
+}
