@@ -6,6 +6,45 @@ from typing import Any, Optional
 from pydantic import BaseModel, ConfigDict
 
 
+class AddressModel(BaseModel):
+    street: Optional[str] = None
+    country: Optional[str] = None
+    postalCode: Optional[str] = None
+    houseNumber: Optional[str] = None
+    city: Optional[str] = None
+
+    model_config = ConfigDict(extra="ignore")
+
+
+class RealEstateModel(BaseModel):
+    realEstateId: str
+    realEstateType: Optional[str] = None
+    marketValue: Optional[float] = None
+    marketValueDate: Optional[datetime] = None
+    selfUtilizationPercentage: Optional[float] = None
+    indexedValue: Optional[float] = None
+    indexedValueDate: Optional[datetime] = None
+    constructionDate: Optional[datetime] = None
+    condominiumFlag: Optional[bool] = None
+    landLease: Optional[bool] = None
+    endOfLandLeaseDate: Optional[datetime] = None
+    rentAssignmentFlag: Optional[bool] = None
+    rentalIncome: Optional[float] = None
+    mortgageDeedRank: Optional[float] = None
+    address: Optional[AddressModel] = None
+
+    model_config = ConfigDict(extra="ignore")
+
+
+class MortgageDeedModel(BaseModel):
+    mortgageDeedType: Optional[str] = None
+    mortgageDeedSecuringType: Optional[str] = None
+    mortgageDeedRegistrationDate: Optional[datetime] = None
+    realestates: list[RealEstateModel] = []
+
+    model_config = ConfigDict(extra="ignore")
+
+
 class CollateralModel(BaseModel):
     collateralId: str
     collateralType: str
@@ -17,6 +56,7 @@ class CollateralModel(BaseModel):
     nominalValueAmount: float
 
     lendingValueDate: datetime
+    mortgageDeed: Optional[MortgageDeedModel] = None
 
     model_config = ConfigDict(extra="ignore")
 

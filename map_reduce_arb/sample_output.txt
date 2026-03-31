@@ -1,0 +1,1480 @@
+============================================================
+Step 1: Running Declarative FSM
+============================================================
+============================================================
+Declarative FSM Demo
+============================================================
+
+1. Loading configuration from declarative_fsm\example_config.yaml...
+   ✓ Loaded configuration with 4 fields
+
+2. Creating FSM engine...
+   ✓ Engine created
+
+3. Loading sample data from declarative_fsm\sample_data.json...
+   ✓ Data: {
+  "collateral": {
+    "value_type": "Real Estate Property",
+    "amount": "2500000"
+  },
+  "real estate assets": {
+    "address": "123 Main Street, Suite 450, New York, NY 10001",
+    "real_estate_type": "Commercial Office Building"
+  },
+  "Financials": {
+    "net_sales": "15000000",
+    "ebitda": "3200000",
+    "year_1": {
+      "category": "revenue",
+      "amount": "5000000"
+    },
+    "year_2": {
+      "category": "revenue",
+      "amount": "3000000"
+    },
+    "year_3": {
+      "category": "expense",
+      "amount": "2000000"
+    }
+  },
+  "financials_debt": {
+    "YEAR": 2024,
+    "ER12": 15000000,
+    "ER32": 3200000,
+    "P88": -500000,
+    "EM06": -200000,
+    "ER13": 1000000,
+    "ER41": 500000,
+    "P19": 2000000,
+    "P14": 5000000,
+    "P03": 3000000,
+    "P20": 1000000
+  }
+}
+
+4. Executing FSMs...
+   (Using strategy handlers for state validation)
+
+============================================================
+Data being saved to pickle file:
+============================================================
+
+Field: collateral
+  - most_current_data keys: ['canonical_value_type', 'canonical_amount']
+  - eval_type: llm
+  - metrics: ['score how readable it is', 'score how complete the information is', 'score how accurate the data appears']
+  - format: table
+
+Field: real estate assets
+  - most_current_data keys: ['canonical_address', 'canonical_real_estate_type']
+  - eval_type: llm
+  - metrics: ['score how readable it is', 'score how complete the information is', 'score how accurate the data appears']
+  - format: freeform
+
+Field: Financials
+  - most_current_data keys: ['canonical_net_sales', 'canonical_ebitda', 'year_1', 'year_2', 'year_3', 'aggregation']
+  - eval_type: llm
+  - metrics: ['score how readable it is', 'score how complete the information is', 'score how accurate the data appears']
+  - format: table
+
+Field: financials_debt
+  - most_current_data keys: ['year', 'ER12', 'ER32', 'P88', 'EM06', 'Re_CapEx', 'int_sub', 'int_hypo', 'FCF', 'DC', 'DCU', 'debt_capacity']
+  - eval_type: llm
+  - metrics: ['score how readable it is', 'score how complete the information is', 'score how accurate the data appears']
+  - format: table
+============================================================
+
+   ✓ Saved most_current_data to map_reduce\most_current_data.pkl
+
+5. Execution Report:
+============================================================
+{
+  "execution_summary": {
+    "total_fields": 4,
+    "fields_passed": 1,
+    "fields_failed": 3
+  },
+  "fields": {
+    "collateral": {
+      "status": "not_passed",
+      "strategies": {
+        "field_selection_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "check_completeness",
+            "convert_to_canon"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        },
+        "extraction_strategy": {
+          "status": "not_passed",
+          "states_executed": [
+            "validate_type"
+          ],
+          "failed_at": "validate_type",
+          "nested_strategies": {}
+        },
+        "generation_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "format"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        },
+        "validation_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "llm_eval"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        }
+      },
+      "bundle": {
+        "most_current_data": {
+          "canonical_value_type": "Real Estate Property",
+          "canonical_amount": "2500000"
+        },
+        "canonical_mapping": {
+          "value_type": "canonical_value_type",
+          "amount": "canonical_amount"
+        },
+        "required_fields_found": [
+          "value_type",
+          "amount"
+        ],
+        "field_data": {
+          "value_type": "Real Estate Property",
+          "amount": "2500000"
+        },
+        "canonical_data": {
+          "original": {
+            "value_type": "Real Estate Property",
+            "amount": "2500000"
+          },
+          "converted": true,
+          "fields": [
+            "value_type",
+            "amount"
+          ]
+        },
+        "type_validated": false,
+        "type_validation_results": {
+          "canonical_value_type": "str",
+          "canonical_amount": "int"
+        },
+        "converted_values": {
+          "canonical_amount": 2500000
+        },
+        "format": "table",
+        "eval_type": "llm",
+        "metrics": [
+          "score how readable it is",
+          "score how complete the information is",
+          "score how accurate the data appears"
+        ]
+      }
+    },
+    "real estate assets": {
+      "status": "not_passed",
+      "strategies": {
+        "field_selection_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "check_completeness",
+            "convert_to_canon"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        },
+        "extraction_strategy": {
+          "status": "not_passed",
+          "states_executed": [
+            "validate_type"
+          ],
+          "failed_at": "validate_type",
+          "nested_strategies": {}
+        },
+        "generation_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "format"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        },
+        "validation_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "llm_eval"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        }
+      },
+      "bundle": {
+        "most_current_data": {
+          "canonical_address": "123 Main Street, Suite 450, New York, NY 10001",
+          "canonical_real_estate_type": "Commercial Office Building"
+        },
+        "canonical_mapping": {
+          "address": "canonical_address",
+          "real_estate_type": "canonical_real_estate_type"
+        },
+        "required_fields_found": [
+          "address",
+          "real_estate_type"
+        ],
+        "field_data": {
+          "address": "123 Main Street, Suite 450, New York, NY 10001",
+          "real_estate_type": "Commercial Office Building"
+        },
+        "canonical_data": {
+          "original": {
+            "address": "123 Main Street, Suite 450, New York, NY 10001",
+            "real_estate_type": "Commercial Office Building"
+          },
+          "converted": true,
+          "fields": [
+            "address",
+            "real_estate_type"
+          ]
+        },
+        "type_validated": false,
+        "type_validation_results": {
+          "canonical_address": "str",
+          "canonical_real_estate_type": "str"
+        },
+        "format": "freeform",
+        "eval_type": "llm",
+        "metrics": [
+          "score how readable it is",
+          "score how complete the information is",
+          "score how accurate the data appears"
+        ]
+      }
+    },
+    "Financials": {
+      "status": "not_passed",
+      "strategies": {
+        "field_selection_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "check_completeness",
+            "convert_to_canon"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        },
+        "extraction_strategy": {
+          "status": "not_passed",
+          "states_executed": [
+            "validate_type"
+          ],
+          "failed_at": "validate_type",
+          "nested_strategies": {}
+        },
+        "generation_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "format"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        },
+        "validation_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "llm_eval"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        },
+        "calculation_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "calculation"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        }
+      },
+      "bundle": {
+        "most_current_data": {
+          "canonical_net_sales": "15000000",
+          "canonical_ebitda": "3200000",
+          "year_1": {
+            "category": "revenue",
+            "amount": "5000000"
+          },
+          "year_2": {
+            "category": "revenue",
+            "amount": "3000000"
+          },
+          "year_3": {
+            "category": "expense",
+            "amount": "2000000"
+          },
+          "aggregation": {
+            "revenue": 8000000.0,
+            "expense": 2000000.0
+          }
+        },
+        "canonical_mapping": {
+          "net_sales": "canonical_net_sales",
+          "ebitda": "canonical_ebitda"
+        },
+        "required_fields_found": [
+          "net_sales",
+          "ebitda"
+        ],
+        "field_data": {
+          "net_sales": "15000000",
+          "ebitda": "3200000",
+          "year_1": {
+            "category": "revenue",
+            "amount": "5000000"
+          },
+          "year_2": {
+            "category": "revenue",
+            "amount": "3000000"
+          },
+          "year_3": {
+            "category": "expense",
+            "amount": "2000000"
+          }
+        },
+        "canonical_data": {
+          "original": {
+            "net_sales": "15000000",
+            "ebitda": "3200000",
+            "year_1": {
+              "category": "revenue",
+              "amount": "5000000"
+            },
+            "year_2": {
+              "category": "revenue",
+              "amount": "3000000"
+            },
+            "year_3": {
+              "category": "expense",
+              "amount": "2000000"
+            }
+          },
+          "converted": true,
+          "fields": [
+            "net_sales",
+            "ebitda"
+          ]
+        },
+        "type_validated": false,
+        "type_validation_results": {
+          "canonical_net_sales": "int",
+          "canonical_ebitda": "int",
+          "year_1": "unknown_dict",
+          "year_2": "unknown_dict",
+          "year_3": "unknown_dict"
+        },
+        "converted_values": {
+          "canonical_net_sales": 15000000,
+          "canonical_ebitda": 3200000
+        },
+        "format": "table",
+        "eval_type": "llm",
+        "metrics": [
+          "score how readable it is",
+          "score how complete the information is",
+          "score how accurate the data appears"
+        ],
+        "calculation_type": "aggregation",
+        "aggregated_values": {
+          "revenue": 8000000.0,
+          "expense": 2000000.0
+        },
+        "calculation_complete": true
+      }
+    },
+    "financials_debt": {
+      "status": "passed",
+      "strategies": {
+        "field_selection_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "check_completeness",
+            "convert_to_canon"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        },
+        "extraction_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "validate_type"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        },
+        "generation_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "format"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        },
+        "validation_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "llm_eval"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        },
+        "calculation_strategy": {
+          "status": "passed",
+          "states_executed": [
+            "calculation"
+          ],
+          "failed_at": null,
+          "nested_strategies": {}
+        }
+      },
+      "bundle": {
+        "most_current_data": {
+          "year": 2024.0,
+          "ER12": 15000000.0,
+          "ER32": 3200000.0,
+          "P88": 500000.0,
+          "EM06": 200000.0,
+          "Re_CapEx": 1500000.0,
+          "int_sub": -120000.0,
+          "int_hypo": -250000.0,
+          "FCF": 20030000.0,
+          "DC": 119778130.98499683,
+          "DCU": 0.01669753888754965,
+          "debt_capacity": {
+            "year": 2024.0,
+            "ER12": 15000000.0,
+            "ER32": 3200000.0,
+            "P88": 500000.0,
+            "EM06": 200000.0,
+            "Re_CapEx": 1500000.0,
+            "int_sub": -120000.0,
+            "int_hypo": -250000.0,
+            "FCF": 20030000.0,
+            "DC": 119778130.98499683,
+            "DCU": 0.01669753888754965
+          }
+        },
+        "canonical_mapping": {},
+        "required_fields_found": [
+          "YEAR",
+          "ER12",
+          "ER32",
+          "P88",
+          "EM06",
+          "ER13",
+          "ER41",
+          "P19",
+          "P14",
+          "P03",
+          "P20"
+        ],
+        "field_data": {
+          "YEAR": 2024,
+          "ER12": 15000000,
+          "ER32": 3200000,
+          "P88": -500000,
+          "EM06": -200000,
+          "ER13": 1000000,
+          "ER41": 500000,
+          "P19": 2000000,
+          "P14": 5000000,
+          "P03": 3000000,
+          "P20": 1000000
+        },
+        "canonical_data": {
+          "original": {
+            "YEAR": 2024,
+            "ER12": 15000000,
+            "ER32": 3200000,
+            "P88": -500000,
+            "EM06": -200000,
+            "ER13": 1000000,
+            "ER41": 500000,
+            "P19": 2000000,
+            "P14": 5000000,
+            "P03": 3000000,
+            "P20": 1000000
+          },
+          "converted": true,
+          "fields": [
+            "YEAR",
+            "ER12",
+            "ER32",
+            "P88",
+            "EM06",
+            "ER13",
+            "ER41",
+            "P19",
+            "P14",
+            "P03",
+            "P20"
+          ]
+        },
+        "type_validated": true,
+        "type_validation_results": {
+          "YEAR": "int",
+          "ER12": "int",
+          "ER32": "int",
+          "P88": "int",
+          "EM06": "int",
+          "ER13": "int",
+          "ER41": "int",
+          "P19": "int",
+          "P14": "int",
+          "P03": "int",
+          "P20": "int"
+        },
+        "format": "table",
+        "eval_type": "llm",
+        "metrics": [
+          "score how readable it is",
+          "score how complete the information is",
+          "score how accurate the data appears"
+        ],
+        "calculation_type": "debt_capacity",
+        "calculation_complete": true
+      }
+    }
+  },
+  "list_of_bundles": [
+    {
+      "most_current_data": {
+        "canonical_value_type": "Real Estate Property",
+        "canonical_amount": "2500000"
+      },
+      "canonical_mapping": {
+        "value_type": "canonical_value_type",
+        "amount": "canonical_amount"
+      },
+      "required_fields_found": [
+        "value_type",
+        "amount"
+      ],
+      "field_data": {
+        "value_type": "Real Estate Property",
+        "amount": "2500000"
+      },
+      "canonical_data": {
+        "original": {
+          "value_type": "Real Estate Property",
+          "amount": "2500000"
+        },
+        "converted": true,
+        "fields": [
+          "value_type",
+          "amount"
+        ]
+      },
+      "type_validated": false,
+      "type_validation_results": {
+        "canonical_value_type": "str",
+        "canonical_amount": "int"
+      },
+      "converted_values": {
+        "canonical_amount": 2500000
+      },
+      "format": "table",
+      "eval_type": "llm",
+      "metrics": [
+        "score how readable it is",
+        "score how complete the information is",
+        "score how accurate the data appears"
+      ]
+    },
+    {
+      "most_current_data": {
+        "canonical_address": "123 Main Street, Suite 450, New York, NY 10001",
+        "canonical_real_estate_type": "Commercial Office Building"
+      },
+      "canonical_mapping": {
+        "address": "canonical_address",
+        "real_estate_type": "canonical_real_estate_type"
+      },
+      "required_fields_found": [
+        "address",
+        "real_estate_type"
+      ],
+      "field_data": {
+        "address": "123 Main Street, Suite 450, New York, NY 10001",
+        "real_estate_type": "Commercial Office Building"
+      },
+      "canonical_data": {
+        "original": {
+          "address": "123 Main Street, Suite 450, New York, NY 10001",
+          "real_estate_type": "Commercial Office Building"
+        },
+        "converted": true,
+        "fields": [
+          "address",
+          "real_estate_type"
+        ]
+      },
+      "type_validated": false,
+      "type_validation_results": {
+        "canonical_address": "str",
+        "canonical_real_estate_type": "str"
+      },
+      "format": "freeform",
+      "eval_type": "llm",
+      "metrics": [
+        "score how readable it is",
+        "score how complete the information is",
+        "score how accurate the data appears"
+      ]
+    },
+    {
+      "most_current_data": {
+        "canonical_net_sales": "15000000",
+        "canonical_ebitda": "3200000",
+        "year_1": {
+          "category": "revenue",
+          "amount": "5000000"
+        },
+        "year_2": {
+          "category": "revenue",
+          "amount": "3000000"
+        },
+        "year_3": {
+          "category": "expense",
+          "amount": "2000000"
+        },
+        "aggregation": {
+          "revenue": 8000000.0,
+          "expense": 2000000.0
+        }
+      },
+      "canonical_mapping": {
+        "net_sales": "canonical_net_sales",
+        "ebitda": "canonical_ebitda"
+      },
+      "required_fields_found": [
+        "net_sales",
+        "ebitda"
+      ],
+      "field_data": {
+        "net_sales": "15000000",
+        "ebitda": "3200000",
+        "year_1": {
+          "category": "revenue",
+          "amount": "5000000"
+        },
+        "year_2": {
+          "category": "revenue",
+          "amount": "3000000"
+        },
+        "year_3": {
+          "category": "expense",
+          "amount": "2000000"
+        }
+      },
+      "canonical_data": {
+        "original": {
+          "net_sales": "15000000",
+          "ebitda": "3200000",
+          "year_1": {
+            "category": "revenue",
+            "amount": "5000000"
+          },
+          "year_2": {
+            "category": "revenue",
+            "amount": "3000000"
+          },
+          "year_3": {
+            "category": "expense",
+            "amount": "2000000"
+          }
+        },
+        "converted": true,
+        "fields": [
+          "net_sales",
+          "ebitda"
+        ]
+      },
+      "type_validated": false,
+      "type_validation_results": {
+        "canonical_net_sales": "int",
+        "canonical_ebitda": "int",
+        "year_1": "unknown_dict",
+        "year_2": "unknown_dict",
+        "year_3": "unknown_dict"
+      },
+      "converted_values": {
+        "canonical_net_sales": 15000000,
+        "canonical_ebitda": 3200000
+      },
+      "format": "table",
+      "eval_type": "llm",
+      "metrics": [
+        "score how readable it is",
+        "score how complete the information is",
+        "score how accurate the data appears"
+      ],
+      "calculation_type": "aggregation",
+      "aggregated_values": {
+        "revenue": 8000000.0,
+        "expense": 2000000.0
+      },
+      "calculation_complete": true
+    },
+    {
+      "most_current_data": {
+        "year": 2024.0,
+        "ER12": 15000000.0,
+        "ER32": 3200000.0,
+        "P88": 500000.0,
+        "EM06": 200000.0,
+        "Re_CapEx": 1500000.0,
+        "int_sub": -120000.0,
+        "int_hypo": -250000.0,
+        "FCF": 20030000.0,
+        "DC": 119778130.98499683,
+        "DCU": 0.01669753888754965,
+        "debt_capacity": {
+          "year": 2024.0,
+          "ER12": 15000000.0,
+          "ER32": 3200000.0,
+          "P88": 500000.0,
+          "EM06": 200000.0,
+          "Re_CapEx": 1500000.0,
+          "int_sub": -120000.0,
+          "int_hypo": -250000.0,
+          "FCF": 20030000.0,
+          "DC": 119778130.98499683,
+          "DCU": 0.01669753888754965
+        }
+      },
+      "canonical_mapping": {},
+      "required_fields_found": [
+        "YEAR",
+        "ER12",
+        "ER32",
+        "P88",
+        "EM06",
+        "ER13",
+        "ER41",
+        "P19",
+        "P14",
+        "P03",
+        "P20"
+      ],
+      "field_data": {
+        "YEAR": 2024,
+        "ER12": 15000000,
+        "ER32": 3200000,
+        "P88": -500000,
+        "EM06": -200000,
+        "ER13": 1000000,
+        "ER41": 500000,
+        "P19": 2000000,
+        "P14": 5000000,
+        "P03": 3000000,
+        "P20": 1000000
+      },
+      "canonical_data": {
+        "original": {
+          "YEAR": 2024,
+          "ER12": 15000000,
+          "ER32": 3200000,
+          "P88": -500000,
+          "EM06": -200000,
+          "ER13": 1000000,
+          "ER41": 500000,
+          "P19": 2000000,
+          "P14": 5000000,
+          "P03": 3000000,
+          "P20": 1000000
+        },
+        "converted": true,
+        "fields": [
+          "YEAR",
+          "ER12",
+          "ER32",
+          "P88",
+          "EM06",
+          "ER13",
+          "ER41",
+          "P19",
+          "P14",
+          "P03",
+          "P20"
+        ]
+      },
+      "type_validated": true,
+      "type_validation_results": {
+        "YEAR": "int",
+        "ER12": "int",
+        "ER32": "int",
+        "P88": "int",
+        "EM06": "int",
+        "ER13": "int",
+        "ER41": "int",
+        "P19": "int",
+        "P14": "int",
+        "P03": "int",
+        "P20": "int"
+      },
+      "format": "table",
+      "eval_type": "llm",
+      "metrics": [
+        "score how readable it is",
+        "score how complete the information is",
+        "score how accurate the data appears"
+      ],
+      "calculation_type": "debt_capacity",
+      "calculation_complete": true
+    }
+  ],
+  "most_current_data_list": [
+    {
+      "field_name": "collateral",
+      "most_current_data": {
+        "canonical_value_type": "Real Estate Property",
+        "canonical_amount": "2500000"
+      },
+      "eval_type": "llm",
+      "metrics": [
+        "score how readable it is",
+        "score how complete the information is",
+        "score how accurate the data appears"
+      ],
+      "format": "table"
+    },
+    {
+      "field_name": "real estate assets",
+      "most_current_data": {
+        "canonical_address": "123 Main Street, Suite 450, New York, NY 10001",
+        "canonical_real_estate_type": "Commercial Office Building"
+      },
+      "eval_type": "llm",
+      "metrics": [
+        "score how readable it is",
+        "score how complete the information is",
+        "score how accurate the data appears"
+      ],
+      "format": "freeform"
+    },
+    {
+      "field_name": "Financials",
+      "most_current_data": {
+        "canonical_net_sales": "15000000",
+        "canonical_ebitda": "3200000",
+        "year_1": {
+          "category": "revenue",
+          "amount": "5000000"
+        },
+        "year_2": {
+          "category": "revenue",
+          "amount": "3000000"
+        },
+        "year_3": {
+          "category": "expense",
+          "amount": "2000000"
+        },
+        "aggregation": {
+          "revenue": 8000000.0,
+          "expense": 2000000.0
+        }
+      },
+      "eval_type": "llm",
+      "metrics": [
+        "score how readable it is",
+        "score how complete the information is",
+        "score how accurate the data appears"
+      ],
+      "format": "table"
+    },
+    {
+      "field_name": "financials_debt",
+      "most_current_data": {
+        "year": 2024.0,
+        "ER12": 15000000.0,
+        "ER32": 3200000.0,
+        "P88": 500000.0,
+        "EM06": 200000.0,
+        "Re_CapEx": 1500000.0,
+        "int_sub": -120000.0,
+        "int_hypo": -250000.0,
+        "FCF": 20030000.0,
+        "DC": 119778130.98499683,
+        "DCU": 0.01669753888754965,
+        "debt_capacity": {
+          "year": 2024.0,
+          "ER12": 15000000.0,
+          "ER32": 3200000.0,
+          "P88": 500000.0,
+          "EM06": 200000.0,
+          "Re_CapEx": 1500000.0,
+          "int_sub": -120000.0,
+          "int_hypo": -250000.0,
+          "FCF": 20030000.0,
+          "DC": 119778130.98499683,
+          "DCU": 0.01669753888754965
+        }
+      },
+      "eval_type": "llm",
+      "metrics": [
+        "score how readable it is",
+        "score how complete the information is",
+        "score how accurate the data appears"
+      ],
+      "format": "table"
+    }
+  ]
+}
+
+6. Summary:
+   Total fields: 4
+   Fields passed: 1
+   Fields failed: 3
+
+7. Field Details:
+   ✗ collateral: not_passed
+      - field_selection_strategy: passed (executed 2 states)
+      - extraction_strategy: not_passed (failed at: validate_type, executed 1 states)
+      - generation_strategy: passed (executed 1 states)
+      - validation_strategy: passed (executed 1 states)
+   ✗ real estate assets: not_passed
+      - field_selection_strategy: passed (executed 2 states)
+      - extraction_strategy: not_passed (failed at: validate_type, executed 1 states)
+      - generation_strategy: passed (executed 1 states)
+      - validation_strategy: passed (executed 1 states)
+   ✗ Financials: not_passed
+      - field_selection_strategy: passed (executed 2 states)
+      - extraction_strategy: not_passed (failed at: validate_type, executed 1 states)
+      - generation_strategy: passed (executed 1 states)
+      - validation_strategy: passed (executed 1 states)
+      - calculation_strategy: passed (executed 1 states)
+   ✓ financials_debt: passed
+      - field_selection_strategy: passed (executed 2 states)
+      - extraction_strategy: passed (executed 1 states)
+      - generation_strategy: passed (executed 1 states)
+      - validation_strategy: passed (executed 1 states)
+      - calculation_strategy: passed (executed 1 states)
+
+8. Bundle (Final Payload) Demonstration:
+============================================================
+
+   collateral bundle (final payload after all strategies pass):
+   {
+      "most_current_data": {
+            "canonical_value_type": "Real Estate Property",
+            "canonical_amount": "2500000"
+      },
+      "canonical_mapping": {
+            "value_type": "canonical_value_type",
+            "amount": "canonical_amount"
+      },
+      "required_fields_found": [
+            "value_type",
+            "amount"
+      ],
+      "field_data": {
+            "value_type": "Real Estate Property",
+            "amount": "2500000"
+      },
+      "canonical_data": {
+            "original": {
+                  "value_type": "Real Estate Property",
+                  "amount": "2500000"
+            },
+            "converted": true,
+            "fields": [
+                  "value_type",
+                  "amount"
+            ]
+      },
+      "type_validated": false,
+      "type_validation_results": {
+            "canonical_value_type": "str",
+            "canonical_amount": "int"
+      },
+      "converted_values": {
+            "canonical_amount": 2500000
+      },
+      "format": "table",
+      "eval_type": "llm",
+      "metrics": [
+            "score how readable it is",
+            "score how complete the information is",
+            "score how accurate the data appears"
+      ]
+}
+      → check_completeness stored: required_fields_found, field_data
+      → convert_to_canon read from context and stored: canonical_data
+      → format stored: format='table'
+      → llm_eval stored: eval_type='llm', metrics=['score how readable it is', 'score how complete the information is', 'score how accurate the data appears']
+
+   real estate assets bundle (final payload after all strategies pass):
+   {
+      "most_current_data": {
+            "canonical_address": "123 Main Street, Suite 450, New York, NY 10001",
+            "canonical_real_estate_type": "Commercial Office Building"
+      },
+      "canonical_mapping": {
+            "address": "canonical_address",
+            "real_estate_type": "canonical_real_estate_type"
+      },
+      "required_fields_found": [
+            "address",
+            "real_estate_type"
+      ],
+      "field_data": {
+            "address": "123 Main Street, Suite 450, New York, NY 10001",
+            "real_estate_type": "Commercial Office Building"
+      },
+      "canonical_data": {
+            "original": {
+                  "address": "123 Main Street, Suite 450, New York, NY 10001",
+                  "real_estate_type": "Commercial Office Building"
+            },
+            "converted": true,
+            "fields": [
+                  "address",
+                  "real_estate_type"
+            ]
+      },
+      "type_validated": false,
+      "type_validation_results": {
+            "canonical_address": "str",
+            "canonical_real_estate_type": "str"
+      },
+      "format": "freeform",
+      "eval_type": "llm",
+      "metrics": [
+            "score how readable it is",
+            "score how complete the information is",
+            "score how accurate the data appears"
+      ]
+}
+      → check_completeness stored: required_fields_found, field_data
+      → convert_to_canon read from context and stored: canonical_data
+      → format stored: format='freeform'
+      → llm_eval stored: eval_type='llm', metrics=['score how readable it is', 'score how complete the information is', 'score how accurate the data appears']
+
+   Financials bundle (final payload after all strategies pass):
+   {
+      "most_current_data": {
+            "canonical_net_sales": "15000000",
+            "canonical_ebitda": "3200000",
+            "year_1": {
+                  "category": "revenue",
+                  "amount": "5000000"
+            },
+            "year_2": {
+                  "category": "revenue",
+                  "amount": "3000000"
+            },
+            "year_3": {
+                  "category": "expense",
+                  "amount": "2000000"
+            },
+            "aggregation": {
+                  "revenue": 8000000.0,
+                  "expense": 2000000.0
+            }
+      },
+      "canonical_mapping": {
+            "net_sales": "canonical_net_sales",
+            "ebitda": "canonical_ebitda"
+      },
+      "required_fields_found": [
+            "net_sales",
+            "ebitda"
+      ],
+      "field_data": {
+            "net_sales": "15000000",
+            "ebitda": "3200000",
+            "year_1": {
+                  "category": "revenue",
+                  "amount": "5000000"
+            },
+            "year_2": {
+                  "category": "revenue",
+                  "amount": "3000000"
+            },
+            "year_3": {
+                  "category": "expense",
+                  "amount": "2000000"
+            }
+      },
+      "canonical_data": {
+            "original": {
+                  "net_sales": "15000000",
+                  "ebitda": "3200000",
+                  "year_1": {
+                        "category": "revenue",
+                        "amount": "5000000"
+                  },
+                  "year_2": {
+                        "category": "revenue",
+                        "amount": "3000000"
+                  },
+                  "year_3": {
+                        "category": "expense",
+                        "amount": "2000000"
+                  }
+            },
+            "converted": true,
+            "fields": [
+                  "net_sales",
+                  "ebitda"
+            ]
+      },
+      "type_validated": false,
+      "type_validation_results": {
+            "canonical_net_sales": "int",
+            "canonical_ebitda": "int",
+            "year_1": "unknown_dict",
+            "year_2": "unknown_dict",
+            "year_3": "unknown_dict"
+      },
+      "converted_values": {
+            "canonical_net_sales": 15000000,
+            "canonical_ebitda": 3200000
+      },
+      "format": "table",
+      "eval_type": "llm",
+      "metrics": [
+            "score how readable it is",
+            "score how complete the information is",
+            "score how accurate the data appears"
+      ],
+      "calculation_type": "aggregation",
+      "aggregated_values": {
+            "revenue": 8000000.0,
+            "expense": 2000000.0
+      },
+      "calculation_complete": true
+}
+      → check_completeness stored: required_fields_found, field_data
+      → convert_to_canon read from context and stored: canonical_data
+      → format stored: format='table'
+      → llm_eval stored: eval_type='llm', metrics=['score how readable it is', 'score how complete the information is', 'score how accurate the data appears']
+
+   financials_debt bundle (final payload after all strategies pass):
+   {
+      "most_current_data": {
+            "year": 2024.0,
+            "ER12": 15000000.0,
+            "ER32": 3200000.0,
+            "P88": 500000.0,
+            "EM06": 200000.0,
+            "Re_CapEx": 1500000.0,
+            "int_sub": -120000.0,
+            "int_hypo": -250000.0,
+            "FCF": 20030000.0,
+            "DC": 119778130.98499683,
+            "DCU": 0.01669753888754965,
+            "debt_capacity": {
+                  "year": 2024.0,
+                  "ER12": 15000000.0,
+                  "ER32": 3200000.0,
+                  "P88": 500000.0,
+                  "EM06": 200000.0,
+                  "Re_CapEx": 1500000.0,
+                  "int_sub": -120000.0,
+                  "int_hypo": -250000.0,
+                  "FCF": 20030000.0,
+                  "DC": 119778130.98499683,
+                  "DCU": 0.01669753888754965
+            }
+      },
+      "canonical_mapping": {},
+      "required_fields_found": [
+            "YEAR",
+            "ER12",
+            "ER32",
+            "P88",
+            "EM06",
+            "ER13",
+            "ER41",
+            "P19",
+            "P14",
+            "P03",
+            "P20"
+      ],
+      "field_data": {
+            "YEAR": 2024,
+            "ER12": 15000000,
+            "ER32": 3200000,
+            "P88": -500000,
+            "EM06": -200000,
+            "ER13": 1000000,
+            "ER41": 500000,
+            "P19": 2000000,
+            "P14": 5000000,
+            "P03": 3000000,
+            "P20": 1000000
+      },
+      "canonical_data": {
+            "original": {
+                  "YEAR": 2024,
+                  "ER12": 15000000,
+                  "ER32": 3200000,
+                  "P88": -500000,
+                  "EM06": -200000,
+                  "ER13": 1000000,
+                  "ER41": 500000,
+                  "P19": 2000000,
+                  "P14": 5000000,
+                  "P03": 3000000,
+                  "P20": 1000000
+            },
+            "converted": true,
+            "fields": [
+                  "YEAR",
+                  "ER12",
+                  "ER32",
+                  "P88",
+                  "EM06",
+                  "ER13",
+                  "ER41",
+                  "P19",
+                  "P14",
+                  "P03",
+                  "P20"
+            ]
+      },
+      "type_validated": true,
+      "type_validation_results": {
+            "YEAR": "int",
+            "ER12": "int",
+            "ER32": "int",
+            "P88": "int",
+            "EM06": "int",
+            "ER13": "int",
+            "ER41": "int",
+            "P19": "int",
+            "P14": "int",
+            "P03": "int",
+            "P20": "int"
+      },
+      "format": "table",
+      "eval_type": "llm",
+      "metrics": [
+            "score how readable it is",
+            "score how complete the information is",
+            "score how accurate the data appears"
+      ],
+      "calculation_type": "debt_capacity",
+      "calculation_complete": true
+}
+      → check_completeness stored: required_fields_found, field_data
+      → convert_to_canon read from context and stored: canonical_data
+      → format stored: format='table'
+      → llm_eval stored: eval_type='llm', metrics=['score how readable it is', 'score how complete the information is', 'score how accurate the data appears']
+
+9. Data Transformation Tracking (most_current_data):
+============================================================
+
+   Field: collateral
+   Original data: {
+      "value_type": "Real Estate Property",
+      "amount": "2500000"
+}
+   Transformed data (most_current_data): {
+      "canonical_value_type": "Real Estate Property",
+      "canonical_amount": "2500000"
+}
+   Transformations applied:
+      ✓ Keys converted to canonical form
+      ✓ String values converted to numeric types
+
+   Field: real estate assets
+   Original data: {
+      "address": "123 Main Street, Suite 450, New York, NY 10001",
+      "real_estate_type": "Commercial Office Building"
+}
+   Transformed data (most_current_data): {
+      "canonical_address": "123 Main Street, Suite 450, New York, NY 10001",
+      "canonical_real_estate_type": "Commercial Office Building"
+}
+   Transformations applied:
+      ✓ Keys converted to canonical form
+
+   Field: Financials
+   Original data: {
+      "net_sales": "15000000",
+      "ebitda": "3200000",
+      "year_1": {
+            "category": "revenue",
+            "amount": "5000000"
+      },
+      "year_2": {
+            "category": "revenue",
+            "amount": "3000000"
+      },
+      "year_3": {
+            "category": "expense",
+            "amount": "2000000"
+      }
+}
+   Transformed data (most_current_data): {
+      "canonical_net_sales": "15000000",
+      "canonical_ebitda": "3200000",
+      "year_1": {
+            "category": "revenue",
+            "amount": "5000000"
+      },
+      "year_2": {
+            "category": "revenue",
+            "amount": "3000000"
+      },
+      "year_3": {
+            "category": "expense",
+            "amount": "2000000"
+      },
+      "aggregation": {
+            "revenue": 8000000.0,
+            "expense": 2000000.0
+      }
+}
+   Transformations applied:
+      ✓ Keys converted to canonical form
+      ✓ String values converted to numeric types
+      ✓ Aggregation calculation performed
+
+   Field: financials_debt
+   Original data: {
+      "YEAR": 2024,
+      "ER12": 15000000,
+      "ER32": 3200000,
+      "P88": -500000,
+      "EM06": -200000,
+      "ER13": 1000000,
+      "ER41": 500000,
+      "P19": 2000000,
+      "P14": 5000000,
+      "P03": 3000000,
+      "P20": 1000000
+}
+   Transformed data (most_current_data): {
+      "year": 2024.0,
+      "ER12": 15000000.0,
+      "ER32": 3200000.0,
+      "P88": 500000.0,
+      "EM06": 200000.0,
+      "Re_CapEx": 1500000.0,
+      "int_sub": -120000.0,
+      "int_hypo": -250000.0,
+      "FCF": 20030000.0,
+      "DC": 119778130.98499683,
+      "DCU": 0.01669753888754965,
+      "debt_capacity": {
+            "year": 2024.0,
+            "ER12": 15000000.0,
+            "ER32": 3200000.0,
+            "P88": 500000.0,
+            "EM06": 200000.0,
+            "Re_CapEx": 1500000.0,
+            "int_sub": -120000.0,
+            "int_hypo": -250000.0,
+            "FCF": 20030000.0,
+            "DC": 119778130.98499683,
+            "DCU": 0.01669753888754965
+      }
+}
+   Transformations applied:
+      ✓ Keys converted to canonical form
+      ✓ Debt capacity calculation performed
+
+10. Canonical Key Mappings:
+============================================================
+
+   collateral:
+      'value_type' → 'canonical_value_type'
+      'amount' → 'canonical_amount'
+
+   real estate assets:
+      'address' → 'canonical_address'
+      'real_estate_type' → 'canonical_real_estate_type'
+
+   Financials:
+      'net_sales' → 'canonical_net_sales'
+      'ebitda' → 'canonical_ebitda'
+
+============================================================
+Step 2: Running Map-Reduce Pipeline
+============================================================
+✓ Using OpenAI for summarization
+Bundle Report
+
+## Collateral
+
+### collateral
+
+| Metric                  | Value                   |
+|-------------------------|-------------------------|
+| Canonical Amount        | $2,500,000              |
+| Canonical Value Type    | Real Estate Property     |
+
+**Evaluation Score: 7.3/10**
+*Detailed: score how readable it is: 9.0/10, score how complete the information is: 5.0/10, score how accurate the data appears: 8.0/10*
+
+## Real Estate Assets
+
+### real estate assets
+
+The bundle titled "real estate assets" contains key information about a specific property located at 123 Main Street, Suite 450, New York, NY 10001. This property is classified as a commercial office building, indicating its use for business purposes. The details provided suggest that this asset is part of the commercial real estate sector, which typically includes properties used for office space, retail, and other business-related functions.
+
+**Evaluation Score: 8.7/10**
+*Detailed: score how readable it is: 9.0/10, score how complete the information is: 8.0/10, score how accurate the data appears: 9.0/10*
+
+## Financials
+
+### Financials
+
+| Metric                     | Value          |
+|----------------------------|----------------|
+| Total Revenue              | $8,000,000     |
+| Total Expense              | $2,000,000     |
+| Canonical EBITDA           | $3,200,000     |
+| Canonical Net Sales        | $15,000,000    |
+
+| Year   | Category | Amount      |
+|--------|----------|-------------|
+| Year 1 | Revenue  | $5,000,000  |
+| Year 2 | Revenue  | $3,000,000  |
+| Year 3 | Expense  | $2,000,000  |
+
+**Evaluation Score: 7.0/10**
+*Detailed: score how readable it is: 7.0/10, score how complete the information is: 6.0/10, score how accurate the data appears: 8.0/10*
+
+### Financials_Debt
+
+| Item          | Category        | Amount          |
+|---------------|------------------|------------------|
+| DC            | Debt Capacity     | $119,778,130.98  |
+| DCU           | Debt Capacity     | $0.02            |
+| EM06          | Debt Capacity     | $200,000.00      |
+| ER12          | Debt Capacity     | $15,000,000.00   |
+| ER32          | Debt Capacity     | $3,200,000.00    |
+| FCF           | Debt Capacity     | $20,030,000.00   |
+| P88           | Debt Capacity     | $500,000.00      |
+| Re_CapEx      | Debt Capacity     | $1,500,000.00    |
+| int_hypo      | Interest Expense   | -$250,000.00     |
+| int_sub       | Interest Expense   | -$120,000.00     |
+| Year          |                  | 2024             |
+
+**Evaluation Score: 7.0/10**
+*Detailed: score how readable it is: 6.0/10, score how complete the information is: 7.0/10, score how accurate the data appears: 8.0/10*
+
+
+## Overall Report Evaluation
+
+**Overall Report Score: 8.0/10**
+*Detailed: score how readable it is: 7.0/10, score how complete the information is: 8.0/10, score how accurate the data appears: 9.0/10*

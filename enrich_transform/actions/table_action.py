@@ -57,7 +57,30 @@ def render_section_to_markdown(section_name: str, section_payload: Any, *, max_r
 
     if isinstance(section_payload, list):
         if section_payload and isinstance(section_payload[0], dict):
-            md_parts.append(render_records_as_markdown_table(section_payload, max_rows=max_rows, max_columns=max_columns))
+            column_order = None
+            if section_name == "real_estate":
+                column_order = [
+                    "realEstateId",
+                    "realEstateType",
+                    "marketValue",
+                    "marketValueDate",
+                    "indexedValue",
+                    "indexedValueDate",
+                    "selfUtilizationPercentage",
+                    "addressCity",
+                    "addressCountry",
+                    "collateralId",
+                    "relationId",
+                    "legalEntityId",
+                ]
+            md_parts.append(
+                render_records_as_markdown_table(
+                    section_payload,
+                    max_rows=max_rows,
+                    max_columns=max_columns,
+                    column_order=column_order,
+                )
+            )
         else:
             md_parts.append(render_records_as_markdown_table([{"value": x} for x in section_payload], max_rows=max_rows, max_columns=max_columns))
         return "\n\n".join(md_parts)

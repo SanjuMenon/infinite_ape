@@ -1,0 +1,13 @@
+[
+  {
+    "field_name": "collateral",
+    "prompt": "Summarize the collateral JSON payload accurately and concisely. Do not invent facts.",
+    "payload": "{\n  \"value_type\": \"Sample value type\",\n  \"amount\": \"Sample amount\"\n}"
+  },
+  {
+    "field_name": "business_model",
+    "prompt": "Summarize the business_model JSON payload accurately and concisely. Do not invent facts.",
+    "payload": "{\n  \"industry\": \"Sample industry\",\n  \"products\": [\"A\", \"B\"]\n}"
+  }
+]
+

@@ -38,6 +38,48 @@
         "sales": "{\"products\": [{\"ratio\": \"string\", \"type\": \"string\"}], \"currenciesWithRatios\": [{\"currency\": \"string\", \"ratio\": \"string\"}], \"clients\": [{\"name\": \"string\", \"country\": \"string\", \"salesInCHF\": \"string\", \"sales\": {\"amount\": \"string\", \"currency\": \"string\"}, \"keyClient\": true}], \"competitors\": [\"string\"], \"revenue\": {\"year\": \"string\", \"seasonalSalesDifferences\": \"string\", \"value\": {\"amount\": \"string\", \"currency\": \"string\"}, \"sales\": [{\"category\": \"string\", \"percentage\": \"string\", \"details\": \"string\"}]}}",
         "esg": "{\"sustainabilityGoals\": [{\"code\": \"string\", \"name\": \"string\", \"remark\": \"string\"}], \"ratingsAndCertifications\": {\"remark\": \"string\", \"innerOptions\": [{\"code\": \"string\", \"name\": \"string\"}]}, \"stakeholderExpectations\": [{\"code\": \"string\", \"name\": \"string\", \"remark\": \"string\"}], \"investmentProjects\": {\"volume\": {\"amount\": \"string\", \"currency\": \"string\"}}, \"desiredSupport\": {\"innerOptions\": [{\"code\": \"string\", \"name\": \"string\"}], \"remarks\": \"string\"}, \"productionServiceLocations\": [{\"country\": \"string\", \"numberOfEmployees\": \"string\", \"operationCost\": {\"amount\": \"string\", \"currency\": \"string\"}, \"operationCostInCHF\": \"string\"}]}"
       }
+    ],
+    "real_estate": [
+      {
+        "realEstateId": "string",
+        "realEstateType": "string",
+        "marketValue": 0.0,
+        "marketValueDate": "2026-03-18T06:26:51.572000Z",
+        "indexedValue": 0.0,
+        "indexedValueDate": "2026-03-18T06:26:51.572000Z",
+        "constructionDate": "2026-03-18T06:26:51.572000Z",
+        "selfUtilizationPercentage": 0.0,
+        "condominiumFlag": true,
+        "landLease": true,
+        "endOfLandLeaseDate": "2026-03-18T06:26:51.572000Z",
+        "rentAssignmentFlag": true,
+        "rentalIncome": 0.0,
+        "mortgageDeedRank": 0.0,
+        "address": "{\"street\": \"string\", \"country\": \"string\", \"postalCode\": \"string\", \"houseNumber\": \"string\", \"city\": \"string\"}",
+        "collateralId": "string",
+        "relationId": "string",
+        "legalEntityId": "string"
+      },
+      {
+        "realEstateId": "string-2",
+        "realEstateType": "string",
+        "marketValue": 0.0,
+        "marketValueDate": "2026-03-18T06:26:51.572000Z",
+        "indexedValue": 0.0,
+        "indexedValueDate": "2026-03-18T06:26:51.572000Z",
+        "constructionDate": "2026-03-18T06:26:51.572000Z",
+        "selfUtilizationPercentage": 0.0,
+        "condominiumFlag": true,
+        "landLease": true,
+        "endOfLandLeaseDate": "2026-03-18T06:26:51.572000Z",
+        "rentAssignmentFlag": true,
+        "rentalIncome": 0.0,
+        "mortgageDeedRank": 0.0,
+        "address": "{\"street\": \"string\", \"country\": \"string\", \"postalCode\": \"string\", \"houseNumber\": \"string\", \"city\": \"string\"}",
+        "collateralId": "string-2",
+        "relationId": "string",
+        "legalEntityId": "string"
+      }
     ]
   },
   "downstream": {
@@ -103,6 +145,17 @@
         }
       },
       "summary_md": "# business_model summary\n- row_count: 1\n- isMainBR_counts: `{\"true\": 1, \"false\": 0}`\n- unique_relationId_count: 1\n- unique_legalEntityId_count: 1\n- sample_rows_first_5: `[{\"legalEntityId\": \"string\", \"relationId\": \"string\", \"isMainBR\": true}]`"
+    },
+    "real_estate": {
+      "json_str": "[\n  {\n    \"realEstateId\": \"string\",\n    \"realEstateType\": \"string\",\n    \"marketValue\": 0.0,\n    \"marketValueDate\": \"2026-03-18T06:26:51.572000Z\",\n    \"indexedValue\": 0.0,\n    \"indexedValueDate\": \"2026-03-18T06:26:51.572000Z\",\n    \"constructionDate\": \"2026-03-18T06:26:51.572000Z\",\n    \"selfUtilizationPercentage\": 0.0,\n    \"condominiumFlag\": true,\n    \"landLease\": true,\n    \"endOfLandLeaseDate\": \"2026-03-18T06:26:51.572000Z\",\n    \"rentAssignmentFlag\": true,\n    \"rentalIncome\": 0.0,\n    \"mortgageDeedRank\": 0.0,\n    \"address\": \"{\\\"street\\\": \\\"string\\\", \\\"country\\\": \\\"string\\\", \\\"postalCode\\\": \\\"string\\\", \\\"houseNumber\\\": \\\"string\\\", \\\"city\\\": \\\"string\\\"}\",\n    \"collateralId\": \"string\",\n    \"relationId\": \"string\",\n    \"legalEntityId\": \"string\"\n  },\n  {\n    \"realEstateId\": \"string-2\",\n    \"realEstateType\": \"string\",\n    \"marketValue\": 0.0,\n    \"marketValueDate\": \"2026-03-18T06:26:51.572000Z\",\n    \"indexedValue\": 0.0,\n    \"indexedValueDate\": \"2026-03-18T06:26:51.572000Z\",\n    \"constructionDate\": \"2026-03-18T06:26:51.572000Z\",\n    \"selfUtilizationPercentage\": 0.0,\n    \"condominiumFlag\": true,\n    \"landLease\": true,\n    \"endOfLandLeaseDate\": \"2026-03-18T06:26:51.572000Z\",\n    \"rentAssignmentFlag\": true,\n    \"rentalIncome\": 0.0,\n    \"mortgageDeedRank\": 0.0,\n    \"address\": \"{\\\"street\\\": \\\"string\\\", \\\"country\\\": \\\"string\\\", \\\"postalCode\\\": \\\"string\\\", \\\"houseNumber\\\": \\\"string\\\", \\\"city\\\": \\\"string\\\"}\",\n    \"collateralId\": \"string-2\",\n    \"relationId\": \"string\",\n    \"legalEntityId\": \"string\"\n  }\n]",
+      "table_md": "## real_estate\n\n| realEstateId | realEstateType | marketValue | marketValueDate | indexedValue | indexedValueDate | constructionDate | selfUtilizationPercentage | condominiumFlag | landLease | endOfLandLeaseDate | rentAssignmentFlag | rentalIncome | mortgageDeedRank | address | collateralId | relationId | legalEntityId |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| string | string | 0.0 | 2026-03-18T06:26:51.572000Z | 0.0 | 2026-03-18T06:26:51.572000Z | 2026-03-18T06:26:51.572000Z | 0.0 | True | True | 2026-03-18T06:26:51.572000Z | True | 0.0 | 0.0 | {\"street\": \"string\", \"country\": \"string\", \"postalCode\": \"string\", \"houseNumber\": \"string\", \"city\": \"string\"} | string | string | string |\n| string-2 | string | 0.0 | 2026-03-18T06:26:51.572000Z | 0.0 | 2026-03-18T06:26:51.572000Z | 2026-03-18T06:26:51.572000Z | 0.0 | True | True | 2026-03-18T06:26:51.572000Z | True | 0.0 | 0.0 | {\"street\": \"string\", \"country\": \"string\", \"postalCode\": \"string\", \"houseNumber\": \"string\", \"city\": \"string\"} | string-2 | string | string |",
+      "summary": {
+        "section": "real_estate",
+        "row_count": 2,
+        "unique_realEstateId_count": 2,
+        "unique_collateralId_count": 2
+      },
+      "summary_md": "# real_estate summary\n- row_count: 2\n- unique_realEstateId_count: 2\n- unique_collateralId_count: 2"
     }
   }
 }

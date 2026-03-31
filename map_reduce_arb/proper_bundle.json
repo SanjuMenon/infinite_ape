@@ -1,0 +1,12 @@
+[
+    {
+      "field_name": "collateral",
+      "prompt": "Summarize the collateral JSON payload accurately and concisely. Do not invent facts.",
+      "payload": "{\n  \"canonical_value_type\": \"Real Estate Property\",\n  \"canonical_amount\": \"2500000\"\n}"
+    },
+    {
+      "field_name": "business_model",
+      "prompt": "Summarize the business_model JSON payload accurately and concisely. Do not invent facts.",
+      "payload": "{\n  \"canonical_industry\": \"Manufacturing\",\n  \"revenue_streams\": [\"Subscriptions\", \"Services\"],\n  \"geographies\": [\"US\", \"EU\"]\n}"
+    }
+  ]

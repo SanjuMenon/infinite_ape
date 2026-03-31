@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ubs.com/fso/cfbu/creditsummary/data-collection/domain/gen-ai/CreditSummaryGenAIResponse.json",
+  "requestId": "REQ-UNKNOWN",
+  "language": "en",
+  "generatedBy": "map_reduce",
+  "generatedAt": "2026-03-31T06:16:51Z",
+  "summary-sections": [
+    {
+      "identifier": "collateral",
+      "heading": "Collateral",
+      "sub-heading": null,
+      "content": "",
+      "content-format": "TEXT",
+      "summary-sub-sections": [
+        {
+          "identifier": "collateral",
+          "heading": "collateral",
+          "content-format": "TEXT",
+          "content": "## Collateral\n\n### Aggregate\n\n| collateralId | collateralType | latest_lendingValueDate | total_nominal_value | total_lending_value | currency |\n| --- | --- | --- | --- | --- | --- |\n| string | string | 2026-03-18T06:26:51.572000Z | 0.0 | 0.0 | CHF |\n| string-2 | string | 2026-03-18T06:26:51.572000Z | 500000.0 | 250000.0 | CHF |\n\n\n### Grand Total\n\n| key | value |\n| --- | --- |\n| total_nominal_value | 500000.0 |\n| total_lending_value | 250000.0 |\n| unique_collateral_count | 2 |\n| latest_lendingValueDate | 2026-03-18T06:26:51.572000Z |\n| currency | CHF |"
+        }
+      ]
+    },
+    {
+      "identifier": "business-model",
+      "heading": "Business Model",
+      "sub-heading": null,
+      "content": "",
+      "content-format": "TEXT",
+      "summary-sub-sections": [
+        {
+          "identifier": "business_model",
+          "heading": "business_model",
+          "content-format": "TEXT",
+          "content": "The business model includes a main legal entity with a focus on various activities, competencies, and objectives, while facing specific challenges. It operates in defined markets and maintains relationships with key suppliers and clients. The procurement strategy involves detailed purchasing volumes and dependencies, while the transformation aspect highlights operational costs, investments, and capacity limits. Sales are generated through a range of products and services, with a focus on key clients and revenue management. Additionally, the business emphasizes sustainability goals, stakeholder expectations, and investment projects related to environmental, social, and governance (ESG) criteria."
+        }
+      ]
+    },
+    {
+      "identifier": "real-estate",
+      "heading": "Real Estate",
+      "sub-heading": null,
+      "content": "",
+      "content-format": "TEXT",
+      "summary-sub-sections": [
+        {
+          "identifier": "real_estate",
+          "heading": "real_estate",
+          "content-format": "TEXT",
+          "content": "## Real Estate\n\n| realEstateId | realEstateType | marketValue | marketValueDate | indexedValue | indexedValueDate | selfUtilizationPercentage | addressCity | addressCountry | collateralId | relationId | legalEntityId |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| string | string | 0.0 | 2026-03-18T06:26:51.572000Z | 0.0 | 2026-03-18T06:26:51.572000Z | 0.0 | string | string | string | string | string |\n| string-2 | string | 0.0 | 2026-03-18T06:26:51.572000Z | 0.0 | 2026-03-18T06:26:51.572000Z | 0.0 | string | string | string-2 | string | string |"
+        }
+      ]
+    }
+  ],
+  "summary-meta-data": {
+    "overall-evaluation-report": {
+      "content": "Summary Scores (0-10):\n- business_model: 8.0/10 (readability: 7.0/10, completeness: 8.0/10, groundedness (does not invent facts not present in the payload): 9.0/10)\n\nOverall Report Score: 6.3/10 (readability: 4.0/10, completeness: 6.0/10, groundedness (does not invent facts not present in the payload): 9.0/10)",
+      "content-format": "TEXT"
+    },
+    "debug-log": "LLM Provider: AI Gateway"
+  }
+}

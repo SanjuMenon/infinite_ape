@@ -10,6 +10,7 @@ from enrich_transform.pipeline.normalize import (
     business_model_rows,
     collateral_rows,
     collateral_value_grand_total,
+    real_estate_rows,
 )
 from enrich_transform.schemas.raw_models import RawPayloadModel
 
@@ -28,6 +29,10 @@ def build_enriched_payload(raw_obj: dict[str, Any]) -> dict[str, Any]:
     bm_df = pd.DataFrame.from_records(bm_records)
     bm_out = dataframe_to_json_records(bm_df)
 
+    re_records = real_estate_rows(payload)
+    re_df = pd.DataFrame.from_records(re_records)
+    re_out = dataframe_to_json_records(re_df) if not re_df.empty else []
+
     collateral_out = dataframe_to_json_records(collateral_agg_df)
 
     return {
@@ -36,5 +41,6 @@ def build_enriched_payload(raw_obj: dict[str, Any]) -> dict[str, Any]:
             "grand_total": grand_total_out[0] if grand_total_out else {},
         },
         "business_model": bm_out,
+        "real_estate": re_out,
     }
 

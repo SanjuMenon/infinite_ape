@@ -1,0 +1,16 @@
+{
+  "title": "Bundle Report",
+  "sections": [
+    {
+      "name": "Assets",
+      "field_names": ["collateral", "real_estate_assets"],
+      "subsections": []
+    },
+    {
+      "name": "Financials",
+      "field_names": ["financials"],
+      "subsections": []
+    }
+  ]
+}
+

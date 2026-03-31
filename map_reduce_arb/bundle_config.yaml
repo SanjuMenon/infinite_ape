@@ -1,0 +1,10 @@
+bundle_order:
+  - field_name: collateral
+    section_title: Collateral
+    order: 0
+  - field_name: business_model
+    section_title: Business Model
+    order: 1
+  - field_name: real_estate
+    section_title: Real Estate
+    order: 2

@@ -57,6 +57,56 @@ def business_model_rows(payload: RawPayloadModel) -> list[dict[str, Any]]:
     return rows
 
 
+def real_estate_rows(payload: RawPayloadModel) -> list[dict[str, Any]]:
+    """
+    Flatten `collaterals[*].mortgageDeed.realestates[*]` into row records.
+    Linked back to legal entity + relation + collateral for joins.
+    """
+    rows: list[dict[str, Any]] = []
+    for entity in payload.data.data.legalEntities:
+        legal_entity_id = entity.legalEntityIdGPID
+        for br in entity.bankingRelations:
+            relation_id = br.bankingRelationNumber
+            for c in br.collaterals:
+                if not c.mortgageDeed or not c.mortgageDeed.realestates:
+                    continue
+                for re in c.mortgageDeed.realestates:
+                    address = re.address.model_dump() if re.address is not None else None
+                    addr_street = re.address.street if re.address is not None else None
+                    addr_city = re.address.city if re.address is not None else None
+                    addr_postal_code = re.address.postalCode if re.address is not None else None
+                    addr_country = re.address.country if re.address is not None else None
+                    rows.append(
+                        {
+                            "realEstateId": re.realEstateId,
+                            "realEstateType": re.realEstateType,
+                            "marketValue": re.marketValue,
+                            "marketValueDate": re.marketValueDate,
+                            "indexedValue": re.indexedValue,
+                            "indexedValueDate": re.indexedValueDate,
+                            "constructionDate": re.constructionDate,
+                            "selfUtilizationPercentage": re.selfUtilizationPercentage,
+                            "condominiumFlag": re.condominiumFlag,
+                            "landLease": re.landLease,
+                            "endOfLandLeaseDate": re.endOfLandLeaseDate,
+                            "rentAssignmentFlag": re.rentAssignmentFlag,
+                            "rentalIncome": re.rentalIncome,
+                            "mortgageDeedRank": re.mortgageDeedRank,
+                            # serialize nested address to keep table-friendly
+                            "address": _json_serialize_if_needed(address),
+                            "addressStreet": addr_street,
+                            "addressPostalCode": addr_postal_code,
+                            "addressCity": addr_city,
+                            "addressCountry": addr_country,
+                            # join context
+                            "collateralId": c.collateralId,
+                            "relationId": relation_id,
+                            "legalEntityId": legal_entity_id,
+                        }
+                    )
+    return rows
+
+
 def aggregate_collateral_values(collateral_df: pd.DataFrame) -> pd.DataFrame:
     required = {
         "collateralId",

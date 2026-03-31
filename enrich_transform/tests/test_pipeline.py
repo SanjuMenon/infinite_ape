@@ -18,6 +18,7 @@ def test_build_enriched_payload_from_raw_json_shape():
     assert isinstance(enriched, dict)
     assert "collateral" in enriched
     assert "business_model" in enriched
+    assert "real_estate" in enriched
 
     assert isinstance(enriched["collateral"], dict)
     assert "aggregate" in enriched["collateral"]
@@ -26,6 +27,7 @@ def test_build_enriched_payload_from_raw_json_shape():
     assert isinstance(enriched["collateral"]["aggregate"], list)
     assert isinstance(enriched["collateral"]["grand_total"], dict)
     assert isinstance(enriched["business_model"], list)
+    assert isinstance(enriched["real_estate"], list)
 
 
 @pytest.mark.unit
@@ -38,8 +40,9 @@ def test_downstream_actions_artifacts_present():
 
     assert "collateral" in downstream
     assert "business_model" in downstream
+    assert "real_estate" in downstream
 
-    for section in ["collateral", "business_model"]:
+    for section in ["collateral", "business_model", "real_estate"]:
         assert "json_str" in downstream[section]
         assert "table_md" in downstream[section]
         assert "summary" in downstream[section]

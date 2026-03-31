@@ -98,6 +98,25 @@ def summarize_section(section_name: str, section_payload: Any) -> dict[str, Any]
             },
         }
 
+    if section_name == "real_estate":
+        if not isinstance(section_payload, list):
+            return {"section": section_name, "error": "expected list payload"}
+
+        real_estate_ids = set()
+        collateral_ids = set()
+        for row in section_payload:
+            if not isinstance(row, dict):
+                continue
+            real_estate_ids.add(row.get("realEstateId"))
+            collateral_ids.add(row.get("collateralId"))
+
+        return {
+            "section": section_name,
+            "row_count": len(section_payload),
+            "unique_realEstateId_count": len([x for x in real_estate_ids if x is not None]),
+            "unique_collateralId_count": len([x for x in collateral_ids if x is not None]),
+        }
+
     return {"section": section_name, "shape": type(section_payload).__name__}
 
 
@@ -125,6 +144,10 @@ def summary_dict_to_markdown(summary: dict[str, Any]) -> str:
         add_line("unique_relationId_count", summary.get("unique_relationId_count"))
         add_line("unique_legalEntityId_count", summary.get("unique_legalEntityId_count"))
         add_line("sample_rows_first_5", summary.get("sample_rows_first_5"))
+    elif section == "real_estate":
+        add_line("row_count", summary.get("row_count"))
+        add_line("unique_realEstateId_count", summary.get("unique_realEstateId_count"))
+        add_line("unique_collateralId_count", summary.get("unique_collateralId_count"))
     else:
         for k, v in summary.items():
             add_line(k, v)

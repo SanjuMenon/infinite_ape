@@ -14,7 +14,7 @@ def run_downstream_actions(
     table_action: TableAction | None = None,
     summary_action: SummaryAction | None = None,
 ) -> dict[str, Any]:
-    sections = sections or ["collateral", "business_model"]
+    sections = sections or ["collateral", "business_model", "real_estate"]
     table_action = table_action or TableAction(max_rows=50, max_columns=200)
     summary_action = summary_action or SummaryAction()
 
