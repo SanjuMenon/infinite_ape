@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from datetime import datetime
+import json
 import operator
 from typing import Annotated, Any, Dict, List, Optional, TypedDict
 
@@ -59,10 +60,19 @@ def _flatten_sections(sections: List[OutputSectionSchema]) -> List[OutputSection
 
 def _infer_content_format(text: str) -> str:
     """Infer report content format from generated text."""
-    t = (text or "").lstrip()
-    # simple heuristic for markdown tables
-    if t.startswith("|") and "\n|" in t:
+    t = (text or "")
+    # Common heuristic: treat as markdown if it contains a markdown table anywhere.
+    # This catches sections that start with headings (e.g. "## Real Estate") and then include tables.
+    if "\n|" in t or t.lstrip().startswith("|"):
         return "MD"
+    # If the content is valid JSON (object/array), mark it as JSON.
+    s = t.lstrip()
+    if s.startswith("{") or s.startswith("["):
+        try:
+            json.loads(s)
+            return "JSON"
+        except Exception:
+            pass
     return "TEXT"
 
 
@@ -463,10 +473,22 @@ def _build_bundles_node(state: MapReduceState) -> Dict[str, List[Bundle]]:
             artifacts = {}
 
         if prompt == PROMPT_NONE:
-            # passthrough: use downstream table markdown
-            table_md = artifacts.get("table_md", "") or ""
-            table_md = prettify_section_table_md(section_name, str(table_md))
-            bundles.append(Bundle(field_name=section_name, prompt=PROMPT_NONE, payload=table_md))
+            # passthrough: payload format depends on section type
+            # - collateral: JSON passthrough (use enriched JSON, not downstream json_str)
+            # - real_estate: JSON passthrough (use enriched JSON)
+            # - default: markdown passthrough
+            if section_name == "collateral":
+                collateral_obj = enriched.get("collateral", {})
+                payload = json.dumps(collateral_obj, ensure_ascii=False, indent=2, sort_keys=True)
+                bundles.append(Bundle(field_name=section_name, prompt=PROMPT_NONE, payload=payload))
+            elif section_name == "real_estate":
+                real_estate_obj = enriched.get("real_estate", [])
+                payload = json.dumps(real_estate_obj, ensure_ascii=False, indent=2, sort_keys=True)
+                bundles.append(Bundle(field_name=section_name, prompt=PROMPT_NONE, payload=payload))
+            else:
+                table_md = artifacts.get("table_md", "") or ""
+                table_md = prettify_section_table_md(section_name, str(table_md))
+                bundles.append(Bundle(field_name=section_name, prompt=PROMPT_NONE, payload=table_md))
         else:
             # LLM path: use downstream json_str
             json_str = artifacts.get("json_str", "") or ""

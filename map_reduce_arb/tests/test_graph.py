@@ -49,3 +49,45 @@ def test_graph_basic_flow_without_evaluation() -> None:
     assert dumped["requestId"]
     assert dumped["summary-sections"]
 
+
+def test_passthrough_payload_can_be_json_or_md_based_on_section_type() -> None:
+    """Unit-test the intended behavior:
+    - collateral passthrough uses enriched JSON (not downstream json_str)
+    - real_estate passthrough uses enriched JSON
+    """
+    graph = build_map_reduce_graph()
+
+    state = graph.invoke(
+        {
+            "raw_obj": None,
+            "raw_path": None,
+            "enriched": {"collateral": {"a": 1}, "real_estate": [{"realEstateId": "x"}]},
+            "downstream": {
+                "collateral": {"json_str": '{"a": 1}', "table_md": "## collateral\n\n### collateral.aggregate\nx"},
+                "real_estate": {"json_str": "[1]", "table_md": "## real_estate\n\n| a | b |\n|---|---|\n| 1 | 2 |"},
+            },
+            "bundle_config": BundleConfig(
+                bundle_order=[
+                    BundleTypeConfig(field_name="collateral", section_title="Collateral", order=0),
+                    BundleTypeConfig(field_name="real_estate", section_title="Real Estate", order=1),
+                ]
+            ),
+            "output_schema": OutputSchema(title="Test Report"),
+        }
+    )
+
+    report = state["report"]
+    dumped = report.model_dump(by_alias=True)
+    sections = dumped["summary-sections"]
+    # Flatten sub-sections by identifier
+    sub_by_id = {}
+    for sec in sections:
+        for sub in sec.get("summary-sub-sections", []):
+            sub_by_id[sub["identifier"]] = sub
+
+    assert sub_by_id["collateral"]["content-format"] == "JSON"
+    assert '"a": 1' in sub_by_id["collateral"]["content"]  # enriched JSON passthrough
+
+    assert sub_by_id["real_estate"]["content-format"] == "JSON"
+    assert '"realEstateId": "x"' in sub_by_id["real_estate"]["content"]  # enriched JSON passthrough
+
