@@ -20,6 +20,8 @@ PROMPT_NONE: Final[str] = "__NONE__"
 def get_prompt_for_section(section_name: str) -> str:
     """Return the prompt for a section, or PROMPT_NONE to enable passthrough behavior."""
     key = (section_name or "").strip().lower()
+    if key == "partner_shared_information":
+        return PROMPT_NONE
     if key == "collateral":
         return PROMPT_NONE
     if key == "business_model":

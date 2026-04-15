@@ -49,7 +49,7 @@ def main() -> None:
     })
     
     # Print report as markdown (using renderer)
-    from map_reduce.graph import render_to_markdown
+    from map_reduce_arb.graph import render_to_markdown
     report = final_state["report"]
 
     # Persist report as JSON in Pydantic (aliased) form

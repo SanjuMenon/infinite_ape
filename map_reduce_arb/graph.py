@@ -4,14 +4,17 @@ from collections import defaultdict
 from datetime import datetime
 import json
 import operator
+from pathlib import Path
 from typing import Annotated, Any, Dict, List, Optional, TypedDict
 
 from langgraph.graph import END, StateGraph
 from langgraph.types import Send
 
 from enrich_transform.cli import run as enrich_run
+from enrich_transform.io.json_io import read_json
 
 from .agents import summarize_passthrough, summarize_with_prompt
+from .partner_shared_info import format_partner_shared_information
 from .evaluator import DEFAULT_EVAL_METRICS, evaluate_report_text, evaluate_summary_text
 from .llm_client import is_llm_available, get_provider
 from .markdown_utils import prettify_section_table_md
@@ -25,6 +28,14 @@ from .report_schemas import (
 )
 from .schemas import Bundle, BundleConfig, BundleTypeConfig, OutputSchema, OutputSectionSchema
 from .splitter import split_bundle
+
+# Order matters: partner block is first (generic client information).
+_BUNDLE_SECTION_NAMES = (
+    "partner_shared_information",
+    "collateral",
+    "business_model",
+    "real_estate",
+)
 
 
 class MapReduceState(TypedDict, total=False):
@@ -453,8 +464,15 @@ def _enrich_node(state: MapReduceState) -> Dict[str, Any]:
         return {}
     raw_obj = state.get("raw_obj")
     raw_path = state.get("raw_path")
-    result = enrich_run(raw_obj=raw_obj, raw_path=raw_path, no_downstream=False)
-    return {"enriched": result.get("enriched", {}), "downstream": result.get("downstream", {})}
+    if raw_obj is None:
+        path = Path(raw_path) if raw_path else Path(__file__).resolve().parent.parent / "enrich_transform" / "raw.json"
+        raw_obj = read_json(path)
+    result = enrich_run(raw_obj=raw_obj, raw_path=None, no_downstream=False)
+    return {
+        "enriched": result.get("enriched", {}),
+        "downstream": result.get("downstream", {}),
+        "raw_obj": raw_obj,
+    }
 
 
 def _build_bundles_node(state: MapReduceState) -> Dict[str, List[Bundle]]:
@@ -466,7 +484,18 @@ def _build_bundles_node(state: MapReduceState) -> Dict[str, List[Bundle]]:
     downstream = state.get("downstream", {}) or {}
 
     bundles: List[Bundle] = []
-    for section_name in ("collateral", "business_model", "real_estate"):
+    for section_name in _BUNDLE_SECTION_NAMES:
+        if section_name == "partner_shared_information":
+            raw_for_partner: Dict[str, Any] = dict(state.get("raw_obj") or {})
+            meta = state.get("metadata")
+            if isinstance(meta, dict) and meta:
+                merged = dict(raw_for_partner.get("metadata") or {})
+                merged.update(meta)
+                raw_for_partner["metadata"] = merged
+            payload = format_partner_shared_information(raw_for_partner)
+            bundles.append(Bundle(field_name=section_name, prompt=PROMPT_NONE, payload=payload))
+            continue
+
         prompt = get_prompt_for_section(section_name)
         artifacts = downstream.get(section_name, {}) if isinstance(downstream, dict) else {}
         if not isinstance(artifacts, dict):

@@ -4,8 +4,23 @@
   "requestId": "REQ-UNKNOWN",
   "language": "en",
   "generatedBy": "map_reduce",
-  "generatedAt": "2026-04-08T14:20:51Z",
+  "generatedAt": "2026-04-15T23:40:09Z",
   "summary-sections": [
+    {
+      "identifier": "partner-shared-information",
+      "heading": "Partner Shared Information",
+      "sub-heading": null,
+      "content": "",
+      "content-format": "TEXT",
+      "summary-sub-sections": [
+        {
+          "identifier": "partner_shared_information",
+          "heading": "Partner Shared Information",
+          "content-format": "TEXT",
+          "content": "- **Name:** string\n- **GPID:** string\n\n### Legal entities\n_No legal entities listed._"
+        }
+      ]
+    },
     {
       "identifier": "collateral",
       "heading": "Collateral",
@@ -32,7 +47,7 @@
           "identifier": "business_model",
           "heading": "business_model",
           "content-format": "TEXT",
-          "content": "The business model includes an overview of activities, competencies, challenges, objectives, and organization members. It outlines procurement details such as purchasing volumes, currencies, dependencies, and key suppliers. The transformation section covers operational costs, replacement investments, capacity limits, investment projects, processes, and digitalization efforts. Sales information details products, currencies, clients, competitors, and revenue metrics, including seasonal sales differences. The ESG section highlights sustainability goals, ratings, stakeholder expectations, investment projects, desired support, and production service locations with associated operational costs."
+          "content": "The business model includes a main legal entity with various activities, competencies, challenges, and objectives. It has a structured procurement process detailing purchasing volumes, currencies, dependencies, and key suppliers. The transformation aspect outlines operational costs, investment projects, capacity limits, and digitalization efforts. Sales are generated through specific products and clients, with a focus on revenue metrics and competitor analysis. Additionally, the model incorporates ESG elements such as sustainability goals, stakeholder expectations, and production service locations, emphasizing operational costs and investment projects."
         }
       ]
     },
@@ -54,7 +69,7 @@
   ],
   "summary-meta-data": {
     "overall-evaluation-report": {
-      "content": "Summary Scores (0-10):\n- business_model: 8.7/10 (readability: 7.0/10, completeness: 9.0/10, groundedness (does not invent facts not present in the payload): 10.0/10)\n\nOverall Report Score: 6.3/10 (readability: 3.0/10, completeness: 7.0/10, groundedness (does not invent facts not present in the payload): 9.0/10)",
+      "content": "Summary Scores (0-10):\n- business_model: 8.3/10 (readability: 7.0/10, completeness: 9.0/10, groundedness (does not invent facts not present in the payload): 9.0/10)\n\nOverall Report Score: 6.7/10 (readability: 4.0/10, completeness: 7.0/10, groundedness (does not invent facts not present in the payload): 9.0/10)",
       "content-format": "TEXT"
     },
     "debug-log": "LLM Provider: AI Gateway"
