@@ -51,3 +51,7 @@ From the repo root:
 ```bash
 python -m pytest map_reduce_arb/tests -q
 ```
+
+## Related documentation
+
+For how **`enrich_transform`** and **`map_reduce_arb`** connect end-to-end (diagrams and sample flow), see **`METHODOLOGY.md`** in this folder.
