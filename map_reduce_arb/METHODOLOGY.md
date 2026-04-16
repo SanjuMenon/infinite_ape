@@ -170,6 +170,178 @@ If the caller passes **`bundles`** directly, **`enrich`** and **`build_bundles`*
 
 ---
 
+## Sample JSON evolution across the pipeline
+
+The examples below are **pedagogical**: one small collateral and one business-model row, no real-estate rows. Shapes match what **`build_enriched_payload`** and **`run_downstream_actions`** produce; numeric and date serializations in your environment may differ slightly (e.g. pandas timestamp formatting).
+
+### Stage 1 — Raw input (`raw_obj`)
+
+What enters **`enrich_transform.cli.run`** (and is also kept on graph state as **`raw_obj`** for Partner Shared Information).
+
+```json
+{
+  "requestId": "doc-example-001",
+  "metadata": { "creditSummaryScope": "group" },
+  "client": { "id": "GRP-1", "partnerType": "GROUP" },
+  "data": {
+    "data": {
+      "id": "deal-1",
+      "legalEntities": [
+        {
+          "legalEntityIdGPID": "GRP-1",
+          "entityType": "GROUP",
+          "organizationName": "Alpine Holdings AG",
+          "bankingRelations": [
+            {
+              "bankingRelationNumber": "BR-100",
+              "isMainBR": true,
+              "businessModel": [
+                {
+                  "overview": { "activities": ["Wholesale trade"] }
+                }
+              ],
+              "collaterals": [
+                {
+                  "collateralId": "COL-1",
+                  "collateralType": "REAL_ESTATE",
+                  "currency": "CHF",
+                  "lendingValueAmount": 500000,
+                  "nominalValueAmount": 600000,
+                  "lendingValueDate": "2026-03-01T00:00:00Z"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
+```
+
+### Stage 2 — Enriched payload (`enriched`)
+
+Output of **`build_enriched_payload`**: nested JSON, **not** yet the string sent to the LLM.
+
+- **`collateral.aggregate`**: one row per `collateralId` after Pandas `groupby` (totals + latest date + `currency` forced to `"CHF"` in aggregation).
+- **`collateral.grand_total`**: single object summing across aggregates.
+- **`business_model`**: list of flat dicts; nested BM fragments become **JSON strings** on each key (see `overview` below).
+- **`real_estate`**: `[]` when no `mortgageDeed.realestates` exist (as in this sample).
+
+```json
+{
+  "collateral": {
+    "aggregate": [
+      {
+        "collateralId": "COL-1",
+        "collateralType": "REAL_ESTATE",
+        "latest_lendingValueDate": "2026-03-01T00:00:00Z",
+        "total_nominal_value": 600000,
+        "total_lending_value": 500000,
+        "currency": "CHF"
+      }
+    ],
+    "grand_total": {
+      "total_nominal_value": 600000,
+      "total_lending_value": 500000,
+      "unique_collateral_count": 1,
+      "latest_lendingValueDate": "2026-03-01T00:00:00Z",
+      "currency": "CHF"
+    }
+  },
+  "business_model": [
+    {
+      "legalEntityId": "GRP-1",
+      "relationId": "BR-100",
+      "isMainBR": true,
+      "overview": "{\"activities\": [\"Wholesale trade\"]}"
+    }
+  ],
+  "real_estate": []
+}
+```
+
+### Stage 3 — Downstream artifacts (`downstream`)
+
+Output of **`run_downstream_actions`**: per section, **`json_str`** (canonical JSON text), **`table_md`**, **`summary`**, **`summary_md`**. Only **`business_model.json_str`** is shown here (truncation indicated); **`collateral`** / **`real_estate`** follow the same pattern.
+
+```json
+{
+  "business_model": {
+    "json_str": "{\n  \"legalEntityId\": \"GRP-1\",\n  \"relationId\": \"BR-100\",\n  ...\n}",
+    "table_md": "## business_model\n\n| legalEntityId | relationId | ... |\n| --- | --- | --- |\n| GRP-1 | BR-100 | ... |",
+    "summary": { "section": "business_model", "...": "..." },
+    "summary_md": "..."
+  }
+}
+```
+
+In **`map_reduce_arb`**, the **business model** LLM bundle uses **`downstream["business_model"]["json_str"]`** as the **`payload`**. **Collateral** and **real estate** passthrough bundles instead stringify the Stage 2 **`enriched`** subtrees (so the report shows the enriched structure, not necessarily the same whitespace as `json_str`).
+
+### Stage 4 — Bundles (`bundles` before split)
+
+Logical content after **`_build_bundles_node`** ( **`prompt`** is `__NONE__` for passthrough, or a long template string for LLM; shown as labels).
+
+| `field_name` | `prompt` | `payload` source (conceptual) |
+|--------------|----------|-------------------------------|
+| `partner_shared_information` | `PROMPT_NONE` | Markdown built from **Stage 1** `raw_obj` + merged metadata (e.g. group header + “no legal entities” if none listed). |
+| `collateral` | `PROMPT_NONE` | `json.dumps(enriched["collateral"], indent=2, sort_keys=True)` |
+| `business_model` | LLM prompt text | `downstream["business_model"]["json_str"]` |
+| `real_estate` | `PROMPT_NONE` | `json.dumps(enriched["real_estate"], ...)` → often `"[]"` |
+
+### Stage 5 — After map–reduce (`report`)
+
+**`reduce`** turns each bundle’s final text into **`SummarySubSection`** entries grouped by **`section_title`** from **`bundle_config.yaml`**. Aliased JSON shape (illustrative):
+
+```json
+{
+  "requestId": "…",
+  "summary-sections": [
+    {
+      "identifier": "partner-shared-information",
+      "heading": "Partner Shared Information",
+      "summary-sub-sections": [
+        {
+          "identifier": "partner_shared_information",
+          "heading": "Partner Shared Information",
+          "content-format": "MD",
+          "content": "- **Name:** Alpine Holdings AG\n- **GPID:** GRP-1\n\n### Legal entities\n_No legal entities listed._"
+        }
+      ]
+    },
+    {
+      "identifier": "collateral",
+      "heading": "Collateral",
+      "summary-sub-sections": [
+        {
+          "identifier": "collateral",
+          "heading": "collateral",
+          "content-format": "JSON",
+          "content": "{ \"aggregate\": [ ... ], \"grand_total\": { ... } }"
+        }
+      ]
+    }
+  ]
+}
+```
+
+The **`content`** strings for passthrough sections are **literally** the Stage 4 payloads (possibly with format inference for `content-format`). The **business model** subsection would contain **LLM narrative** when credentials are present, or raise/fallback depending on your **`agents.py`** configuration.
+
+### End-to-end mental model
+
+```text
+Stage 1 raw_obj
+    → enrich_transform validates + build_enriched_payload → Stage 2 enriched
+    → run_downstream_actions → Stage 3 downstream
+    → map_reduce_arb _build_bundles_node → Stage 4 bundles (raw + enriched + downstream)
+    → summarize_one (passthrough / LLM) → partials
+    → reduce → Stage 5 CreditSummaryGenAIResponse
+```
+
+You can paste **Stage 1** into a file and run `enrich_transform.cli.run(raw_path=...)` in a REPL to compare your machine’s **Stage 2–3** output to the shapes above.
+
+---
+
 ## Configuration knobs
 
 - **`map_reduce_arb/bundle_config.yaml`** — `field_name`, `section_title`, `order`, optional `display_name`. Must align with bundles produced in `_build_bundles_node`.
